@@ -1,0 +1,31 @@
+{
+  "name": "xuecheng-1",
+  "version": "0.1.0",
+  "private": true,
+  "proxy": "http://localhost:3099/",
+  "dependencies": {
+    "babel-plugin-import": "^1.6.5",
+    "react": "^16.2.0",
+    "react-app-rewired": "^1.4.1",
+    "react-dom": "^16.2.0",
+    "react-scripts": "1.1.1"
+  },
+  "scripts": {
+    "start": "react-app-rewired  start",
+    "build": "react-app-rewired  build",
+    "test": "react-app-rewired test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "antd": "^3.2.2",
+    "rc-banner-anim": "^1.0.1",
+    "rc-queue-anim": "^1.4.1",
+    "rc-tween-one": "^1.7.3",
+    "react-addons-css-transition-group": "^15.6.2",
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.2.2",
+    "react-router-redux": "^4.0.8",
+    "redux": "^3.7.2",
+    "styled-components": "^3.1.6"
+  }
+}
