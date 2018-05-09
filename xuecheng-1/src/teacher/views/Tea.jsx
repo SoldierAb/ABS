@@ -4,7 +4,6 @@ import styled, { injectGlobal, keyframes } from 'styled-components'
 import TweenOne, { TweenOneGroup } from 'rc-tween-one';
 import { Button, message, Icon } from 'antd';
 
-
 injectGlobal`
     .clearfix:after{
         height:0;
@@ -21,19 +20,21 @@ injectGlobal`
     .fl{
         float:left
     }
-    
 
+    .fr{
+        float:right;
+    }
 `;
 
 const fade = keyframes`
     0%{
         opacity:0;
-        top:-100px;
+        left:-100px;
     }
 
     100%{
         opacity:1;
-        top:0;
+        left:0;
     }
 `;
 
@@ -41,21 +42,19 @@ const Wrapper = styled.div`
     max-width:1700px;
     min-width:960px;
     padding:40px;
-    background-color:#DEEDCC;
+    .teaTitle{
+        background: url(http://localhost:3099/crossword.png) repeat scroll 0 0 #5a88ca;
+    }
     .boxContainer{
-        height:2000px;
         position:relative;
         margin:auto;
         background:white;
-        border-radius:4px;
         padding:10px;
-        box-shadow:0 0 2px #ccc;
     }
     .boxItem{
         height:290px;
         width:262px;
         margin:10px;
-        border-radius:4px;
         background:white;
         padding:4px;
         over-flow:hidden;
@@ -64,7 +63,6 @@ const Wrapper = styled.div`
         &:hover{
             cursor:pointer;
             opacity:0;
-            box-shadow:0 0 4px gray;
         }
         .boxItemContent{
             position:absolute;
@@ -79,31 +77,27 @@ const Wrapper = styled.div`
             color:rgba(255,255,255,0.8);
             opacity:0;
             &:hover{
-                animation:${fade} 400ms linear normal;
+                animation:${fade} .2s ease;
                 opacity:1;
             }
             .detailBox{
-                .phoneCall{
-                    width:15%;
+                .callBtn{
+                    width:50%;
                     text-align:center;
-                    margin:45% auto;
-                    transform:scale(2);
-                    border:6px groove rgba(255,255,255,0.3);
-                    border-radius:50%;
-                    &:hover{
-                        transition:.5s ease-out;
-                        tranform:scale(2.5);
-                    }
+                    margin:25% auto;
+                    transform:translateY(20px);
+                }
+                .detailBtn{
+                    width:50%;
+                    text-align:center;
+                    margin:0 auto;
+                    transform:translateY(-10px);
                 }
             }
         }
     }
 
-  
 `;
-
-
-
 
 export default class Tea extends React.Component {
     constructor() {
@@ -140,8 +134,13 @@ export default class Tea extends React.Component {
     }
 
 
-    clickContact = () => {
-        message.success('SUCCESS');
+    seeDetail = (e) => {
+        let tea = this.state.teaArr[e.target.value];
+        let toDetail = {
+            pathname: '/simplecv',
+            state: tea
+        }
+        this.props.history.push(toDetail);
     }
 
 
@@ -149,6 +148,7 @@ export default class Tea extends React.Component {
         const { teaArr, btnSize } = this.state;
         return teaArr.map((item, i) => {
             const { head, address, name, phone, age, price, sex, suject } = item;
+            // console.log(item);
             const imgBoxWidth = 262;
             const imgBoxHeight = 290;
             const left = imgBoxWidth * (i % 4) * 1.17;
@@ -170,9 +170,11 @@ export default class Tea extends React.Component {
                         className="boxItemContent"
                     >
                         <div className="detailBox">
-                            <p>{address.address}</p>
-                            <div className="phoneCall">
-                                <Icon type="phone" onClick={this.clickContact} />
+                            <div className="callBtn">
+                                <Button type="primary">SELECT</Button>
+                            </div>
+                            <div className="detailBtn">
+                                <Button type="primary" value={i} onClick={this.seeDetail}>SEE DETAILS</Button>
                             </div>
                         </div>
                     </TweenOneGroup>
@@ -190,10 +192,18 @@ export default class Tea extends React.Component {
 
         return (
             <Wrapper>
-                <div className="boxContainer">
-                    <QueueAnim delay={400}>
-                        {this.getDiv()}
-                    </QueueAnim>
+                <div className="teaTitle">
+
+                </div>
+                <div className="boxContainer clearfix">
+                    <div className="teaLeft fl clearfix">
+                        <QueueAnim delay={400}>
+                            {this.getDiv()}
+                        </QueueAnim>
+                    </div>
+                    <div className="teaRight fr">
+
+                    </div>
                 </div>
             </Wrapper>
         );

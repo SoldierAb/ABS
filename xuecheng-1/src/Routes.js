@@ -10,14 +10,14 @@ import Loading from './components/loading/Loading.jsx';
 import Personal from './personal/views/Personal.jsx';
 import Login from './login/views/Login.jsx';
 import Home from './home/views/Home.jsx';
-// import Course from './course/views/Course.jsx';
 import Menu from './menu/Menu.jsx';
 import Regist from './regist/views/Regist.jsx';
 import About from './about/views/About.jsx';
 import Teacher from './teacher/views/Tea.jsx';
-import Course from './teacher/views/Teacher.jsx';
+import Course from './course/views/Course.jsx';
 import Order from './order/views/Order.jsx';
 import Contact from './contact/views/Contact.jsx';
+import Simplecv from './components/simplecv/Simplecv.jsx';
 import './transition.css';
 
 injectGlobal`
@@ -116,6 +116,7 @@ const Routes = () => (
                 <Route path="/contact" component={Contact} />
                 <Route path="/teacher" component={Teacher} />
                 <Route path="/personal" component={Personal} />
+                <Route path="/simplecv" component={Simplecv} />
             </div>
             <div>
                 <Loading />
