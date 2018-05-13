@@ -1,4 +1,4 @@
-import {message} from 'antd';
+import { message } from 'antd';
 import * as LoadingTypes from '../components/loading/ActionTypes';
 
 const isPromise = (obj) => {
@@ -15,20 +15,21 @@ const promiseMiddleware = ({ dispatch }) => {
         const [PENDING, DONE, FAIL] = types;
 
         dispatch({ type: PENDING, ...rest });
-        dispatch({ type: LoadingTypes.LOADING_SHOW});
+        dispatch({ type: LoadingTypes.LOADING_SHOW });
         return promise.then(
             (res) => {
-                dispatch({ type: LoadingTypes.LOADING_HIDE})
+                dispatch({ type: LoadingTypes.LOADING_HIDE })
                 if (res.code === 200) {
-                    message.info(res.msg,2);
-                   return dispatch({ type: DONE, res, ...rest });
+                    console.log('promise res: ', res);
+                    message.info(res.msg, 2);
+                    return dispatch({ type: DONE, res, ...rest });
                 } else {
-                    message.warning(res.msg,2);
+                    message.warning(res.msg, 2);
                     return dispatch({ type: FAIL, res, ...rest });
                 }
             },
-            (err) =>{
-                dispatch({ type: LoadingTypes.LOADING_HIDE})
+            (err) => {
+                dispatch({ type: LoadingTypes.LOADING_HIDE })
                 message.error(err);
                 return dispatch({ type: FAIL, err, ...rest })
             }

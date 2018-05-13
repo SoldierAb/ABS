@@ -4,9 +4,7 @@ import * as LoginStatusTypes from '../Status';
 import * as Actions from '../Actions';
 import { Button, Avatar, Menu, Dropdown } from 'antd';
 import Toast from '../../components/toast/Toast.jsx';
-import {Link} from 'react-router-dom';
-
-
+import { Link } from 'react-router-dom';
 
 const mapState = (state) => {
     return {
@@ -21,8 +19,6 @@ const mapDispatch = (dispatch) => {
         signOut: () => dispatch(Actions.signOut())
     }
 }
-
-
 
 class LoginCheck extends React.Component {
     constructor(props) {
@@ -64,6 +60,5 @@ class LoginCheck extends React.Component {
         }
     }
 }
-
 
 export default connect(mapState, mapDispatch)(LoginCheck);

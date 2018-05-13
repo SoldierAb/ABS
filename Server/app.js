@@ -18,6 +18,8 @@ var loginCheck = require('./routes/logincheck');
 var regist = require('./routes/register');
 var modify = require('./routes/modify');
 var orderadd = require('./routes/orderAdd');
+var orderall = require('./routes/getOrders');
+app.use('/', orderall);
 app.use('/', orderadd);
 app.use('/', modify);
 app.use('/', regist);

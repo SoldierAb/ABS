@@ -20,24 +20,23 @@ router.get('/getOrders', function (req, res, next) {
         }
 
         if (result.length < 1) {
-            _response = { status: 404, data: '暂无相关数据' }
+            _response = { status: 404, data: '暂无相关数据' };
         } else {
+            console.log('order res: ', result);
             for (var i = 0; i < result.length; i++) {
                 var order = new Order();
-                order.orderNo = result[i].orderNo;
-                order.orderGrade = result[i].orderGrade;
-                order.orderSex = result[i].orderSex;
-                order.orderNeedSex = result[i].orderNeedSex;
-                order.orderSubject = result[i].orderSubject;
-                order.orderDetail = result[i].orderDetail;
-                order.orderTimes = result[i].orderTimes;
-                order.orderTeachTime = result[i].orderTeachTime;
+                order.phone = result[i].phone;
+                order.order_no = result[i].order_no;
+                order.order_price = result[i].order_price;
+                order.order_address = result[i].order_address;
+                order.order_need_sex = result[i].order_need_sex;
+                order.order_subject = result[i].order_subject;
+                order.order_time = result[i].order_time;
+                order.order_detail = result[i].order_detail;
                 _arr.push(order);
             }
-
-            _response = { status: 200, data: _arr };
+            _response = { code: 200, data: _arr, msg: 'get orders success' };
         }
-
         res.send(JSON.stringify(_response));
 
     });
