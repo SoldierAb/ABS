@@ -22,10 +22,7 @@ export const getOrders = () => {
     return {
         promise: fetch(api).then((res) => {
             if (res.status !== 200) throw new Error('订单数据请求获取出错', res);
-            return res.json().then((resJson) => {
-                console.log('res orders: ', resJson);
-                return resJson;
-            });
+            return res.json().then(resJson => resJson);
         }),
         types: [ActionTypes.GET_START, ActionTypes.GET_SUCCESS, ActionTypes.GET_FAIL]
     }

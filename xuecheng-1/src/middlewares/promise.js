@@ -20,8 +20,7 @@ const promiseMiddleware = ({ dispatch }) => {
             (res) => {
                 dispatch({ type: LoadingTypes.LOADING_HIDE })
                 if (res.code === 200) {
-                    console.log('promise res: ', res);
-                    message.info(res.msg, 2);
+                    if (res.msg !== 'get orders success') message.info(res.msg, 2);
                     return dispatch({ type: DONE, res, ...rest });
                 } else {
                     message.warning(res.msg, 2);

@@ -134,7 +134,7 @@ export default class Tea extends React.Component {
     }
 
 
-    seeDetail = (e) => {
+    seeDetail = (e) => {                     //查看教师详情数据
         let tea = this.state.teaArr[e.target.value];
         let toDetail = {
             pathname: '/simplecv',
@@ -144,7 +144,7 @@ export default class Tea extends React.Component {
     }
 
 
-    getDiv = () => {
+    getDiv = () => {                         //列表数据渲染
         const { teaArr, btnSize } = this.state;
         return teaArr.map((item, i) => {
             const { head, address, name, phone, age, price, sex, suject } = item;
@@ -188,7 +188,7 @@ export default class Tea extends React.Component {
     render() {
         const { loaded } = this.state;
 
-        if (!loaded) return <div></div>
+        if (!loaded) return <div>加载中。。。</div>
 
         return (
             <Wrapper>
