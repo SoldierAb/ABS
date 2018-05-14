@@ -67,7 +67,7 @@ class NormalLoginForm extends React.Component {
     }
 
     render() {
-        const
+        const { current_user } = this.state;
         const { getFieldDecorator } = this.props.form;
         const isLogin = this.props.loginStatus === LoginStatusTypes.SUCCESS ? true : false;
         const { currentUser } = this.props;
@@ -80,6 +80,7 @@ class NormalLoginForm extends React.Component {
                     <FormItem>
                         {getFieldDecorator('userphone', {
                             rules: [{ required: true, message: '请输入手机号!' }],
+                            initialValue: current_user ? current_user.userphone : ''
                         })(
                             <Input prefix={<Icon type="phone" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Phone" />
                             )}
@@ -87,13 +88,15 @@ class NormalLoginForm extends React.Component {
                     <FormItem>
                         {getFieldDecorator('userpwd', {
                             rules: [{ required: true, message: '请输入密码!' }],
+                            initialValue: current_user ? current_user.userpwd : ''
                         })(
                             <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" />
                             )}
                     </FormItem>
                     <FormItem>
                         {getFieldDecorator('usertype', {
-                            rules: [{ required: true, message: '请选择账户类型!' }]
+                            rules: [{ required: true, message: '请选择账户类型!' }],
+                            initialValue: current_user ? current_user.usertype : ''
                         })(
                             <RadioGroup>
                                 <Radio style={colorWhite} value={1}>用户</Radio>
