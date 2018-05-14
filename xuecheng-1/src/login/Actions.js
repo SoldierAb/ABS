@@ -1,4 +1,5 @@
 import * as ActionTypes from './ActionTypes';
+import { locale } from 'moment';
 
 export const signIn = (obj) => {
 
@@ -10,8 +11,15 @@ export const signIn = (obj) => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(obj)
         }).then((res) => {
-            if (res.status !== 200) throw new Error('错误 ' + res);
-            return res.json().then((resJson) => resJson)
+            if (res.status !== 200) {
+                throw new Error('错误 ' + res);
+            } else {
+                return res.json().then((resJson) => {
+                    console.log('当前用户：   ', resJson);
+                    if (obj.remember) localStorage.setItem(`current_user`, JSON.stringify(obj));
+                    return resJson;
+                })
+            }
         }),
 
         types: [ActionTypes.LOGIN_START, ActionTypes.LOGIN_SUCCESS, ActionTypes.LOGIN_FAIL]

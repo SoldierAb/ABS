@@ -29,6 +29,8 @@ class LoginCheck extends React.Component {
         }
     }
 
+
+
     render() {
         const { loginStatus, currentUser, msg, signOut } = this.props;
         const { size, head } = this.state;

@@ -36,6 +36,7 @@ class NormalLoginForm extends React.Component {
 
     constructor(props) {
         super(props);
+        this.state = { current_user: {} };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -43,16 +44,17 @@ class NormalLoginForm extends React.Component {
         e.preventDefault();
         const _this = this;
         this.props.form.validateFields((err, values) => {
-            if (!err) {
-                console.log('表单数据 ', values);
-                _this.props.clickSignIn(values);
-            }
+            if (!err) _this.props.clickSignIn(values);
         });
     }
 
-    handleRegist(ev) {
-        ev.preventDefault();
-        this.props.history.push('/course');
+
+    componentDidMount() {
+        const current_user = JSON.parse(localStorage.getItem('current_user'));
+        console.log('local:  ', current_user);
+        this.setState({
+            current_user
+        });
     }
 
     componentDidUpdate() {
@@ -65,6 +67,7 @@ class NormalLoginForm extends React.Component {
     }
 
     render() {
+        const
         const { getFieldDecorator } = this.props.form;
         const isLogin = this.props.loginStatus === LoginStatusTypes.SUCCESS ? true : false;
         const { currentUser } = this.props;
