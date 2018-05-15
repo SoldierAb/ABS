@@ -9,9 +9,22 @@ router.get('/getOrders', function (req, res, next) {
     console.log('--------------------------getOrders----START------------------------');
     var _response = {},
         _size = req.query.pageSize,
-        _page = (req.query.currentPage - 1) * _size,
+        _curPage = req.query.currentPage,
+        _pageDrop = (_curPage - 1) * _size,
         _arr = [],
-        _sql = "SELECT * FROM orders limit " + _page + "," + _size + "";
+        _sql = "SELECT * FROM orders limit " + _pageDrop + "," + _size + "",
+        _countSql = 'SELECT count(order_no) FROM orders',
+        _total = 0;
+    connection.query(_countSql, function (err, result) {
+        if (err) {
+            console.log('[SELECT ERROR] - ', err.message);
+            res.send(JSON.stringify({ status: 202, data: '服务器错误' }));
+            return;
+        }
+        _total = result[0]['count(order_no)'];
+        console.log('总条数： ', _total);
+
+    });
     connection.query(_sql, function (err, result) {
         if (err) {
             console.log('[SELECT ERROR] - ', err.message);
@@ -35,7 +48,7 @@ router.get('/getOrders', function (req, res, next) {
                 order.order_state = result[i].order_state;
                 _arr.push(order);
             }
-            _response = { code: 200, data: _arr, msg: 'get orders success' };
+            _response = { code: 200, data: _arr, total: _total, currentPage: _curPage, pageSize: _size, msg: 'get orders success' };
         }
         res.send(JSON.stringify(_response));
 

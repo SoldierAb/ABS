@@ -84,6 +84,7 @@ class Order extends React.Component {
     }
     return orders.map((item, index) => {
       const { phone, order_no, order_price, order_address, order_need_sex, order_subject, order_time, order_detail, order_state } = item;
+      console.log(item);
       return (
         <div
           key={item + index}
@@ -120,6 +121,16 @@ class Order extends React.Component {
                 <span key={item + i} style={{ marginRight: "10px" }}>{item}</span>
               )}
             </div>
+          </div>
+          <div className="orderContent">
+            <div className="">
+              <span>地址：</span>
+              <span>{order_address.city[0]}</span>
+              <span>{order_address.city[1]}</span>
+              <span>{order_address.city[2]}</span>
+              <span>{order_address.address}</span>
+            </div>
+
           </div>
           <div className="orderContent clearfix">
             <div className="fl">
