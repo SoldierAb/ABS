@@ -5,7 +5,7 @@ import * as Actions from '../Actions';
 import * as Status from '../../Status';
 import QueueAnim from 'rc-queue-anim';
 import * as DateUtil from '../../utils/DateUtil';
-import { Button, message, Modal } from 'antd';
+import { Button, message, Modal, Pagination } from 'antd';
 const confirm = Modal.confirm;
 
 const Wrapper = styled.div`
@@ -42,6 +42,17 @@ const Wrapper = styled.div`
 
 class Order extends React.Component {
 
+  switchPage = (current) => {
+    console.log('当前页', current);
+    this.props.getOrders(current, 10);
+  }
+
+  /**
+   * 
+   * 点击申请接单
+   * @param {any} e 
+   * @returns 
+   */
   clickContact = (e) => {
     const _this = this;
     if (!this.props.currentUser) {
@@ -71,7 +82,7 @@ class Order extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getOrders(1, 5);
+    this.props.getOrders(1, 10);
   }
 
   getOrderTem = () => {
@@ -125,9 +136,10 @@ class Order extends React.Component {
           <div className="orderContent">
             <div className="">
               <span>地址：</span>
-              <span>{order_address.city[0]}</span>
-              <span>{order_address.city[1]}</span>
-              <span>{order_address.city[2]}</span>
+              <span>{order_address.city[0]}省</span>
+              <span>{order_address.city[1]}市</span>
+              <span>{order_address.city[2]}区</span>
+              <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
               <span>{order_address.address}</span>
             </div>
 
@@ -138,7 +150,7 @@ class Order extends React.Component {
               <span>{order_detail}</span>
             </div>
             <div className="fr">
-              <Button type="primary" onClick={this.clickContact} data-order-no={order_no} data-phone={phone}>点击申请</Button>
+              <Button type="primary" onClick={this.clickContact} data-order-no={order_no} data-phone={phone}>查看详情</Button>
             </div>
           </div>
         </div >
@@ -147,11 +159,12 @@ class Order extends React.Component {
   }
 
   render() {
-    const { getOrderStatus, orders, msg } = this.props;
+    const { getOrderStatus, orders, total, pageSize, currentPage, msg } = this.props;
     switch (getOrderStatus) {
       case Status.LOADING:
         return <Wrapper></Wrapper>;
       case Status.SUCCESS:
+        console.log('page: --->    ', total);
         return (
           <Wrapper>
             <div className="clearfix">
@@ -163,6 +176,9 @@ class Order extends React.Component {
               <div className="orderContainerRight fr">
 
               </div>
+            </div>
+            <div className="orderBottom">
+              <Pagination showQuickJumper defaultCurrent={parseInt(currentPage)} total={total} onChange={this.switchPage} />,
             </div>
           </Wrapper>
         );
@@ -179,7 +195,10 @@ const mapState = (state) => {
     getOrderStatus: state.order.status,
     orders: state.order.data,
     msg: state.order.msg,
-    currentUser: state.login.data
+    currentUser: state.login.data,
+    total: state.order.total,
+    pageSize: state.order.pageSize,
+    currentPage: state.order.currentPage
   }
 }
 

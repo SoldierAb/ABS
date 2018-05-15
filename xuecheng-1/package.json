@@ -22,6 +22,7 @@
     "rc-queue-anim": "^1.4.1",
     "rc-tween-one": "^1.7.3",
     "react-addons-css-transition-group": "^15.6.2",
+    "react-bmap": "^1.0.71",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
     "react-router-redux": "^4.0.8",

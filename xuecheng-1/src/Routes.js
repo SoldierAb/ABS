@@ -18,6 +18,7 @@ import Course from './course/views/Course.jsx';
 import Order from './order/views/Order.jsx';
 import Contact from './contact/views/Contact.jsx';
 import Simplecv from './components/simplecv/Simplecv.jsx';
+import Edumap from './components/edumap/Edumap.jsx';
 import './transition.css';
 
 injectGlobal`
@@ -117,6 +118,7 @@ const Routes = () => (
                 <Route path="/teacher" component={Teacher} />
                 <Route path="/personal" component={Personal} />
                 <Route path="/simplecv" component={Simplecv} />
+                <Route path="/edumap" component={Edumap} />
             </div>
             <div>
                 <Loading />
