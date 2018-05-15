@@ -17,8 +17,8 @@ export const addOrder = (obj) => {
     }
 }
 
-export const getOrders = () => {
-    const api = `/getOrders`;
+export const getOrders = (currentPage, pageSize) => {
+    const api = `/getOrders?currentPage=${currentPage}&&pageSize=${pageSize}`;
     return {
         promise: fetch(api).then((res) => {
             if (res.status !== 200) throw new Error('订单数据请求获取出错', res);
@@ -26,4 +26,8 @@ export const getOrders = () => {
         }),
         types: [ActionTypes.GET_START, ActionTypes.GET_SUCCESS, ActionTypes.GET_FAIL]
     }
+}
+
+export const contactOrder = (order_no, phone) => {
+
 }

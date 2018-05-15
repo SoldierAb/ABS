@@ -5,7 +5,8 @@ import * as Actions from '../Actions';
 import * as Status from '../../Status';
 import QueueAnim from 'rc-queue-anim';
 import * as DateUtil from '../../utils/DateUtil';
-import { Button } from 'antd';
+import { Button, message, Modal } from 'antd';
+const confirm = Modal.confirm;
 
 const Wrapper = styled.div`
   padding:40px;
@@ -41,8 +42,36 @@ const Wrapper = styled.div`
 
 class Order extends React.Component {
 
+  clickContact = (e) => {
+    const _this = this;
+    if (!this.props.currentUser) {
+      confirm({
+        title: '您还未登录哦~',
+        content: '赶快登陆吧',
+        okText: '朕就答应你吧',
+        okType: 'success',
+        cancelText: '才不要~',
+        cancelType: 'danger',
+        onOk() {
+          _this.props.history.push('/login');
+        },
+        onCancel() {
+          console.log('Cancel');
+        },
+      });
+      return;
+    }
+    if (this.props.currentUser.type !== 5) {
+      message.warning('您不是教员哦！', 2);
+      return;
+    }
+    console.log('order_no: ', e.target.getAttribute('data-order-no'), '  phone  :', e.target.getAttribute('data-phone'));
+    let order_no = e.target.getAttribute('data-order-no'),
+      phone = e.target.getAttribute('data-phone');
+  }
+
   componentDidMount() {
-    this.props.getOrders();
+    this.props.getOrders(1, 5);
   }
 
   getOrderTem = () => {
@@ -54,7 +83,7 @@ class Order extends React.Component {
       orders[i].order_time = typeof orders[i].order_time === 'string' ? JSON.parse(orders[i].order_time) : orders[i].order_time;
     }
     return orders.map((item, index) => {
-      const { phone, order_no, order_price, order_address, order_need_sex, order_subject, order_time, order_detail } = item;
+      const { phone, order_no, order_price, order_address, order_need_sex, order_subject, order_time, order_detail, order_state } = item;
       return (
         <div
           key={item + index}
@@ -69,7 +98,7 @@ class Order extends React.Component {
               <span>发布时间：</span>
               <span>{DateUtil.toDate(order_no)}</span>
               <span>订单状态：</span>
-              <span>---</span>
+              {order_state == 1 ? <span style={{ color: 'green' }}>待接单</span> : <span style={{ color: 'yellow' }}>已接单</span>}
             </div>
           </div>
           <div className="orderContent">
@@ -83,7 +112,6 @@ class Order extends React.Component {
                 <span>{order_need_sex === 1 ? '男' : '女'}</span>
               </div>
             </div>
-
           </div>
           <div className="orderContent">
             <div className="">
@@ -99,7 +127,7 @@ class Order extends React.Component {
               <span>{order_detail}</span>
             </div>
             <div className="fr">
-              <Button type="primary">点击申请</Button>
+              <Button type="primary" onClick={this.clickContact} data-order-no={order_no} data-phone={phone}>点击申请</Button>
             </div>
           </div>
         </div >
@@ -139,13 +167,14 @@ const mapState = (state) => {
   return {
     getOrderStatus: state.order.status,
     orders: state.order.data,
-    msg: state.order.msg
+    msg: state.order.msg,
+    currentUser: state.login.data
   }
 }
 
 const mapDispatch = (dispatch) => {
   return {
-    getOrders: () => dispatch(Actions.getOrders())
+    getOrders: (currentPage, pageSize) => dispatch(Actions.getOrders(currentPage, pageSize))
   }
 }
 

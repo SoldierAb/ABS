@@ -9,8 +9,8 @@ router.post('/orderadd', (req, res) => {
         _response = {},
         _addSql = '',
         _addParams = [],
-        orderarr = ['phone', 'order_no', 'order_price', 'order_address', 'order_need_sex', 'order_subject', 'order_time', 'order_detail'],
-        _addSql = "INSERT INTO " + _table + "(phone, order_no, order_price,order_address, order_need_sex, order_subject,order_time, order_detail) VALUES(?,?,?,?,?,?,?,?)";
+        orderarr = ['phone', 'order_no', 'order_price', 'order_address', 'order_need_sex', 'order_subject', 'order_time', 'order_detail', 'order_state'],
+        _addSql = "INSERT INTO " + _table + "(phone, order_no, order_price,order_address, order_need_sex, order_subject,order_time, order_detail, order_state) VALUES(?,?,?,?,?,?,?,?,?)";
 
     orderarr.forEach(function (item, index) {
         _addParams[index] = req.body[item] || '';

@@ -34,6 +34,7 @@ class OrderForm extends Component {
                 values.order_time = JSON.stringify(values.order_time);
                 values.order_subject = JSON.stringify(values.order_subject);
                 values.order_no = JSON.stringify(new Date().getTime());
+                values.order_state = 1;          //未处理
                 console.log('order add : ', values);
                 this.props.addOrder(values);
             }
@@ -124,7 +125,7 @@ class OrderForm extends Component {
                 >
                     {getFieldDecorator('phone', {
                         rules: [{ required: true, message: 'Please input your phone number!' }],
-                        initialValue:data.phone
+                        initialValue: data.phone
                     })(
                         <Input style={{ width: '100%' }} />
                         )}
