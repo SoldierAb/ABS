@@ -12,8 +12,10 @@
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
   <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
   <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=gj25M6ti5q5gdVSWtwIiv8PGTZGSQmMz"></script>
+  <!-- <script type="text/javascript" src="[https://api.map.baidu.com/api?type=subway https://api.map.baidu.com/api?type=subway]&v=1.0&ak=gj25M6ti5q5gdVSWtwIiv8PGTZGSQmMz"></script> -->
   <script>
-    window.BMap = BMap
+    window.BMap = BMap;
+    // window.BMapSub = BMapSub;
   </script>
   <!--
       Notice the use of %PUBLIC_URL% in the tags above.
@@ -28,6 +30,17 @@
   <style type="text/css">
     #root {
       min-width: 1290px;
+    }
+
+    .sel_n .sel_body_name {
+      height: auto!important;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      margin: 0 20px 0 30px;
+      padding: 8px 7px 7px;
+      font-size: 14px;
+      color: #FA8722;
     }
   </style>
 </head>

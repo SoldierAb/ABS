@@ -19,6 +19,8 @@ import Order from './order/views/Order.jsx';
 import Contact from './contact/views/Contact.jsx';
 import Simplecv from './components/simplecv/Simplecv.jsx';
 import Edumap from './components/edumap/Edumap.jsx';
+// import Subway from './components/edumap/Subway.jsx';
+import Detail from './order/views/Detail.jsx';
 import './transition.css';
 
 injectGlobal`
@@ -119,6 +121,8 @@ const Routes = () => (
                 <Route path="/personal" component={Personal} />
                 <Route path="/simplecv" component={Simplecv} />
                 <Route path="/edumap" component={Edumap} />
+                {/* <Route path="/subway" component={Subway} /> */}
+                <Route path="/detail" component={Detail} />
             </div>
             <div>
                 <Loading />

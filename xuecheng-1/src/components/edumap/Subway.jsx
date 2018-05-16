@@ -39,48 +39,31 @@ const Wrapper = styled.div`
    }
 `;
 
-export default class Edumap extends React.Component {
+export default class Subway extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       address: '福建省福州市仓山区上下店路15号',
       start_address: '福建工程学院鳝溪校区',
       map: {},
-      BMap: window.BMap,
+      BMapSub: window.BMapSub,
       resBox: {}
     }
   }
 
   componentDidMount() {
-    let resBox = document.getElementById('results');
-    this.setState({ resBox })
-    let { address } = this.state,
-      BMap = window.BMap,
-      str = `<div>${address}</div>`,
-      map = new BMap.Map("mapbox");             // 创建地图实例
-    this.setState({ map });
-    map.centerAndZoom("福州", 12);               //初始化默认福州
-    map.enableScrollWheelZoom();                //启用滚轮放大缩小
-    map.addControl(new BMap.NavigationControl());  //添加默认缩放平移控件
-    map.addControl(new BMap.OverviewMapControl()); //添加默认缩略地图控件
-    map.addControl(new BMap.OverviewMapControl({ isOpen: true, anchor: BMap.BMAP_ANCHOR_BOTTOM_RIGHT }));   //右下角，打开  
-
-    //构建查询
-    let localSearch = new BMap.LocalSearch(map);
-    localSearch.enableAutoViewport();       //允许自动调节窗口
-    map.clearOverlays();                   //清空原来的标注
-    localSearch.setSearchCompleteCallback((res) => {
-      let position = res.getPoi(0);        //获取结果
-      let longitude = position.point.lng,      //纬度
-        latitude = position.point.lat;       //纬度
-      map.centerAndZoom(position.point, 15);    //地图设置中心点
-      //创建标注
-      let marker = new BMap.Marker(new BMap.Point(longitude, latitude));
-      map.addOverlay(marker);  //向地图中添加标注
-      // let info = new BMap.InfoWindow(str);
-      // marker.openInfoWindow(info);         //标注提示信息默认展示
-    })
-    localSearch.search(address);
+    let subwayCityName = '北京',
+      list = window.BMapSub.SubwayCitiesList;
+    let subwaycity = null;
+    for (let i = 0; i < list.length; i++) {
+      if (list[i].name === subwayCityName) {
+        subwaycity = list[i];
+        break;
+      }
+    }
+    // 获取北京地铁数据-初始化地铁图
+    let subway = new window.BMapSub.Subway('mapbox', subwaycity.citycode);
+    subway.setZoom(0.5);
 
   }
 

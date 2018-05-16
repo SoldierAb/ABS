@@ -76,9 +76,15 @@ class Order extends React.Component {
       message.warning('您不是教员哦！', 2);
       return;
     }
-    console.log('order_no: ', e.target.getAttribute('data-order-no'), '  phone  :', e.target.getAttribute('data-phone'));
-    let order_no = e.target.getAttribute('data-order-no'),
-      phone = e.target.getAttribute('data-phone');
+    console.log('order index: ', e.target.value);
+    let index = e.target.value, { orders, currentUser } = this.props;
+    let detail = { order: orders[index], currentUser: currentUser };
+    console.log('order item:  ', detail);
+    let path = {
+      pathname: '/detail',
+      state: detail
+    }
+    this.props.history.push(path);
   }
 
   componentDidMount() {
@@ -95,7 +101,6 @@ class Order extends React.Component {
     }
     return orders.map((item, index) => {
       const { phone, order_no, order_price, order_address, order_need_sex, order_subject, order_time, order_detail, order_state } = item;
-      console.log(item);
       return (
         <div
           key={item + index}
@@ -150,7 +155,7 @@ class Order extends React.Component {
               <span>{order_detail}</span>
             </div>
             <div className="fr">
-              <Button type="primary" onClick={this.clickContact} data-order-no={order_no} data-phone={phone}>查看详情</Button>
+              <Button type="primary" onClick={this.clickContact} value={index}>查看详情</Button>
             </div>
           </div>
         </div >

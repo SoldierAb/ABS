@@ -136,11 +136,11 @@ export default class Tea extends React.Component {
 
     seeDetail = (e) => {                     //查看教师详情数据
         let tea = this.state.teaArr[e.target.value];
-        let toDetail = {
+        let toSimplecv = {
             pathname: '/simplecv',
             state: tea
         }
-        this.props.history.push(toDetail);
+        this.props.history.push(toSimplecv);
     }
 
 
