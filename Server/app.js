@@ -20,7 +20,8 @@ var modify = require('./routes/modify');
 var orderadd = require('./routes/orderAdd');
 var orderall = require('./routes/getOrders');
 var getPerorders = require('./routes/getPerorders');
-
+var uporders = require('./routes/updateOrder');
+app.use('/', uporders);
 app.use('/', getPerorders);
 app.use('/', orderall);
 app.use('/', orderadd);

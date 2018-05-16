@@ -57,3 +57,31 @@ tea:{
     }
 ]
 
+
+order_address
+    // :
+    // "{"city":["zhejiang","hangzhou","xihu"],"address":"街道1010"}"
+    // order_detail
+    // :
+    // "基础不好1010"
+    // order_need_sex
+    // :
+    // 3
+    // order_no
+    // :
+    // "1526385828735"
+    // order_price
+    // :
+    // 80
+    // order_state
+    // :
+    // 1
+    // order_subject
+    // :
+    // "["数学","高数","英语"]"
+    // order_time
+    // :
+    // "["周一晚上","周二上午"]"
+    // phone
+    // :
+    // "13003896629"
