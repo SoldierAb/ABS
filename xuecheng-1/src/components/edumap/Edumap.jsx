@@ -33,7 +33,7 @@ const Wrapper = styled.div`
    .resBox{
      position:absolute;
      left:0;
-     top:0;
+     top:200px;
      height:auto;
      width:300px;
    }
@@ -43,22 +43,17 @@ export default class Edumap extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      address: '福建省福州市仓山区上下店路15号',
-      start_address: '福建工程学院鳝溪校区',
-      map: {},
+      end: props.location.state.end,
+      start: props.location.state.start,
+      type: props.location.state.type,
       BMap: window.BMap,
-      resBox: {}
     }
   }
 
   componentDidMount() {
-    let resBox = document.getElementById('results');
-    this.setState({ resBox })
-    let { address } = this.state,
-      BMap = window.BMap,
-      str = `<div>${address}</div>`,
+    let { start, end, type, BMap } = this.state,
       map = new BMap.Map("mapbox");             // 创建地图实例
-    this.setState({ map });
+    console.log('edumap state:  ', this.state);
     map.centerAndZoom("福州", 12);               //初始化默认福州
     map.enableScrollWheelZoom();                //启用滚轮放大缩小
     map.addControl(new BMap.NavigationControl());  //添加默认缩放平移控件
@@ -80,40 +75,49 @@ export default class Edumap extends React.Component {
       // let info = new BMap.InfoWindow(str);
       // marker.openInfoWindow(info);         //标注提示信息默认展示
     })
-    localSearch.search(address);
+    localSearch.search(end);
 
+    switch (type) {
+      case 'drive':
+        console.log(type);
+        // let driving = new BMap.DrivingRoute(map, {
+        //   renderOptions: {
+        //     map: map,
+        //     panel: "results",
+        //     autoViewport: true
+        //   }
+        // });
+        // driving.search(start, end);
+        break;
+      case 'bus':
+        console.log(type);
+
+        let transit = new BMap.TransitRoute(map, {
+          renderOptions: { map: map, panel: "results" }
+        });
+        transit.search(start, end);
+        break;
+    }
   }
 
   getDrive = () => {
-    let { start_address, address, BMap, resBox } = this.state,
-      map = new BMap.Map("mapbox");             // 创建地图实例
-    map.centerAndZoom("福州", 12);               //初始化默认福州
-    map.enableScrollWheelZoom();                //启用滚轮放大缩小
-    map.addControl(new BMap.NavigationControl());  //添加默认缩放平移控件
-    map.addControl(new BMap.OverviewMapControl()); //添加默认缩略地图控件
-    map.addControl(new BMap.OverviewMapControl({ isOpen: true, anchor: BMap.BMAP_ANCHOR_BOTTOM_RIGHT }));   //右下角，打开  
-    let driving = new BMap.DrivingRoute(map, {
-      renderOptions: {
-        map: map,
-        panel: "results",
-        autoViewport: true
-      }
-    });
-    driving.search(start_address, address);
+    // let { start, end, BMap, resBox } = this.state;
+    // let driving = new BMap.DrivingRoute(map, {
+    //   renderOptions: {
+    //     map: map,
+    //     panel: "results",
+    //     autoViewport: true
+    //   }
+    // });
+    // driving.search(start, end);
   }
 
   getBus = () => {
-    let { start_address, address, BMap, resBox } = this.state,
-      map = new BMap.Map("mapbox");             // 创建地图实例
-    map.centerAndZoom("福州", 12);               //初始化默认福州
-    map.enableScrollWheelZoom();                //启用滚轮放大缩小
-    map.addControl(new BMap.NavigationControl());  //添加默认缩放平移控件
-    map.addControl(new BMap.OverviewMapControl()); //添加默认缩略地图控件
-    map.addControl(new BMap.OverviewMapControl({ isOpen: true, anchor: BMap.BMAP_ANCHOR_BOTTOM_RIGHT }));   //右下角，打开  
-    let transit = new BMap.TransitRoute(map, {
-      renderOptions: { map: map, panel: "results" }
-    });
-    transit.search(start_address, address);
+    // let { start, end, BMap, resBox } = this.state;
+    // let transit = new BMap.TransitRoute(map, {
+    //   renderOptions: { map: map, panel: "results" }
+    // });
+    // transit.search(start, end);
   }
 
   render() {
@@ -123,15 +127,6 @@ export default class Edumap extends React.Component {
           <div id="mapbox" className="mapBox"></div>
         </div>
         <div className="btnBox">
-          <span>
-
-          </span>
-          <span>
-            <Button type="primary" onClick={this.getDrive} value={this.state.start_address}>驾车路线</Button>
-          </span>
-          <span>
-            <Button type="primary" onClick={this.getBus} value={this.state.start_address}>公交路线</Button>
-          </span>
         </div>
         <div id="results" className="resBox"></div>
       </Wrapper>

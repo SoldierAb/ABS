@@ -141,9 +141,9 @@ class Order extends React.Component {
           <div className="orderContent">
             <div className="">
               <span>地址：</span>
-              <span>{order_address.city[0]}省</span>
-              <span>{order_address.city[1]}市</span>
-              <span>{order_address.city[2]}区</span>
+              <span>{order_address.city[0]}</span>
+              <span>{order_address.city[1]}</span>
+              <span>{order_address.city[2]}</span>
               <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
               <span>{order_address.address}</span>
             </div>

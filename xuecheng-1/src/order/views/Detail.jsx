@@ -109,7 +109,7 @@ class Detail extends React.Component {
         <div className="detailMap">
           <QueueAnim delay={330}>
             <div key={Math.random()}>
-              <Minmap address={address} />
+              <Minmap address={address} history={this.props.history} />
             </div>
           </QueueAnim>
         </div>

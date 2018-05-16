@@ -18,8 +18,10 @@ import Course from './course/views/Course.jsx';
 import Order from './order/views/Order.jsx';
 import Contact from './contact/views/Contact.jsx';
 import Simplecv from './components/simplecv/Simplecv.jsx';
-import Edumap from './components/edumap/Edumap.jsx';
+// import Edumap from './components/edumap/Edumap.jsx';
 // import Subway from './components/edumap/Subway.jsx';
+import Busmap from './components/edumap/Busmap.jsx';
+import Drivemap from './components/edumap/Drivemap.jsx';
 import Detail from './order/views/Detail.jsx';
 import './transition.css';
 
@@ -120,8 +122,8 @@ const Routes = () => (
                 <Route path="/teacher" component={Teacher} />
                 <Route path="/personal" component={Personal} />
                 <Route path="/simplecv" component={Simplecv} />
-                <Route path="/edumap" component={Edumap} />
-                {/* <Route path="/subway" component={Subway} /> */}
+                <Route path="/busmap" component={Busmap} />
+                <Route path="/drivemap" component={Drivemap} />
                 <Route path="/detail" component={Detail} />
             </div>
             <div>

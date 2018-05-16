@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button } from 'antd';
+import { Button, Input } from 'antd';
 
 const Wrapper = styled.div`
   position:relative;
@@ -44,10 +44,12 @@ export default class Minmap extends React.Component {
     super(props);
     this.state = {
       address: props.address,
-      start_address: '福建工程学院鳝溪校区',
+      start_address: '',
       map: {},
       BMap: window.BMap,
-      resBox: {}
+      resBox: {},
+      latlng: '',
+      history: props.history
     }
   }
 
@@ -73,6 +75,9 @@ export default class Minmap extends React.Component {
       let position = res.getPoi(0);        //获取结果
       let longitude = position.point.lng,      //纬度
         latitude = position.point.lat;       //纬度
+      this.setState({
+        latlng: `${latitude},${longitude}`
+      })
       map.centerAndZoom(position.point, 15);    //地图设置中心点
       //创建标注
       let marker = new BMap.Marker(new BMap.Point(longitude, latitude));
@@ -84,7 +89,38 @@ export default class Minmap extends React.Component {
 
   }
 
+  onChange = (e) => {
+    this.setState({
+      start_address: e.target.value
+    });
+  }
 
+  toThere = () => {
+
+    let { latlng, start_address, address } = this.state;
+    let hrefstr = `http://map.baidu.com/?latlng=${latlng}&title=目的地&content=${address}&autoOpen=true&l`;
+    window.open(hrefstr, '_blank');
+  }
+
+  getDrive = () => {
+    let { start_address, address, history } = this.state;
+    let obj = { start: start_address, end: address }
+    let path = {
+      pathname: '/drivemap',
+      state: obj
+    }
+    this.props.history.push(path);
+  }
+
+  getBus = () => {
+    let { start_address, address } = this.state;
+    let obj = { start: start_address, end: address }
+    let path = {
+      pathname: '/busmap',
+      state: obj
+    }
+    this.props.history.push(path);
+  }
 
 
   render() {
@@ -95,11 +131,17 @@ export default class Minmap extends React.Component {
         </div>
         <div className="btnBox">
           {/* <span>
+            <Input placeholder="请输入起点地址" onChange={this.onChange} />
+          </span>
+          <span>
             <Button type="primary" onClick={this.getDrive} value={this.state.start_address}>驾车路线</Button>
           </span>
           <span>
             <Button type="primary" onClick={this.getBus} value={this.state.start_address}>公交路线</Button>
           </span> */}
+          <span>
+            <Button type="primary" onClick={this.toThere}>到这里去</Button>
+          </span>
         </div>
       </Wrapper>
     );
