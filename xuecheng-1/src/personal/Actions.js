@@ -4,7 +4,7 @@ import { message } from 'antd';
 
 
 export const modifyAct = (obj) => {
-    
+
     const api = `/modify`;
 
     return {
@@ -18,10 +18,9 @@ export const modifyAct = (obj) => {
             }
 
             return res.json().then((resJson) => resJson)
-        }),   
-    
+        }),
+
         types: [ActionTypes.MODIFY_START, ActionTypes.MODIFY_SUCCESS, ActionTypes.MODIFY_FAIL]
     }
 
 }
-

@@ -102,10 +102,7 @@ class Order extends React.Component {
     return orders.map((item, index) => {
       const { phone, order_no, order_price, order_address, order_need_sex, order_subject, order_time, order_detail, order_state } = item;
       return (
-        <div
-          key={item + index}
-          className="orderBox"
-        >
+        <div key={item + index} className="orderBox">
           <div className="orderHeader clearfix">
             <div className="orderHeaderLeft fl">
               <span>订单号：</span>
@@ -122,7 +119,7 @@ class Order extends React.Component {
             <div className="clearfix">
               <div className="fl">
                 <span>订单价位：</span>
-                <span>&yen;{order_price}.00/小时</span>
+                <span style={{ color: 'orange' }}>&yen;{order_price}.00/小时</span>
               </div>
               <div className="fr">
                 <span>需要教员性别：</span>
@@ -147,7 +144,6 @@ class Order extends React.Component {
               <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
               <span>{order_address.address}</span>
             </div>
-
           </div>
           <div className="orderContent clearfix">
             <div className="fl">

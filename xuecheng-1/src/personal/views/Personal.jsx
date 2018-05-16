@@ -4,8 +4,10 @@ import { connect } from 'react-redux';
 import Pertea from './Tea/Pertea.jsx';
 import Peruser from './User/Peruser.jsx';
 import OrderAdd from '../../order/views/Addorder.jsx'
+import Perorder from './User/Perorder.jsx';
 import * as UserTypes from '../../UserTypes';
 import * as Actions from '../Actions';
+
 
 const TabPane = Tabs.TabPane;
 
@@ -24,15 +26,15 @@ const mapState = (state) => {
 }
 
 
-const Personal = ({ currentUser, modifyAct ,history }) => {
-    if (!currentUser){
+const Personal = ({ currentUser, modifyAct, history }) => {
+    if (!currentUser) {
         return null;
         history.push('/login');
     }
 
     if (currentUser.type === UserTypes.USER) {
         return (
-            <Tabs defaultActiveKey="1"  tabPosition="left">
+            <Tabs defaultActiveKey="1" tabPosition="left">
                 <TabPane tab="Personal IM" key="1">
                     <div><Peruser modifyAct={modifyAct} data={currentUser} /></div>
                 </TabPane>
@@ -42,7 +44,9 @@ const Personal = ({ currentUser, modifyAct ,history }) => {
                             <div><OrderAdd data={currentUser} /></div>
                         </TabPane>
                         <TabPane tab="My Orders" key="2-2">
-                            <div>My Orders</div>
+                            <div>
+                                <Perorder currentUser={currentUser} />
+                            </div>
                         </TabPane>
                     </Tabs>
                 </TabPane>

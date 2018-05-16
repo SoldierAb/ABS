@@ -5,6 +5,7 @@
   "proxy": "http://localhost:3099/",
   "dependencies": {
     "babel-plugin-import": "^1.6.5",
+    "qrcode.react": "^0.8.0",
     "react": "^16.2.0",
     "react-app-rewired": "^1.4.1",
     "react-dom": "^16.2.0",

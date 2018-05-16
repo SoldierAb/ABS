@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Select, Input, Cascader, Checkbox, Button, Radio, Slider, InputNumber, Row, Col } from 'antd';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
 import * as Actions from '../Actions';
 import Avatar from '../../components/upload/Upload.jsx';
 import Age from '../../components/age/Age.jsx';
@@ -13,6 +14,11 @@ const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
 const SelectOption = Select.Option;
 const { TextArea } = Input;
+
+const Wrapper = styled.div`
+    width:500px;    
+    padding:20px;
+`;
 
 const mapDispatch = (dispatch) => {
     return {
@@ -94,143 +100,115 @@ class OrderForm extends Component {
         const { getFieldDecorator } = this.props.form;
         const { age, time } = this.state;
         const { data } = this.props;
-        const formItemLayout = {
-            labelCol: {
-                xs: { span: 24 },
-                sm: { span: 8 },
-            },
-            wrapperCol: {
-                xs: { span: 24 },
-                sm: { span: 16 },
-            },
-        };
-        const tailFormItemLayout = {
-            wrapperCol: {
-                xs: {
-                    span: 24,
-                    offset: 0,
-                },
-                sm: {
-                    span: 16,
-                    offset: 8,
-                },
-            },
-        };
-
         return (
-            <Form onSubmit={this.handleSubmit} className="clearfix">
-                <FormItem
-                    {...formItemLayout}
-                    label="Phone Number"
-                >
-                    {getFieldDecorator('phone', {
-                        rules: [{ required: true, message: 'Please input your phone number!' }],
-                        initialValue: data.phone
-                    })(
-                        <Input style={{ width: '100%' }} />
-                        )}
-                </FormItem>
+            <Wrapper>
+                <Form onSubmit={this.handleSubmit} className="clearfix">
+                    <FormItem
+                        label="Phone Number"
+                    >
+                        {getFieldDecorator('phone', {
+                            rules: [{ required: true, message: 'Please input your phone number!' }],
+                            initialValue: data.phone
+                        })(
+                            <Input style={{ width: '100%' }} />
+                            )}
+                    </FormItem>
 
-                <FormItem
-                    {...formItemLayout}
-                    label="Price Per Hour"
-                >
-                    {getFieldDecorator('order_price', {
-                        rules: [{ required: true, message: 'Please check the price' }]
-                    })(
-                        <Select>
-                            {
-                                prices.map((item, index) =>
-                                    <SelectOption key={item + index} value={item}>{item}</SelectOption>
-                                )
-                            }
-                        </Select>
-                        )}
-                </FormItem>
+                    <FormItem
+                        label="Price Per Hour"
+                    >
+                        {getFieldDecorator('order_price', {
+                            rules: [{ required: true, message: 'Please check the price' }]
+                        })(
+                            <Select>
+                                {
+                                    prices.map((item, index) =>
+                                        <SelectOption key={item + index} value={item}>{item}</SelectOption>
+                                    )
+                                }
+                            </Select>
+                            )}
+                    </FormItem>
 
-                <FormItem
-                    {...formItemLayout}
-                    label="Address"
-                >
-                    {getFieldDecorator('order_address', {
-                        initialValue: {},
-                        rules: [{ required: true, message: 'Please input your address' }]
-                    })(
-                        <Address />
-                        )}
-                </FormItem>
+                    <FormItem
+                        label="Address"
+                    >
+                        {getFieldDecorator('order_address', {
+                            initialValue: {},
+                            rules: [{ required: true, message: 'Please input your address' }]
+                        })(
+                            <Address />
+                            )}
+                    </FormItem>
 
-                <FormItem
-                    {...formItemLayout}
-                    label="Need Sex"
-                    initialValue={1}
-                >
-                    {getFieldDecorator('order_need_sex', {
-                        rules: [{ required: true, message: 'Please check the sex' }]
-                    })(
-                        <RadioGroup >
-                            <Radio value={1}>Male</Radio>
-                            <Radio value={2}>Female</Radio>
-                            <Radio value={3}>No-Limit</Radio>
-                        </RadioGroup>
-                        )}
-                </FormItem>
+                    <FormItem
+                        label="Need Sex"
+                        initialValue={1}
+                    >
+                        {getFieldDecorator('order_need_sex', {
+                            rules: [{ required: true, message: 'Please check the sex' }]
+                        })(
+                            <RadioGroup >
+                                <Radio value={1}>Male</Radio>
+                                <Radio value={2}>Female</Radio>
+                                <Radio value={3}>No-Limit</Radio>
+                            </RadioGroup>
+                            )}
+                    </FormItem>
 
 
-                <FormItem
-                    {...formItemLayout}
-                    label="Order Subject"
-                >
-                    {getFieldDecorator('order_subject', {
-                        rules: [{ required: true, message: 'Please check the subject' }]
-                    })(
-                        <Select
-                            mode="multiple"
-                            style={{ width: '100%' }}
-                            placeholder="Please select"
-                        >
-                            {subjectOptions}
-                        </Select>
-                        )}
-                </FormItem>
+                    <FormItem
+                        label="Order Subject"
+                    >
+                        {getFieldDecorator('order_subject', {
+                            rules: [{ required: true, message: 'Please check the subject' }]
+                        })(
+                            <Select
+                                mode="multiple"
+                                style={{ width: '100%' }}
+                                placeholder="Please select"
+                            >
+                                {subjectOptions}
+                            </Select>
+                            )}
+                    </FormItem>
 
-                <FormItem
-                    {...formItemLayout}
-                    label="Order Time"
-                >
-                    {getFieldDecorator('order_time', {
-                        rules: [{ required: true, message: 'Please check your time' }]
-                    })(
-                        <Select
-                            mode="multiple"
-                            style={{ width: '100%' }}
-                            placeholder="Please select"
-                        >
-                            {timeOptions}
-                        </Select>
-                        )}
-                </FormItem>
-                <FormItem
-                    {...formItemLayout}
-                    label="Order Detail"
-                >
-                    {getFieldDecorator('order_detail', {
+                    <FormItem
+                        label="Order Time"
+                    >
+                        {getFieldDecorator('order_time', {
+                            rules: [{ required: true, message: 'Please check your time' }]
+                        })(
+                            <Select
+                                mode="multiple"
+                                style={{ width: '100%' }}
+                                placeholder="Please select"
+                            >
+                                {timeOptions}
+                            </Select>
+                            )}
+                    </FormItem>
+                    <FormItem
+                        label="Order Detail"
+                    >
+                        {getFieldDecorator('order_detail', {
 
-                    })(
-                        <TextArea rows={6} placeholder="words<200" />
-                        )}
-                </FormItem>
-                <FormItem {...tailFormItemLayout}>
-                    {getFieldDecorator('agreement', {
-                        valuePropName: 'checked',
-                    })(
-                        <Checkbox>I have read the <a href="">agreement</a></Checkbox>
-                        )}
-                </FormItem>
-                <FormItem {...tailFormItemLayout}>
-                    <Button type="primary" htmlType="submit">Add</Button>
-                </FormItem>
-            </Form>
+                        })(
+                            <TextArea rows={6} placeholder="words<200" />
+                            )}
+                    </FormItem>
+                    <FormItem>
+                        {getFieldDecorator('agreement', {
+                            valuePropName: 'checked',
+                        })(
+                            <Checkbox>I have read the <a href="">agreement</a></Checkbox>
+                            )}
+                    </FormItem>
+                    <FormItem >
+                        <Button type="primary" htmlType="submit">Add</Button>
+                    </FormItem>
+                </Form>
+            </Wrapper>
         );
     }
 }

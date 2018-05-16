@@ -4,7 +4,6 @@ var db = require('../utils/DButil');
 var connection = db.connect();
 var Order = require('./order');
 
-
 router.get('/getOrders', function (req, res, next) {
     console.log('--------------------------getOrders----START------------------------');
     var _response = {},

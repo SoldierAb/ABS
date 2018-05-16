@@ -27,7 +27,3 @@ export const getOrders = (currentPage, pageSize) => {
         types: [ActionTypes.GET_START, ActionTypes.GET_SUCCESS, ActionTypes.GET_FAIL]
     }
 }
-
-export const contactOrder = (order_no, phone) => {
-
-}
