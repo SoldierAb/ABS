@@ -15,6 +15,7 @@ const promiseMiddleware = ({ dispatch }) => {
         const [PENDING, DONE, FAIL] = types;
 
         dispatch({ type: PENDING, ...rest });
+        console.log('action====>  ', action);
         dispatch({ type: LoadingTypes.LOADING_SHOW });
         return promise.then(
             (res) => {

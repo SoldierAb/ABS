@@ -10,7 +10,7 @@ import Alluser from './Admin/Alluser.jsx';
 import Allteacher from './Admin/Allteacher.jsx';
 import * as UserTypes from '../../UserTypes';
 import * as Actions from '../Actions';
-
+import * as LoginStatusTypes from '../../Status';
 
 const TabPane = Tabs.TabPane;
 
@@ -24,12 +24,139 @@ const mapDispatch = (dispatch) => {
 
 const mapState = (state) => {
     return {
-        currentUser: state.login.data
+        currentUser: state.login.data,
+        loginStatus: state.login.status,
     }
 }
 
 
-const Personal = ({ currentUser, modifyAct, history }) => {
+class Personal extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            currentUser: props.currentUser,
+            timer: null,
+        };
+    }
+
+    componentDidMount() {
+        if (!this.state.timer) {
+            this.setState({
+                timer: setInterval(this.checkState, 3000)
+            });
+        }
+    }
+
+    checkState = () => {
+        const apiUrl = `/loginCheck`;
+        let { currentUser, loginStatus } = this.props;
+        if (loginStatus === LoginStatusTypes.SUCCESS) {
+            let obj = {
+                userphone: currentUser.phone,
+                userpwd: currentUser.pwd,
+                usertype: currentUser.type,
+                remember: true
+            };
+            fetch(apiUrl, {
+                method: 'post',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(obj)
+            }).then((res) => {
+                if (res.status !== 200) {
+                    throw new Error('错误 ' + res);
+                } else {
+                    return res.json().then((resJson) => {
+                        console.log('当前用户===校验---**：   ', resJson);
+                        this.setState({ currentUser: resJson.data });
+                        if (obj.remember) localStorage.setItem(`current_user`, JSON.stringify(obj));
+                        // return resJson;
+                    })
+                }
+            })
+        }
+    }
+
+    componentWillUnmount() {
+        this.setState({
+            timer: null
+        })
+    }
+
+    render() {
+        let { modifyAct, history } = this.props;
+        let { currentUser } = this.state;
+        if (!currentUser) {
+            history.push('/login');
+            return null;
+        }
+
+        if (currentUser.type === UserTypes.ADMIN) {
+            return (
+                <Tabs defaultActiveKey="1" tabPosition="left">
+                    <TabPane tab="用户信息管理" key="1">
+                        <Tabs defaultActiveKey="2-1">
+                            <TabPane tab="教员信息管理" key="2-1">
+                                <div>
+                                    {/* <Allteacher currentUser={currentUser} /> */}
+                                </div>
+                            </TabPane>
+                            <TabPane tab="用户信息管理" key="2-2">
+                                <div>
+                                    <Alluser currentUser={currentUser} />
+                                </div>
+                            </TabPane>
+                        </Tabs>
+                    </TabPane>
+                    <TabPane tab="招聘信息管理" key="2">
+                        <div style={{ paddingTop: '10px' }}>
+                            <Allorder currentUser={currentUser} />
+                        </div>
+                        {/* <Tabs defaultActiveKey="2-1">
+                            <TabPane tab="招聘信息添加" key="2-1">
+                                <div><OrderAdd data={currentUser} /></div>
+                            </TabPane>
+                            <TabPane tab="平台招聘信息" key="2-2">
+                                <div>
+                                </div>
+                            </TabPane>
+                        </Tabs> */}
+                    </TabPane>
+                </Tabs>
+            );
+        }
+
+        if (currentUser.type === UserTypes.USER) {
+            return (
+                <Tabs defaultActiveKey="1" tabPosition="left">
+                    <TabPane tab="个人信息管理" key="1">
+                        <div><Peruser modifyAct={modifyAct} data={currentUser} /></div>
+                    </TabPane>
+                    <TabPane tab="招聘信息管理" key="2">
+                        <Tabs defaultActiveKey="2-1">
+                            <TabPane tab="招聘信息添加" key="2-1">
+                                {
+                                    currentUser.state === UserTypes.ACTIVE ?
+                                        <div><OrderAdd data={currentUser} /></div> :
+                                        <div>您暂时还没有添加招聘信息的权限哦，管理员审核中。。。</div>
+                                }
+                            </TabPane>
+                            <TabPane tab="我的招聘信息" key="2-2">
+                                <div>
+                                    <Perorder currentUser={currentUser} />
+                                </div>
+                            </TabPane>
+                        </Tabs>
+                    </TabPane>
+                </Tabs>
+            )
+        }
+        if (currentUser.type === UserTypes.TEACHER) {
+            return <div><Pertea modifyAct={modifyAct} data={currentUser} /></div>
+        }
+    }
+}
+
+const PersonalBak = ({ currentUser, modifyAct, history }) => {
     if (!currentUser) {
         history.push('/login');
         return null;
