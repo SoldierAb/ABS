@@ -14,6 +14,12 @@ const columns = [
   {
     title: '编号',
     dataIndex: 'order_no',
+    fixed: 'left',
+    width: 120
+  },
+  {
+    title: '手机号',
+    dataIndex: 'phone',
   },
   {
     title: '辅导科目',
@@ -36,8 +42,14 @@ const columns = [
     dataIndex: 'order_detail',
   },
   {
+    title: '地址',
+    dataIndex: 'order_address',
+  },
+  {
     title: '状态',
     dataIndex: 'order_state',
+    fixed: 'right',
+    width: 80
   },
 ];
 
@@ -45,7 +57,7 @@ const _sex = ['男', '女', '不限'],
   _state = ['待接单', '已处理'];
 
 
-export default class Ordertable extends React.Component {
+export default class AllOrderTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -62,6 +74,7 @@ export default class Ordertable extends React.Component {
     for (let i = 0; i < orders.length; i++) {
       data.push({
         key: orders[i].order_no,
+        phone: orders[i].phone,
         order_no: orders[i].order_no,
         order_price: orders[i].order_price,
         order_address: orders[i].order_address,
@@ -172,7 +185,7 @@ export default class Ordertable extends React.Component {
             {hasSelected ? `当前选中 ${selectedRowKeys.length} 条数据` : ''}
           </span>
         </div>
-        <Table scroll={{ y: 400 }} pagination={false} rowSelection={rowSelection} columns={columns} dataSource={orders} />
+        <Table scroll={{ x: 1200, y: 400 }} pagination={false} rowSelection={rowSelection} columns={columns} dataSource={orders} />
       </Wrapper>
     );
   }

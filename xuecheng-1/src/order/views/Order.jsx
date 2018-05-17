@@ -4,7 +4,9 @@ import styled from 'styled-components';
 import * as Actions from '../Actions';
 import * as Status from '../../Status';
 import QueueAnim from 'rc-queue-anim';
+import * as UserTypes from '../../UserTypes';
 import * as DateUtil from '../../utils/DateUtil';
+
 import { Button, message, Modal, Pagination } from 'antd';
 const confirm = Modal.confirm;
 
@@ -72,7 +74,7 @@ class Order extends React.Component {
       });
       return;
     }
-    if (this.props.currentUser.type !== 5) {
+    if (this.props.currentUser.type === UserTypes.USER) {
       message.warning('您不是教员哦！', 2);
       return;
     }

@@ -71,6 +71,8 @@ class NormalLoginForm extends React.Component {
         const { getFieldDecorator } = this.props.form;
         const isLogin = this.props.loginStatus === LoginStatusTypes.SUCCESS ? true : false;
         const { currentUser } = this.props;
+        console.log('history----:', this.props.history.location);
+        let { pathname } = this.props.history.location;
         if (isLogin) {
             return <div>亲爱的~{currentUser.phone},你好@.@,点击菜单栏访问更多内容哦</div>;
         }
@@ -99,9 +101,12 @@ class NormalLoginForm extends React.Component {
                             initialValue: current_user ? current_user.usertype : ''
                         })(
                             <RadioGroup>
-                                <Radio style={colorWhite} value={1}>用户</Radio>
-                                <Radio style={colorWhite} value={5}>教员</Radio>
-                                <Radio style={colorWhite} value={2}>管理员</Radio>
+                                {
+                                    pathname === '/admin' ? <Radio style={colorWhite} value={2}>管理员</Radio> : <div>
+                                        <Radio style={colorWhite} value={1}>用户</Radio>
+                                        <Radio style={colorWhite} value={5}>教员</Radio>
+                                    </div>
+                                }
                             </RadioGroup>
                             )}
                     </FormItem>

@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import QueueAnim from 'rc-queue-anim';
 import { Button, message, Modal, Pagination } from 'antd';
 import * as UserTypes from '../../../UserTypes';
-import Ordertable from '../../../components/table/Ordertable.jsx';
+import Ordertable from '../../../components/table/AllOrderTable.jsx';
 
 const Wrapper = styled.div`
-  .Percontainer{
+  .Allcontainer{
     padding-right:20px;
   }
   .ant-table-header{
@@ -14,28 +14,34 @@ const Wrapper = styled.div`
       thead{
         tr{
           th:nth-child(1){
-            width:60px;
+            width:100px;
           }
           th:nth-child(2){
-            width:140px;
+            width:120px;
           }
           th:nth-child(3){
-            width:170px;
+            width:140px;
           }
           th:nth-child(4){
-            width:100px;
+            width:170px;
           }
           th:nth-child(5){
             width:100px;
           }
           th:nth-child(6){
-            width:170px;
+            width:100px;
           }
           th:nth-child(7){
-            width:300px;
+            width:170px;
           }
           th:nth-child(8){
-            width:100px;
+            width:180px;
+          }
+          th:nth-child(9){
+            width:180px;
+          }
+          th:nth-child(10){
+            width:80px;
           }
         }
       }
@@ -46,28 +52,34 @@ const Wrapper = styled.div`
       tbody{
         tr{
           td:nth-child(1){
-            width:60px;
+            width:80px;
           }
           td:nth-child(2){
-            width:140px;
+            width:120px;
           }
           td:nth-child(3){
-            width:170px;
+            width:140px;
           }
           td:nth-child(4){
-            width:100px;
+            width:170px;
           }
           td:nth-child(5){
             width:100px;
           }
           td:nth-child(6){
-            width:170px;
+            width:100px;
           }
           td:nth-child(7){
-            width:300px;
+            width:170px;
           }
           td:nth-child(8){
-            width:100px;
+            width:180px;
+          }
+          td:nth-child(9){
+            width:180px;
+          }
+          td:nth-child(10){
+            width:80px;
           }
         }
       }
@@ -165,7 +177,7 @@ export default class Perorder extends React.Component {
     let { loaded, total, pageSize, currentPage, orders } = this.state;
     return (
       <Wrapper>
-        <div className="Percontainer" key="b">
+        <div className="Allcontainer" key="b">
           <QueueAnim component="ul" type={['right', 'left']} leaveReverse>
             {loaded ? <Ordertable orders={orders} />
               : <li>暂无数据</li>}

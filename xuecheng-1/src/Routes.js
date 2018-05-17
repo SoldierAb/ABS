@@ -125,6 +125,7 @@ const Routes = () => (
                 <Route path="/busmap" component={Busmap} />
                 <Route path="/drivemap" component={Drivemap} />
                 <Route path="/detail" component={Detail} />
+                <Route path="/admin" component={Login} />
             </div>
             <div>
                 <Loading />

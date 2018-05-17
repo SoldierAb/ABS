@@ -37,10 +37,10 @@ class LoginCheck extends React.Component {
         const menu = (
             <Menu>
                 <Menu.Item>
-                    <Link to='/personal'>PER IM</Link>
+                    <Link to='/personal'>个人主页</Link>
                 </Menu.Item>
                 <Menu.Item>
-                    <Button onClick={signOut} type="primary" size={size}>SIGN OUT</Button>
+                    <Button onClick={signOut} type="primary" size={size}>退出</Button>
                 </Menu.Item>
             </Menu>
         );
