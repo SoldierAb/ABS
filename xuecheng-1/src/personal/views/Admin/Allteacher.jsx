@@ -172,7 +172,7 @@ export default class Perorder extends React.Component {
           </QueueAnim>
         </div>
         <div>
-          <Pagination showQuickJumper defaultCurrent={parseInt(currentPage)} total={total} onChange={this.switchPage} />,
+          {/* <Pagination showQuickJumper defaultCurrent={parseInt(currentPage)} total={total} onChange={this.switchPage} />, */}
         </div>
       </Wrapper>
     );

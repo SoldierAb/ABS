@@ -32,10 +32,13 @@ const Wrapper = styled.div`
             width:170px;
           }
           th:nth-child(7){
-            width:300px;
+            width:200px;
           }
           th:nth-child(8){
-            width:100px;
+            width:200px;
+          }
+          th:nth-child(9){
+            width:80px;
           }
         }
       }
@@ -64,10 +67,13 @@ const Wrapper = styled.div`
             width:170px;
           }
           td:nth-child(7){
-            width:300px;
+            width:200px;
           }
           td:nth-child(8){
-            width:100px;
+            width:200px;
+          }
+          td:nth-child(9){
+            width:80px;
           }
         }
       }
@@ -128,22 +134,15 @@ export default class Perorder extends React.Component {
     this.getOrders(1, 10);
   }
 
-  switchPage = (current) => {
-    console.log('当前页', current);
+  getOrders = () => {
+    console.log('getOrders      ----------------------------');
     this.setState({
       loaded: false,
+      total: 0,
       orders: []
     });
-    this.getOrders(current, 10);
-  }
-
-
-  getOrders = (currentPage, pageSize) => {
     let { phone, type } = this.state.currentUser;
-    let api = `/getPerOrders?currentPage=${currentPage}&&pageSize=${pageSize}&&phone=${phone}`;
-    if (type === UserTypes.ADMIN) {
-      api = `/getOrders?currentPage=${currentPage}&&pageSize=${pageSize}`;
-    }
+    let api = `/getPerOrders?phone=${phone}`;
     fetch(api).then((res) => {
       if (res.status !== 200) throw new Error('出错' + res);
       res.json().then((resJson) => {
@@ -151,8 +150,6 @@ export default class Perorder extends React.Component {
         this.setState({
           loaded: true,
           total: resJson.total,
-          pageSize: parseInt(resJson.pageSize),
-          currentPage: parseInt(resJson.currentPage),
           orders: resJson.data
         });
       })
@@ -160,6 +157,36 @@ export default class Perorder extends React.Component {
       throw new Error('Err' + err);
     })
   }
+  // switchPage = (current) => {
+  //   console.log('当前页', current);
+  //   this.setState({
+  //     loaded: false,
+  //     orders: []
+  //   });
+  //   this.getOrders(current, 10);
+  // }
+
+
+  // getOrders = (currentPage, pageSize) => {
+  //   let { phone, type } = this.state.currentUser;
+  //   // let api = `/getPerOrders?currentPage=${currentPage}&&pageSize=${pageSize}&&phone=${phone}`;
+  //   let api = `/getPerOrders?phone=${phone}`;
+  //   fetch(api).then((res) => {
+  //     if (res.status !== 200) throw new Error('出错' + res);
+  //     res.json().then((resJson) => {
+  //       console.log('perorder:  ==  ', resJson);
+  //       this.setState({
+  //         loaded: true,
+  //         total: resJson.total,
+  //         pageSize: parseInt(resJson.pageSize),
+  //         currentPage: parseInt(resJson.currentPage),
+  //         orders: resJson.data
+  //       });
+  //     })
+  //   }).catch((err) => {
+  //     throw new Error('Err' + err);
+  //   })
+  // }
 
   render() {
     let { loaded, total, pageSize, currentPage, orders } = this.state;
@@ -167,12 +194,12 @@ export default class Perorder extends React.Component {
       <Wrapper>
         <div className="Percontainer" key="b">
           <QueueAnim component="ul" type={['right', 'left']} leaveReverse>
-            {loaded ? <Ordertable orders={orders} />
+            {loaded ? <Ordertable refresh={this.getOrders} orders={orders} />
               : <li>暂无数据</li>}
           </QueueAnim>
         </div>
         <div>
-          <Pagination showQuickJumper defaultCurrent={parseInt(currentPage)} total={total} onChange={this.switchPage} />,
+          {/* <Pagination showQuickJumper defaultCurrent={parseInt(currentPage)} total={total} onChange={this.switchPage} />, */}
         </div>
       </Wrapper>
     );

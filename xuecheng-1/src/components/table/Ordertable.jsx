@@ -36,6 +36,10 @@ const columns = [
     dataIndex: 'order_detail',
   },
   {
+    title: '地址',
+    dataIndex: 'order_address',
+  },
+  {
     title: '状态',
     dataIndex: 'order_state',
   },
@@ -60,14 +64,17 @@ export default class Ordertable extends React.Component {
     let data = [];
 
     for (let i = 0; i < orders.length; i++) {
+      orders[i].order_address = typeof orders[i].order_address === 'string' ? JSON.parse(orders[i].order_address) : orders[i].order_address;
+      orders[i].order_subject = typeof orders[i].order_subject === 'string' ? JSON.parse(orders[i].order_subject) : orders[i].order_subject;
+      orders[i].order_time = typeof orders[i].order_time === 'string' ? JSON.parse(orders[i].order_time) : orders[i].order_time;
       data.push({
         key: orders[i].order_no,
         order_no: orders[i].order_no,
         order_price: orders[i].order_price,
-        order_address: orders[i].order_address,
+        order_address: orders[i].order_address.city.join('') + orders[i].order_address.address,
         order_need_sex: _sex[parseInt(orders[i].order_need_sex) - 1],
-        order_subject: orders[i].order_subject,
-        order_time: orders[i].order_time,
+        order_subject: orders[i].order_subject.join('，'),
+        order_time: orders[i].order_time.join('，'),
         order_detail: orders[i].order_detail,
         order_state: _state[parseInt(orders[i].order_state) - 1]
       });
@@ -90,6 +97,9 @@ export default class Ordertable extends React.Component {
     }, 1000);
   }
 
+  clickRefresh = () => {
+    this.props.refresh();
+  }
 
   clickAct = (e) => {
     let { selectedRowKeys, orders } = this.state,
@@ -120,6 +130,7 @@ export default class Ordertable extends React.Component {
               orders
             });
             message.success('操作成功！', 2);
+            _this.props.refresh();
           }
           // this.setState({
           //   loaded: true,
@@ -167,12 +178,15 @@ export default class Ordertable extends React.Component {
             <span>
               <Button disabled={!hasSelected} type="danger" value={1} onClick={this.clickAct}>设为未处理</Button>
             </span>
+            <span>
+              <Button onClick={this.clickRefresh}>刷新</Button>
+            </span>
           </div>
           <span style={{ marginLeft: 8 }}>
             {hasSelected ? `当前选中 ${selectedRowKeys.length} 条数据` : ''}
           </span>
         </div>
-        <Table scroll={{ y: 400 }} pagination={false} rowSelection={rowSelection} columns={columns} dataSource={orders} />
+        <Table scroll={{ y: 400 }} rowSelection={rowSelection} columns={columns} dataSource={orders} />
       </Wrapper>
     );
   }

@@ -90,7 +90,7 @@ class Order extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getOrders(1, 10);
+    this.props.getOrders();
   }
 
   getOrderTem = () => {
@@ -140,9 +140,7 @@ class Order extends React.Component {
           <div className="orderContent">
             <div className="">
               <span>地址：</span>
-              <span>{order_address.city[0]}</span>
-              <span>{order_address.city[1]}</span>
-              <span>{order_address.city[2]}</span>
+              <span>{order_address.city.join('')}</span>
               <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
               <span>{order_address.address}</span>
             </div>
@@ -207,7 +205,8 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    getOrders: (currentPage, pageSize) => dispatch(Actions.getOrders(currentPage, pageSize))
+    getOrders: () => dispatch(Actions.getOrders())
+    // getOrders: (currentPage, pageSize) => dispatch(Actions.getOrders(currentPage, pageSize))
   }
 }
 

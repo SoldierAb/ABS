@@ -146,25 +146,23 @@ export default class Perorder extends React.Component {
       loaded: false,
       orders: []
     });
-    this.getOrders(current, 10);
+    // this.getOrders(current, 10);
+    this.getOrders();
   }
 
-
-  getOrders = (currentPage, pageSize) => {
+  getOrders = () => {
     let { phone, type } = this.state.currentUser;
-    let api = `/getPerOrders?currentPage=${currentPage}&&pageSize=${pageSize}&&phone=${phone}`;
-    if (type === UserTypes.ADMIN) {
-      api = `/getOrders?currentPage=${currentPage}&&pageSize=${pageSize}`;
-    }
+    let api = `/getOrders`;
+    this.setState({
+      loaded: false,
+      orders: []
+    });
     fetch(api).then((res) => {
       if (res.status !== 200) throw new Error('出错' + res);
       res.json().then((resJson) => {
-        console.log('perorder:  ==  ', resJson);
+        console.log('all order:  ==  ', resJson);
         this.setState({
           loaded: true,
-          total: resJson.total,
-          pageSize: parseInt(resJson.pageSize),
-          currentPage: parseInt(resJson.currentPage),
           orders: resJson.data
         });
       })
@@ -173,18 +171,38 @@ export default class Perorder extends React.Component {
     })
   }
 
+  // getOrders = (currentPage, pageSize) => {
+  //   let { phone, type } = this.state.currentUser;
+  //   let api = `/getOrders`;
+  //   fetch(api).then((res) => {
+  //     if (res.status !== 200) throw new Error('出错' + res);
+  //     res.json().then((resJson) => {
+  //       console.log('all order:  ==  ', resJson);
+  //       this.setState({
+  //         loaded: true,
+  //         total: resJson.total,
+  //         pageSize: parseInt(resJson.pageSize),
+  //         currentPage: parseInt(resJson.currentPage),
+  //         orders: resJson.data
+  //       });
+  //     })
+  //   }).catch((err) => {
+  //     throw new Error('Err' + err);
+  //   })
+  // }
+
   render() {
     let { loaded, total, pageSize, currentPage, orders } = this.state;
     return (
       <Wrapper>
         <div className="Allcontainer" key="b">
           <QueueAnim component="ul" type={['right', 'left']} leaveReverse>
-            {loaded ? <Ordertable orders={orders} />
+            {loaded ? <Ordertable refresh={this.getOrders} orders={orders} />
               : <li>暂无数据</li>}
           </QueueAnim>
         </div>
         <div>
-          <Pagination showQuickJumper defaultCurrent={parseInt(currentPage)} total={total} onChange={this.switchPage} />,
+          {/* <Pagination showQuickJumper defaultCurrent={parseInt(currentPage)} total={total} onChange={this.switchPage} />, */}
         </div>
       </Wrapper>
     );

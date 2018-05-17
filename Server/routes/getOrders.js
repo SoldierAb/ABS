@@ -7,11 +7,12 @@ var Order = require('./order');
 router.get('/getOrders', function (req, res, next) {
     console.log('--------------------------getOrders----START------------------------');
     var _response = {},
-        _size = req.query.pageSize,
-        _curPage = req.query.currentPage,
-        _pageDrop = (_curPage - 1) * _size,
+        // _size = req.query.pageSize,
+        // _curPage = req.query.currentPage,
+        // _pageDrop = (_curPage - 1) * _size,
         _arr = [],
-        _sql = "SELECT * FROM orders limit " + _pageDrop + "," + _size + "",
+        // _sql = "SELECT * FROM orders limit " + _pageDrop + "," + _size + "",
+        _sql = "SELECT * FROM orders",
         _countSql = 'SELECT count(order_no) FROM orders',
         _total = 0;
     connection.query(_countSql, function (err, result) {
@@ -47,7 +48,8 @@ router.get('/getOrders', function (req, res, next) {
                 order.order_state = result[i].order_state;
                 _arr.push(order);
             }
-            _response = { code: 200, data: _arr, total: _total, currentPage: _curPage, pageSize: _size, msg: 'get orders success' };
+            // _response = { code: 200, data: _arr, total: _total, currentPage: _curPage, pageSize: _size, msg: 'get orders success' };
+            _response = { code: 200, data: _arr, total: _total, msg: 'get orders success' };
         }
         res.send(JSON.stringify(_response));
 

@@ -110,7 +110,7 @@ class OrderForm extends Component {
                             rules: [{ required: true, message: 'Please input your phone number!' }],
                             initialValue: data.phone
                         })(
-                            <Input style={{ width: '100%' }} />
+                            <Input disabled style={{ width: '100%' }} />
                             )}
                     </FormItem>
 

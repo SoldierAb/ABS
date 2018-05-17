@@ -8,11 +8,12 @@ router.get('/getPerOrders', function (req, res, next) {
   console.log('--------------------------getOrders----START------------------------');
   var _response = {},
     _phone = req.query.phone,
-    _size = req.query.pageSize,
-    _curPage = req.query.currentPage,
-    _pageDrop = (_curPage - 1) * _size,
+    // _size = req.query.pageSize,
+    // _curPage = req.query.currentPage,
+    // _pageDrop = (_curPage - 1) * _size,
     _arr = [],
-    _sql = "SELECT * FROM orders WHERE phone=" + _phone + " limit " + _pageDrop + "," + _size + "",
+    // _sql = "SELECT * FROM orders WHERE phone=" + _phone + " limit " + _pageDrop + "," + _size + "",
+    _sql = "SELECT * FROM orders WHERE phone=" + _phone + "",
     _countSql = "SELECT count(order_no) FROM orders WHERE phone=" + _phone + "",
     _total = 0;
   connection.query(_countSql, function (err, result) {
@@ -48,7 +49,8 @@ router.get('/getPerOrders', function (req, res, next) {
         order.order_state = result[i].order_state;
         _arr.push(order);
       }
-      _response = { code: 200, data: _arr, total: _total, currentPage: _curPage, pageSize: _size, msg: 'get orders success' };
+      _response = { code: 200, data: _arr, total: _total, msg: 'get orders success' };
+      // _response = { code: 200, data: _arr, total: _total, currentPage: _curPage, pageSize: _size, msg: 'get orders success' };
     }
     res.send(JSON.stringify(_response));
 

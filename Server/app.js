@@ -21,6 +21,8 @@ var orderadd = require('./routes/orderAdd');
 var orderall = require('./routes/getOrders');
 var getPerorders = require('./routes/getPerorders');
 var uporders = require('./routes/updateOrder');
+var delOrder = require('./routes/delOrder');
+app.use('/', delOrder);
 app.use('/', uporders);
 app.use('/', getPerorders);
 app.use('/', orderall);
