@@ -40,11 +40,18 @@ class NormalLoginForm extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    /**
+     * 输入之后的登陆操作
+     * 
+     * @param {any} e 
+     * @memberof NormalLoginForm
+     */
     handleSubmit(e) {
         e.preventDefault();
         const _this = this;
         this.props.form.validateFields((err, values) => {
-            if (!err) _this.props.clickSignIn(values);
+            console.log('login values : ', values);
+            if (!err) _this.props.clickSignIn(values);//登陆Action
         });
     }
 

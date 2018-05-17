@@ -15,8 +15,8 @@ router.post('/regist', (req, res) => {
     switch (_type) {
         case 1:
             _table = 'users';
-            _addSql = "INSERT INTO " + _table + "(phone,pwd,name,head,iden,type,collect,order_no) VALUES(?,?,?,?,?,?,?,?)";
-            var userarr = ['phone', 'pwd', 'name', 'head', 'iden', 'type', 'collect', 'order_no'];
+            _addSql = "INSERT INTO " + _table + "(phone,pwd,name,head,iden,type,collect,order_no,state) VALUES(?,?,?,?,?,?,?,?,?)";
+            var userarr = ['phone', 'pwd', 'name', 'head', 'iden', 'type', 'collect', 'order_no', 'state'];
             userarr.forEach(function (item, index) {
                 _addParams[index] = req.body[item] || '';
             })
@@ -40,7 +40,7 @@ router.post('/regist', (req, res) => {
         case 5:
             _table = 'teachers';
             _addSql = "INSERT INTO " + _table + "(phone,pwd,name,sex,head,iden,age,college,price,subject,address,time,type,evaluation,order_no) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-            var teaarr = ['phone', 'pwd', 'name', 'sex', 'head', 'iden', 'age', 'college', 'price', 'subject', 'address', 'time', 'type', 'evaluation','order_no'];
+            var teaarr = ['phone', 'pwd', 'name', 'sex', 'head', 'iden', 'age', 'college', 'price', 'subject', 'address', 'time', 'type', 'evaluation', 'order_no'];
             teaarr.forEach(function (item, index) {
                 _addParams[index] = req.body[item] || '';
             });

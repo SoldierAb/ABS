@@ -14,12 +14,12 @@ router.get('/getTeachers', function (req, res, next) {
     connection.query(_sql, function (err, result) {
         if (err) {
             console.log('[SELECT ERROR] - ', err.message);
-            res.send(JSON.stringify({ code: 202, data: '服务器错误' }));
+            res.send(JSON.stringify({ code: 202, data: [], msg: '服务器错误' }));
             return;
         }
 
         if (result.length < 1) {
-            _response = { code: 404, data: '',msg:'暂无相关数据' };
+            _response = { code: 404, data: [], msg: '暂无相关数据' };
         } else {
             for (var i = 0; i < result.length; i++) {
                 var teacher = new Teacher();
@@ -37,7 +37,7 @@ router.get('/getTeachers', function (req, res, next) {
                 _arr.push(teacher);
             }
 
-            _response = { code: 200, data: _arr };
+            _response = { code: 200, data: _arr, msg: '加载教员数据成功' };
         }
 
         res.send(JSON.stringify(_response));

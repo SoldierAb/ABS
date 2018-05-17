@@ -19,7 +19,7 @@ router.get('/getPerOrders', function (req, res, next) {
   connection.query(_countSql, function (err, result) {
     if (err) {
       console.log('[SELECT ERROR] - ', err.message);
-      res.send(JSON.stringify({ status: 202, data: '服务器错误' }));
+      res.send(JSON.stringify({ code: 202, data: '服务器错误' }));
       return;
     }
     _total = result[0]['count(order_no)'];
@@ -29,12 +29,12 @@ router.get('/getPerOrders', function (req, res, next) {
   connection.query(_sql, function (err, result) {
     if (err) {
       console.log('[SELECT ERROR] - ', err.message);
-      res.send(JSON.stringify({ status: 202, data: '服务器错误' }));
+      res.send(JSON.stringify({ code: 202, data: '服务器错误' }));
       return;
     }
 
     if (result.length < 1) {
-      _response = { status: 404, data: '暂无相关数据' };
+      _response = { code: 404, data: [], msg: '暂无相关数据' };
     } else {
       for (var i = result.length - 1; i >= 0; i--) {
         var order = new Order();

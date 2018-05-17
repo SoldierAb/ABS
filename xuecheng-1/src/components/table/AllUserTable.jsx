@@ -1,6 +1,8 @@
 import React from 'react';
-import { Table, Button, message } from 'antd';
+import { Table, Button, message, Avatar } from 'antd';
 import styled from 'styled-components';
+import * as UserTypes from '../../UserTypes';
+
 
 const Wrapper = styled.div`
    .btnBox{
@@ -12,50 +14,28 @@ const Wrapper = styled.div`
 
 const columns = [
   {
-    title: '编号',
-    dataIndex: 'order_no',
-    fixed: 'left',
-    width: 120
+    title: '头像',
+    dataIndex: 'head',
   },
   {
     title: '手机号',
     dataIndex: 'phone',
   },
   {
-    title: '辅导科目',
-    dataIndex: 'order_subject',
+    title: '用户名',
+    dataIndex: 'name',
   },
   {
-    title: '单价(元/时)',
-    dataIndex: 'order_price',
-  },
-  {
-    title: '教员性别',
-    dataIndex: 'order_need_sex',
-  },
-  {
-    title: '辅导时间',
-    dataIndex: 'order_time',
-  },
-  {
-    title: '详情',
-    dataIndex: 'order_detail',
-  },
-  {
-    title: '地址',
-    dataIndex: 'order_address',
+    title: '身份证号',
+    dataIndex: 'iden',
   },
   {
     title: '状态',
-    dataIndex: 'order_state',
-    fixed: 'right',
-    width: 80
-  },
+    dataIndex: 'state',
+  }
 ];
 
-const _sex = ['男', '女', '不限'],
-  _state = ['待接单', '已处理'];
-
+const _active = ['未激活', '已激活'];
 
 export default class AllOrderTable extends React.Component {
   constructor(props) {
@@ -63,108 +43,63 @@ export default class AllOrderTable extends React.Component {
     this.state = {
       selectedRowKeys: [], // Check here to configure the default column
       loaded: false,
-      orders: []
+      users: []
     };
   }
 
   componentDidMount() {
-    let { orders } = this.props;
+    let { users } = this.props;
     let data = [];
 
-    for (let i = 0; i < orders.length; i++) {
+    for (let i = 0; i < users.length; i++) {
       data.push({
-        key: orders[i].order_no,
-        phone: orders[i].phone,
-        order_no: orders[i].order_no,
-        order_price: orders[i].order_price,
-        order_address: orders[i].order_address,
-        order_need_sex: _sex[parseInt(orders[i].order_need_sex) - 1],
-        order_subject: orders[i].order_subject,
-        order_time: orders[i].order_time,
-        order_detail: orders[i].order_detail,
-        order_state: _state[parseInt(orders[i].order_state) - 1]
+        key: users[i].phone,
+        phone: users[i].phone,
+        name: users[i].name,
+        head: users[i].head ? <Avatar src={`http://localhost:3099/${users[i].head}`} /> : <Avatar src={`http://localhost:3099/default_head.jpg`} />,
+        iden: users[i].iden,
+        type: users[i].type,
+        collect: users[i].collect,
+        order_no: users[i].order_no,
+        state: users[i].state === UserTypes.ACTIVE ? <span style={{ color: 'green' }}>已激活</span> : <span style={{ color: 'red' }}>未激活</span>
       });
     }
     this.setState({
       loaded: true,
-      orders: data
+      users: data
     })
 
   }
 
-  start = () => {
-    this.setState({ loaded: true });
-    // ajax request after empty completing
-    setTimeout(() => {
-      this.setState({
-        selectedRowKeys: [],
-        loaded: false,
-      });
-    }, 1000);
-  }
-
-
-  delOrder = () => {
-    let { selectedRowKeys, orders } = this.state;
-    const _this = this;
-    const delApi = `/delOrder`;
-    if (selectedRowKeys.length > 0) {
-      fetch(delApi, {
-        method: 'post',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ orders: selectedRowKeys })
-      }).then((res) => {
-        console.log('del res:  ', res);
-        if (res.status !== 200) throw new Error('删除操作出错' + res);
-        for (var i = 0; i < selectedRowKeys.length; i++) {
-          for (var j = 0; j < orders.length; j++) {
-            if (orders[j].order_no === selectedRowKeys[i]) {
-              orders.splice(j, 1);
-            }
-          }
-        }
-        _this.setState({
-          selectedRowKeys: [],
-          orders
-        });
-        _this.props.refresh();
-        message.success('删除操作成功！', 2);
-      })
-    }
-  }
-
-  /**
-   * 已处理未处理状态设置
-   * 
-   * @param {any} e 
-   */
   clickAct = (e) => {
-    let { selectedRowKeys, orders } = this.state,
-      _type = e.target.value;
+    let { selectedRowKeys, users } = this.state,
+      _state = e.target.value;
     const _this = this;
     console.log(e.target.value);
     console.log(selectedRowKeys);
-    const updateApi = `/updateOrder`;
+    const updateApi = `/rootActive`;
     if (selectedRowKeys.length > 0) {
       fetch(updateApi, {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ orders: selectedRowKeys, type: _type })
+        body: JSON.stringify({ root: selectedRowKeys, state: _state, type: UserTypes.USER })
       }).then((res) => {
         if (res.status !== 200) throw new Error('更新状态出错' + res);
         res.json().then((resJson) => {
-          console.log('del order:  ', resJson);
+          // console.log('click users:  ', resJson);
           if (resJson.code === 200) {
-            for (let j = 0; j < orders.length; j++) {
+            for (let j = 0; j < users.length; j++) {
               for (let i = 0; i < selectedRowKeys.length; i++) {
-                if (orders[j].order_no === selectedRowKeys[i]) {
-                  orders[i].order_state = _state[_type - 1];
+                if (users[j].phone === selectedRowKeys[i]) {
+                  users[i].state = _active[_state - 1];
+                  console.log(users[i].phone, users[i].state);
                 }
               }
             }
+            console.log('after active act :  ', users);
             _this.setState({
               selectedRowKeys: [],
-              orders
+              users
             });
             _this.props.refresh();
             message.success('操作成功！', 2);
@@ -187,7 +122,7 @@ export default class AllOrderTable extends React.Component {
   }
 
   render() {
-    const { loaded, selectedRowKeys, orders } = this.state;
+    const { loaded, selectedRowKeys, users } = this.state;
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange,
@@ -198,26 +133,21 @@ export default class AllOrderTable extends React.Component {
         <div style={{ marginBottom: 16 }}>
           <div className="btnBox">
             <span>
-              <Button disabled={!hasSelected} type="primary" value={2} onClick={this.clickAct}>设为已处理</Button>
+              <Button disabled={!hasSelected} type="primary" value={2} onClick={this.clickAct}>激活</Button>
             </span>
             <span>
-              <Button disabled={!hasSelected} type="danger" value={1} onClick={this.clickAct}>设为未处理</Button>
-            </span>
-            <span>
-              <Button
-                type="primary"
-                onClick={this.delOrder}
-                disabled={!hasSelected}
-              >
-                删除
-            </Button>
+              <Button disabled={!hasSelected} type="danger" value={1} onClick={this.clickAct}>禁用</Button>
             </span>
           </div>
           <span style={{ marginLeft: 8 }}>
             {hasSelected ? `当前选中 ${selectedRowKeys.length} 条数据` : ''}
           </span>
         </div>
-        <Table scroll={{ x: 1200, y: 400 }} rowSelection={rowSelection} columns={columns} dataSource={orders} />
+        <Table
+          // scroll={{ x: 1200, y: 400 }}
+          rowSelection={rowSelection}
+          columns={columns}
+          dataSource={users} />
       </Wrapper>
     );
   }

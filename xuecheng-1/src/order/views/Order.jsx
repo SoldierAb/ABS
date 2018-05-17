@@ -163,7 +163,7 @@ class Order extends React.Component {
     const { getOrderStatus, orders, total, pageSize, currentPage, msg } = this.props;
     switch (getOrderStatus) {
       case Status.LOADING:
-        return <Wrapper></Wrapper>;
+        return <Wrapper>加载中。。。</Wrapper>;
       case Status.SUCCESS:
         console.log('page: --->    ', total);
         return (

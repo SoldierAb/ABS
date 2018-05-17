@@ -137,26 +137,25 @@ export default class Perorder extends React.Component {
    */
   componentDidMount = () => {
     console.log('did mount');
-    this.getOrders(1, 10);
-  }
-
-  switchPage = (current) => {
-    console.log('当前页', current);
-    this.setState({
-      loaded: false,
-      orders: []
-    });
-    // this.getOrders(current, 10);
     this.getOrders();
   }
 
+  // switchPage = (current) => {
+  //   console.log('当前页', current);
+  //   this.setState({
+  //     loaded: false,
+  //     orders: []
+  //   });
+  //   // this.getOrders(current, 10);
+  // }
+
   getOrders = () => {
-    let { phone, type } = this.state.currentUser;
-    let api = `/getOrders`;
     this.setState({
       loaded: false,
       orders: []
     });
+    let { phone, type } = this.state.currentUser;
+    let api = `/getOrders`;
     fetch(api).then((res) => {
       if (res.status !== 200) throw new Error('出错' + res);
       res.json().then((resJson) => {
@@ -193,12 +192,13 @@ export default class Perorder extends React.Component {
 
   render() {
     let { loaded, total, pageSize, currentPage, orders } = this.state;
+    if (orders.length < 1) return <div>暂无数据</div>;
     return (
       <Wrapper>
         <div className="Allcontainer" key="b">
           <QueueAnim component="ul" type={['right', 'left']} leaveReverse>
             {loaded ? <Ordertable refresh={this.getOrders} orders={orders} />
-              : <li>暂无数据</li>}
+              : <li>加载中。。。</li>}
           </QueueAnim>
         </div>
         <div>

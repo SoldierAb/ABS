@@ -114,6 +114,13 @@ export default class Tea extends React.Component {
         fetch(api).then((res) => {
             if (res.status !== 200) throw new Error('出错' + res);
             res.json().then((resJson) => {
+                if (resJson.data.length < 1) {
+                    this.setState({
+                        loaded: true,
+                        teaArr: []
+                    })
+                    return;
+                }
                 let teaArr = resJson.data;
                 teaArr.forEach((item, index) => {
                     item.address = JSON.parse(item.address);
@@ -186,10 +193,10 @@ export default class Tea extends React.Component {
 
 
     render() {
-        const { loaded } = this.state;
+        const { loaded, teaArr } = this.state;
 
-        if (!loaded) return <div>加载中。。。</div>
-
+        if (!loaded) return <div>加载中。。。</div>;
+        if (teaArr.length < 1) return <div>暂无数据~</div>;
         return (
             <Wrapper>
                 <div className="teaTitle">

@@ -96,33 +96,27 @@ export default class Perorder extends React.Component {
     };
   }
 
-  onClick = () => {
-    this.setState({
-      loaded: !this.state.loaded,
-    });
-  }
-
-  onAdd = () => {
-    let items = this.state.items;
-    items.push(<li key={Date.now()}>========</li>);
-    this.setState({
-      loaded: true,
-      items,
-    });
-  }
+  // onAdd = () => {
+  //   let items = this.state.items;
+  //   items.push(<li key={Date.now()}>========</li>);
+  //   this.setState({
+  //     loaded: true,
+  //     items,
+  //   });
+  // }
 
   /**
    * 删除订单
    * 
    */
-  onRemove = () => {
-    let items = this.state.items;
-    items.splice(items.length - 1, 1);
-    this.setState({
-      loaded: true,
-      items,
-    });
-  }
+  // onRemove = () => {
+  //   let items = this.state.items;
+  //   items.splice(items.length - 1, 1);
+  //   this.setState({
+  //     loaded: true,
+  //     items,
+  //   });
+  // }
 
 
   /**
@@ -131,7 +125,7 @@ export default class Perorder extends React.Component {
    */
   componentDidMount = () => {
     console.log('did mount');
-    this.getOrders(1, 10);
+    this.getOrders();
   }
 
   getOrders = () => {

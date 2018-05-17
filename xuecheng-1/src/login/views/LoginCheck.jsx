@@ -16,7 +16,8 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
     return {
-        signOut: () => dispatch(Actions.signOut())
+        signOut: () => dispatch(Actions.signOut()),
+        signIn: (obj) => dispatch(Actions.signIn(obj))
     }
 }
 
@@ -25,11 +26,40 @@ class LoginCheck extends React.Component {
         super(props);
         this.state = {
             size: 'small',
-            head: `http://localhost:3099/${props.currentUser.head}` || 'http://localhost:3099/default_head.jpg'
+            head: props.currentUser.head ? `http://localhost:3099/${props.currentUser.head}` : 'http://localhost:3099/default_head.jpg',
+            timer: null,
+            currentUser: props.currentUser,
+            loginStatus: props.loginStatus
         }
     }
 
 
+    componentDidMount() {
+        // if (!this.state.timer) {
+        //     let timer = setInterval(this.checkState, 3000);
+        //     this.setState({ timer });
+        // }
+    }
+
+    checkState = () => {
+        let { currentUser, loginStatus } = this.props;
+        if (loginStatus === LoginStatusTypes.SUCCESS) {
+            let values = {
+                userphone: currentUser.phone,
+                userpwd: currentUser.pwd,
+                usertype: 1,
+                remember: true
+            };
+
+            this.props.signIn(values);
+        }
+    }
+
+    componentWillUnmount() {
+        this.setState({
+            timer: null
+        })
+    }
 
     render() {
         const { loginStatus, currentUser, msg, signOut } = this.props;
@@ -47,14 +77,13 @@ class LoginCheck extends React.Component {
         switch (loginStatus) {
             case LoginStatusTypes.FAILURE:
                 return <div style={{ color: 'orange' }}>{msg}<Toast /></div>;
-            case LoginStatusTypes.SUCCESS: {
+            case LoginStatusTypes.SUCCESS:
                 return (
                     <div>
                         <Dropdown overlay={menu} placement="bottomCenter">
                             <Avatar src={head} />
                         </Dropdown>
                     </div>);
-            }
             case LoginStatusTypes.LOADING:
                 return <div></div>;
             default:

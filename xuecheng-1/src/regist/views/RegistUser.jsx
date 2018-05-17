@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Input, Checkbox, Button } from 'antd';
 import Avatar from '../../components/upload/Upload.jsx';
+import * as UserTypes from '../../UserTypes';
 const FormItem = Form.Item;
 
 
@@ -17,6 +18,7 @@ class RegistForm extends Component {
             if (!err) {
                 values.head = this.state.imgpath;
                 values.type = this.state.tab;
+                values.state = UserTypes.UNACTIVE;
                 console.log('注册User的数据: ', values);
                 this.props.registAct(values);
             }

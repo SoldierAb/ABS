@@ -53,7 +53,7 @@ export default class Ordertable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedRowKeys: [], // Check here to configure the default column
+      selectedRowKeys: [],
       loaded: false,
       orders: []
     };
@@ -63,6 +63,13 @@ export default class Ordertable extends React.Component {
     let { orders } = this.props;
     let data = [];
 
+    if (orders.length < 1) {
+      this.setState({
+        loaded: false,
+        orders: data
+      })
+      return;
+    }
     for (let i = 0; i < orders.length; i++) {
       orders[i].order_address = typeof orders[i].order_address === 'string' ? JSON.parse(orders[i].order_address) : orders[i].order_address;
       orders[i].order_subject = typeof orders[i].order_subject === 'string' ? JSON.parse(orders[i].order_subject) : orders[i].order_subject;
@@ -84,17 +91,6 @@ export default class Ordertable extends React.Component {
       orders: data
     })
 
-  }
-
-  start = () => {
-    this.setState({ loaded: true });
-    // ajax request after empty completing
-    setTimeout(() => {
-      this.setState({
-        selectedRowKeys: [],
-        loaded: false,
-      });
-    }, 1000);
   }
 
   clickRefresh = () => {
@@ -132,13 +128,6 @@ export default class Ordertable extends React.Component {
             message.success('操作成功！', 2);
             _this.props.refresh();
           }
-          // this.setState({
-          //   loaded: true,
-          //   total: resJson.total,
-          //   pageSize: parseInt(resJson.pageSize),
-          //   currentPage: parseInt(resJson.currentPage),
-          //   orders: resJson.data
-          // });
         })
       }).catch((err) => {
         throw new Error('Err' + err);
@@ -158,20 +147,13 @@ export default class Ordertable extends React.Component {
       onChange: this.onSelectChange,
     };
     const hasSelected = selectedRowKeys.length > 0;
+    if (orders.length < 1) {
+      return <div>暂无数据~</div>
+    }
     return (
       <Wrapper>
         <div style={{ marginBottom: 16 }}>
           <div className="btnBox">
-            {/* <span>
-              <Button
-                type="primary"
-                onClick={this.start}
-                disabled={!hasSelected}
-                loaded={loaded}
-              >
-                Reload
-            </Button>
-            </span> */}
             <span>
               <Button disabled={!hasSelected} type="primary" value={2} onClick={this.clickAct}>设为已处理</Button>
             </span>

@@ -42,7 +42,7 @@ const Personal = ({ currentUser, modifyAct, history }) => {
                     <Tabs defaultActiveKey="2-1">
                         <TabPane tab="教员信息管理" key="2-1">
                             <div>
-                                <Allteacher currentUser={currentUser} />
+                                {/* <Allteacher currentUser={currentUser} /> */}
                             </div>
                         </TabPane>
                         <TabPane tab="用户信息管理" key="2-2">
@@ -79,7 +79,11 @@ const Personal = ({ currentUser, modifyAct, history }) => {
                 <TabPane tab="招聘信息管理" key="2">
                     <Tabs defaultActiveKey="2-1">
                         <TabPane tab="招聘信息添加" key="2-1">
-                            <div><OrderAdd data={currentUser} /></div>
+                            {
+                                currentUser.state === UserTypes.ACTIVE ?
+                                    <div><OrderAdd data={currentUser} /></div> :
+                                    <div>您暂时还没有添加招聘信息的权限哦，管理员审核中。。。</div>
+                            }
                         </TabPane>
                         <TabPane tab="我的招聘信息" key="2-2">
                             <div>

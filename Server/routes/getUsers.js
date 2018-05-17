@@ -14,26 +14,27 @@ router.get('/getUsers', function (req, res, next) {
     connection.query(_sql, function (err, result) {
         if (err) {
             console.log('[SELECT ERROR] - ', err.message);
-            res.send(JSON.stringify({ status: 202, data: '服务器错误' }));
+            res.send(JSON.stringify({ code: 202, data: [], msg: '服务器错误' }));
             return;
         }
 
         if (result.length < 1) {
-            _response = { status: 404, data: '暂无相关数据' };
+            _response = { code: 404, data: [], msg: '暂无相关数据' };
         } else {
             for (var i = 0; i < result.length; i++) {
                 var user = new User();
                 user.phone = result[i].phone;
                 user.pwd = result[i].pwd;
                 user.name = result[i].name;
-                user.head= result[i].head;
-                user.iden= result[i].iden;
-                user.type= result[i].type;
-                user.collect= result[i].collect;
+                user.head = result[i].head;
+                user.iden = result[i].iden;
+                user.type = result[i].type;
+                user.collect = result[i].collect;
+                user.state = result[i].state;
                 _arr.push(user);
             }
 
-            _response = { status: 200, data: _arr };
+            _response = { code: 200, data: _arr };
         }
 
         res.send(JSON.stringify(_response));
