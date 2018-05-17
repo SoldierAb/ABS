@@ -35,6 +35,7 @@ class Personal extends React.Component {
         super(props);
         this.state = {
             currentUser: props.currentUser,
+            loginStatus: props.loginStatus,
             timer: null,
         };
     }
@@ -49,7 +50,7 @@ class Personal extends React.Component {
 
     checkState = () => {
         const apiUrl = `/loginCheck`;
-        let { currentUser, loginStatus } = this.props;
+        let { currentUser, loginStatus } = this.state;
         if (loginStatus === LoginStatusTypes.SUCCESS) {
             let obj = {
                 userphone: currentUser.phone,
@@ -67,8 +68,10 @@ class Personal extends React.Component {
                 } else {
                     return res.json().then((resJson) => {
                         console.log('当前用户===校验---**：   ', resJson);
-                        this.setState({ currentUser: resJson.data });
-                        if (obj.remember) localStorage.setItem(`current_user`, JSON.stringify(obj));
+                        if (currentUser.state !== resJson.data.state) {
+                            this.setState({ currentUser: resJson.data });
+                            if (obj.remember) localStorage.setItem(`current_user`, JSON.stringify(obj));
+                        }
                         // return resJson;
                     })
                 }
