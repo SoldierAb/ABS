@@ -20,21 +20,20 @@ user:{
 
 
 tea:{
-  "phone": "13003896629",
-  "pwd": "123",
-  "name": "教员测试",
-  "sex": 2,
-  "head": "upload_c7597430d7c03fb8618d63a8cb008ce9.jpg",
-  "iden": "35052611940507756x",
-  "age": 24,
-  "college": "厦门大学",
-  "price": 300,
-  "subject": "[\"数学\",\"高数\",\"前端\"]",
-  "address": "{\"city\":[\"zhejiang\",\"hangzhou\",\"xihu\"],\"address\":\"厦门大学校内学生宿舍5号楼908\"}",
-  "time": "[\"周一上午\",\"周二晚上\",\"周五晚上\"]",
-  "type": 5,
-  "evaluation": "有责任心，漂亮美丽大方",
-  "order_no": ""
+  address:"{"city":["福建省","福州市","晋安区"],"address":"世欧王庄A区"}"
+  age:20
+  college:"福建师范大学"
+  evaluation:"有责任心，有耐心"
+  head:"upload_7f636dfce1481842733f57dceb3d12dd.jpg"
+  iden:"350526199405077521"
+  name:"罗斯"
+  phone:"13003895529"
+  price:500
+  sex:2
+  state:"1"
+  subject:"["数学"]"
+  time:"["周一晚上","周五晚上"]"
+  type:5
 }
 
 
@@ -56,6 +55,9 @@ tea:{
         type : 5,
     }
 ]
+
+
+
 
 
 order_address

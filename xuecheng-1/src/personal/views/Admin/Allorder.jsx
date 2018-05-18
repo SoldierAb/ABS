@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import QueueAnim from 'rc-queue-anim';
 import { Button, message, Modal, Pagination } from 'antd';
 import * as UserTypes from '../../../UserTypes';
-import Ordertable from '../../../components/table/AllOrderTable.jsx';
+import Ordertable from '../../../components/table/Ordertable.jsx';
 
 const Wrapper = styled.div`
-  .Allcontainer{
+  .Percontainer{
     padding-right:20px;
   }
   .ant-table-header{
@@ -14,33 +14,30 @@ const Wrapper = styled.div`
       thead{
         tr{
           th:nth-child(1){
-            width:100px;
+            width:60px;
           }
           th:nth-child(2){
-            width:120px;
-          }
-          th:nth-child(3){
             width:140px;
           }
-          th:nth-child(4){
+          th:nth-child(3){
             width:170px;
+          }
+          th:nth-child(4){
+            width:100px;
           }
           th:nth-child(5){
             width:100px;
           }
           th:nth-child(6){
-            width:100px;
-          }
-          th:nth-child(7){
             width:170px;
           }
+          th:nth-child(7){
+            width:200px;
+          }
           th:nth-child(8){
-            width:180px;
+            width:200px;
           }
           th:nth-child(9){
-            width:180px;
-          }
-          th:nth-child(10){
             width:80px;
           }
         }
@@ -52,33 +49,30 @@ const Wrapper = styled.div`
       tbody{
         tr{
           td:nth-child(1){
-            width:80px;
+            width:60px;
           }
           td:nth-child(2){
-            width:120px;
-          }
-          td:nth-child(3){
             width:140px;
           }
-          td:nth-child(4){
+          td:nth-child(3){
             width:170px;
+          }
+          td:nth-child(4){
+            width:100px;
           }
           td:nth-child(5){
             width:100px;
           }
           td:nth-child(6){
-            width:100px;
-          }
-          td:nth-child(7){
             width:170px;
           }
+          td:nth-child(7){
+            width:200px;
+          }
           td:nth-child(8){
-            width:180px;
+            width:200px;
           }
           td:nth-child(9){
-            width:180px;
-          }
-          td:nth-child(10){
             width:80px;
           }
         }
@@ -102,33 +96,27 @@ export default class Perorder extends React.Component {
     };
   }
 
-  onClick = () => {
-    this.setState({
-      loaded: !this.state.loaded,
-    });
-  }
-
-  onAdd = () => {
-    let items = this.state.items;
-    items.push(<li key={Date.now()}>========</li>);
-    this.setState({
-      loaded: true,
-      items,
-    });
-  }
+  // onAdd = () => {
+  //   let items = this.state.items;
+  //   items.push(<li key={Date.now()}>========</li>);
+  //   this.setState({
+  //     loaded: true,
+  //     items,
+  //   });
+  // }
 
   /**
    * 删除订单
    * 
    */
-  onRemove = () => {
-    let items = this.state.items;
-    items.splice(items.length - 1, 1);
-    this.setState({
-      loaded: true,
-      items,
-    });
-  }
+  // onRemove = () => {
+  //   let items = this.state.items;
+  //   items.splice(items.length - 1, 1);
+  //   this.setState({
+  //     loaded: true,
+  //     items,
+  //   });
+  // }
 
 
   /**
@@ -140,28 +128,22 @@ export default class Perorder extends React.Component {
     this.getOrders();
   }
 
-  // switchPage = (current) => {
-  //   console.log('当前页', current);
-  //   this.setState({
-  //     loaded: false,
-  //     orders: []
-  //   });
-  //   // this.getOrders(current, 10);
-  // }
-
   getOrders = () => {
+    console.log('getOrders      ----------------------------');
     this.setState({
       loaded: false,
+      total: 0,
       orders: []
     });
     let { phone, type } = this.state.currentUser;
-    let api = `/getOrders`;
+    let api = `/getAllOrders?`;
     fetch(api).then((res) => {
       if (res.status !== 200) throw new Error('出错' + res);
       res.json().then((resJson) => {
-        console.log('all order:  ==  ', resJson);
+        console.log('perorder:  ==  ', resJson);
         this.setState({
           loaded: true,
+          total: resJson.total,
           orders: resJson.data
         });
       })
@@ -169,14 +151,24 @@ export default class Perorder extends React.Component {
       throw new Error('Err' + err);
     })
   }
+  // switchPage = (current) => {
+  //   console.log('当前页', current);
+  //   this.setState({
+  //     loaded: false,
+  //     orders: []
+  //   });
+  //   this.getOrders(current, 10);
+  // }
+
 
   // getOrders = (currentPage, pageSize) => {
   //   let { phone, type } = this.state.currentUser;
-  //   let api = `/getOrders`;
+  //   // let api = `/getPerOrders?currentPage=${currentPage}&&pageSize=${pageSize}&&phone=${phone}`;
+  //   let api = `/getPerOrders?phone=${phone}`;
   //   fetch(api).then((res) => {
   //     if (res.status !== 200) throw new Error('出错' + res);
   //     res.json().then((resJson) => {
-  //       console.log('all order:  ==  ', resJson);
+  //       console.log('perorder:  ==  ', resJson);
   //       this.setState({
   //         loaded: true,
   //         total: resJson.total,
@@ -192,13 +184,12 @@ export default class Perorder extends React.Component {
 
   render() {
     let { loaded, total, pageSize, currentPage, orders } = this.state;
-    if (orders.length < 1) return <div>暂无数据</div>;
     return (
       <Wrapper>
-        <div className="Allcontainer" key="b">
+        <div className="Percontainer" key="b">
           <QueueAnim component="ul" type={['right', 'left']} leaveReverse>
             {loaded ? <Ordertable refresh={this.getOrders} orders={orders} />
-              : <li>加载中。。。</li>}
+              : <li>暂无数据</li>}
           </QueueAnim>
         </div>
         <div>

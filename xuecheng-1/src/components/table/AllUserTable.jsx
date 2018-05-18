@@ -91,7 +91,8 @@ export default class AllOrderTable extends React.Component {
             for (let j = 0; j < users.length; j++) {
               for (let i = 0; i < selectedRowKeys.length; i++) {
                 if (users[j].phone === selectedRowKeys[i]) {
-                  users[i].state = _active[_state - 1];
+                  // users[i].state = _active[_state - 1];
+                  users[i].state = parseInt(_state) === UserTypes.ACTIVE ? <span style={{ color: 'green' }}>已激活</span> : <span style={{ color: 'red' }}>未激活</span>;
                   console.log(users[i].phone, users[i].state);
                 }
               }
@@ -101,7 +102,7 @@ export default class AllOrderTable extends React.Component {
               selectedRowKeys: [],
               users
             });
-            _this.props.refresh();
+            // _this.props.refresh();
             message.success('操作成功！', 2);
           }
         })

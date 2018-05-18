@@ -4,17 +4,17 @@ var db = require('../utils/DButil');
 var connection = db.connect();
 var Order = require('./order');
 
-router.get('/getPerOrders', function (req, res, next) {
+router.get('/getAllOrders', function (req, res, next) {
   console.log('--------------------------getOrders----START------------------------');
   var _response = {},
-    _phone = req.query.phone,
+
     // _size = req.query.pageSize,
     // _curPage = req.query.currentPage,
     // _pageDrop = (_curPage - 1) * _size,
     _arr = [],
     // _sql = "SELECT * FROM orders WHERE phone=" + _phone + " limit " + _pageDrop + "," + _size + "",
-    _sql = "SELECT * FROM orders WHERE phone=" + _phone + "",
-    _countSql = "SELECT count(order_no) FROM orders WHERE phone=" + _phone + "",
+    _sql = "SELECT * FROM orders",
+    _countSql = "SELECT count(order_no) FROM orders",
     _total = 0;
   connection.query(_countSql, function (err, result) {
     if (err) {

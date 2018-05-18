@@ -41,7 +41,8 @@ class Personal extends React.Component {
     }
 
     componentDidMount() {
-        if (!this.state.timer) {
+        console.log('personal user: ', this.state.currentUser);
+        if (!this.state.timer && this.state.currentUser === UserTypes.USER) {
             this.setState({
                 timer: setInterval(this.checkState, 3000)
             });
@@ -111,7 +112,7 @@ class Personal extends React.Component {
                         <Tabs defaultActiveKey="2-1">
                             <TabPane tab="教员信息管理" key="2-1">
                                 <div>
-                                    {/* <Allteacher currentUser={currentUser} /> */}
+                                    <Allteacher currentUser={currentUser} />
                                 </div>
                             </TabPane>
                             <TabPane tab="用户信息管理" key="2-2">
@@ -122,18 +123,16 @@ class Personal extends React.Component {
                         </Tabs>
                     </TabPane>
                     <TabPane tab="招聘信息管理" key="2">
-                        <div style={{ paddingTop: '10px' }}>
-                            <Allorder currentUser={currentUser} />
-                        </div>
-                        {/* <Tabs defaultActiveKey="2-1">
+                        <Tabs defaultActiveKey="2-1">
                             <TabPane tab="招聘信息添加" key="2-1">
                                 <div><OrderAdd data={currentUser} /></div>
                             </TabPane>
                             <TabPane tab="平台招聘信息" key="2-2">
                                 <div>
+                                    <Allorder currentUser={currentUser} />
                                 </div>
                             </TabPane>
-                        </Tabs> */}
+                        </Tabs>
                     </TabPane>
                 </Tabs>
             );

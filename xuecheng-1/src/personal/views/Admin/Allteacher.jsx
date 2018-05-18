@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import QueueAnim from 'rc-queue-anim';
 import { Button, message, Modal, Pagination } from 'antd';
 import * as UserTypes from '../../../UserTypes';
-import Ordertable from '../../../components/table/Ordertable.jsx';
+import AllTeaTable from '../../../components/table/AllTeaTable.jsx';
 
 const Wrapper = styled.div`
   .Percontainer{
@@ -82,78 +82,32 @@ export default class Perorder extends React.Component {
     super(props);
     this.state = {
       loaded: false,
-      currentUser: props.currentUser,
-      total: 0,
-      pageSize: 10,
-      currentPage: 1,
-      orders: []
+      teachers: []
     };
   }
-
-  onClick = () => {
-    this.setState({
-      loaded: !this.state.loaded,
-    });
-  }
-
-  onAdd = () => {
-    let items = this.state.items;
-    items.push(<li key={Date.now()}>========</li>);
-    this.setState({
-      loaded: true,
-      items,
-    });
-  }
-
-  /**
-   * 删除订单
-   * 
-   */
-  onRemove = () => {
-    let items = this.state.items;
-    items.splice(items.length - 1, 1);
-    this.setState({
-      loaded: true,
-      items,
-    });
-  }
-
 
   /**
    * 个人订单组件初始化加载数据
    * 
    */
   componentDidMount = () => {
-    console.log('did mount');
-    this.getOrders(1, 10);
+    this.getAllTeachers();
   }
 
-  switchPage = (current) => {
-    console.log('当前页', current);
+
+  getAllTeachers = () => {
     this.setState({
       loaded: false,
-      orders: []
+      teachers: []
     });
-    this.getOrders(current, 10);
-  }
-
-
-  getOrders = (currentPage, pageSize) => {
-    let { phone, type } = this.state.currentUser;
-    let api = `/getPerOrders?currentPage=${currentPage}&&pageSize=${pageSize}&&phone=${phone}`;
-    if (type === UserTypes.ADMIN) {
-      api = `/getOrders?currentPage=${currentPage}&&pageSize=${pageSize}`;
-    }
+    let api = `/getAllTeachers`;
     fetch(api).then((res) => {
       if (res.status !== 200) throw new Error('出错' + res);
       res.json().then((resJson) => {
-        console.log('perorder:  ==  ', resJson);
+        console.log('allteachers : ', resJson);
         this.setState({
           loaded: true,
-          total: resJson.total,
-          pageSize: parseInt(resJson.pageSize),
-          currentPage: parseInt(resJson.currentPage),
-          orders: resJson.data
+          teachers: resJson.data
         });
       })
     }).catch((err) => {
@@ -162,17 +116,15 @@ export default class Perorder extends React.Component {
   }
 
   render() {
-    let { loaded, total, pageSize, currentPage, orders } = this.state;
+    let { loaded, teachers } = this.state;
+    if (teachers.length < 1) return <div>暂无数据~</div>;
     return (
       <Wrapper>
         <div className="Percontainer" key="b">
           <QueueAnim component="ul" type={['right', 'left']} leaveReverse>
-            {loaded ? <Ordertable orders={orders} />
-              : <li>暂无数据</li>}
+            {loaded ? <AllTeaTable teachers={teachers} refresh={this.getAllTeachers} />
+              : <li>加载中。。。</li>}
           </QueueAnim>
-        </div>
-        <div>
-          {/* <Pagination showQuickJumper defaultCurrent={parseInt(currentPage)} total={total} onChange={this.switchPage} />, */}
         </div>
       </Wrapper>
     );

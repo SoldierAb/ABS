@@ -10,6 +10,7 @@ import univerSitys from '../../initdata/university';
 import prices from '../../initdata/price';
 import subjectOptions from '../../initdata/subject';
 import timeOptions from '../../initdata/time';
+import * as UserTypes from '../../UserTypes';
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
 const SelectOption = Select.Option;
@@ -103,16 +104,31 @@ class OrderForm extends Component {
         return (
             <Wrapper>
                 <Form onSubmit={this.handleSubmit} className="clearfix">
-                    <FormItem
-                        label="手机号码"
-                    >
-                        {getFieldDecorator('phone', {
-                            rules: [{ required: true, message: 'Please input your phone number!' }],
-                            initialValue: data.phone
-                        })(
-                            <Input disabled style={{ width: '100%' }} />
-                            )}
-                    </FormItem>
+                    {
+                        data.type === UserTypes.ADMIN ?
+                            <FormItem
+                                label="手机号码"
+                            >
+                                {getFieldDecorator('phone', {
+                                    rules: [{ required: true, message: 'Please input your phone number!' }],
+                                })(
+                                    <Input style={{ width: '100%' }} />
+                                    )}
+                            </FormItem>
+
+                            :
+                            <FormItem
+                                label="手机号码"
+                            >
+                                {getFieldDecorator('phone', {
+                                    rules: [{ required: true, message: 'Please input your phone number!' }],
+                                    initialValue: data.phone
+                                })(
+                                    <Input disabled style={{ width: '100%' }} />
+                                    )}
+                            </FormItem>
+
+                    }
 
                     <FormItem
                         label="课酬（元/小时）"
