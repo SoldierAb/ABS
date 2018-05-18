@@ -48,6 +48,10 @@ class Personal extends React.Component {
         }
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        return this.state.currentUser.state !== nextState.currentUser.state;
+    }
+
     checkState = () => {
         const apiUrl = `/loginCheck`;
         let { currentUser, loginStatus } = this.state;
@@ -68,10 +72,10 @@ class Personal extends React.Component {
                 } else {
                     return res.json().then((resJson) => {
                         console.log('当前用户===校验---**：   ', resJson);
-                        if (currentUser.state !== resJson.data.state) {
-                            this.setState({ currentUser: resJson.data });
-                            if (obj.remember) localStorage.setItem(`current_user`, JSON.stringify(obj));
-                        }
+                        this.setState({ currentUser: resJson.data });
+                        if (obj.remember) localStorage.setItem(`current_user`, JSON.stringify(obj));
+                        // if (currentUser.state !== resJson.data.state) {
+                        // }
                         // return resJson;
                     })
                 }

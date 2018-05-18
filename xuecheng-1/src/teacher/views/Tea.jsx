@@ -105,11 +105,13 @@ export default class Tea extends React.Component {
         this.state = {
             teaArr: [],
             loaded: false,
-            btnSize: 'small'
+            btnSize: 'small',
         }
     }
 
     componentDidMount() {
+        let currentCity = localStorage.getItem('currentCity');
+        console.log('tea city:  ', currentCity);
         const api = `/getTeachers`;
         fetch(api).then((res) => {
             if (res.status !== 200) throw new Error('出错' + res);

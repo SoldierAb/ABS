@@ -10,13 +10,13 @@ import Loading from './components/loading/Loading.jsx';
 import Personal from './personal/views/Personal.jsx';
 import Login from './login/views/Login.jsx';
 import Home from './home/views/Home.jsx';
-import Menu from './menu/Menu.jsx';
 import Regist from './regist/views/Regist.jsx';
 import About from './about/views/About.jsx';
 import Teacher from './teacher/views/Tea.jsx';
 import Course from './course/views/Course.jsx';
 import Order from './order/views/Order.jsx';
 import Contact from './contact/views/Contact.jsx';
+import Menu from './components/menu/Menu.jsx';
 import Simplecv from './components/simplecv/Simplecv.jsx';
 // import Edumap from './components/edumap/Edumap.jsx';
 // import Subway from './components/edumap/Subway.jsx';
@@ -24,6 +24,7 @@ import Busmap from './components/edumap/Busmap.jsx';
 import Drivemap from './components/edumap/Drivemap.jsx';
 import Detail from './order/views/Detail.jsx';
 import './transition.css';
+import { message } from 'antd';
 
 injectGlobal`
    *{
@@ -107,32 +108,79 @@ const Wrapper = styled.div`
 
 const Top = withRouter(({ location }) => <Menu locat={location} />)
 
-const Routes = () => (
-    <Router>
-        <Wrapper>
-            <Top />
-            <div className="xBody">
-                <Route path="/login" component={Login} />
-                <Route exact path="/" component={Home} />
-                <Route path="/course" component={Course} />
-                <Route path="/regist" component={Regist} />
-                <Route path="/about" component={About} />
-                <Route path="/order" component={Order} />
-                <Route path="/contact" component={Contact} />
-                <Route path="/teacher" component={Teacher} />
-                <Route path="/personal" component={Personal} />
-                <Route path="/simplecv" component={Simplecv} />
-                <Route path="/busmap" component={Busmap} />
-                <Route path="/drivemap" component={Drivemap} />
-                <Route path="/detail" component={Detail} />
-                <Route path="/admin" component={Login} />
-            </div>
-            <div>
-                <Loading />
-            </div>
-        </Wrapper>
-    </Router>
-)
 
+class Routes extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    componentDidMount() {
+        let myCity = new window.BMap.LocalCity();   //定位当前城市
+        myCity.get(this.myFun);
+    }
+
+    myFun = (result) => {      //定位回调函数               
+        let cityName = result.name;
+        message.info(`当前城市：${cityName}`, 2);
+        localStorage.setItem('currentCity', cityName);
+    }
+
+    render() {
+        return (
+            <Router>
+                <Wrapper>
+                    <Top />
+                    <div className="xBody">
+                        <Route path="/login" component={Login} />
+                        <Route exact path="/" component={Home} />
+                        <Route path="/course" component={Course} />
+                        <Route path="/regist" component={Regist} />
+                        <Route path="/about" component={About} />
+                        <Route path="/order" component={Order} />
+                        <Route path="/contact" component={Contact} />
+                        <Route path="/teacher" component={Teacher} />
+                        <Route path="/personal" component={Personal} />
+                        <Route path="/simplecv" component={Simplecv} />
+                        <Route path="/busmap" component={Busmap} />
+                        <Route path="/drivemap" component={Drivemap} />
+                        <Route path="/detail" component={Detail} />
+                        <Route path="/admin" component={Login} />
+                    </div>
+                    <div>
+                        <Loading />
+                    </div>
+                </Wrapper>
+            </Router>
+        );
+    }
+}
 
 export default Routes;
+
+
+// const RoutesBak = () => (
+//     <Router>
+//         <Wrapper>
+//             <Top />
+//             <div className="xBody">
+//                 <Route path="/login" component={Login} />
+//                 <Route exact path="/" component={Home} />
+//                 <Route path="/course" component={Course} />
+//                 <Route path="/regist" component={Regist} />
+//                 <Route path="/about" component={About} />
+//                 <Route path="/order" component={Order} />
+//                 <Route path="/contact" component={Contact} />
+//                 <Route path="/teacher" component={Teacher} />
+//                 <Route path="/personal" component={Personal} />
+//                 <Route path="/simplecv" component={Simplecv} />
+//                 <Route path="/busmap" component={Busmap} />
+//                 <Route path="/drivemap" component={Drivemap} />
+//                 <Route path="/detail" component={Detail} />
+//                 <Route path="/admin" component={Login} />
+//             </div>
+//             <div>
+//                 <Loading />
+//             </div>
+//         </Wrapper>
+//     </Router>
+// )
