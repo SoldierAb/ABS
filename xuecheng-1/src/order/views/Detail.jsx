@@ -162,7 +162,7 @@ class Detail extends React.Component {
                         <QRCode value={order.phone} />
                       </div>
                       <div className="phoneBox">
-                        <span class="phoneIcon">
+                        <span className="phoneIcon">
                           <Icon type="phone" />
                         </span>
                         <span>

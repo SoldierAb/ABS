@@ -10,36 +10,65 @@ import * as DateUtil from '../../utils/DateUtil';
 import { Button, message, Modal, Pagination } from 'antd';
 const confirm = Modal.confirm;
 
+const orderPageSize = 6;
+
 const Wrapper = styled.div`
-  padding:40px;
-  .orderContainerLeft{
+    padding:40px 80px;
     border:1px solid #eee;
     padding:20px 10px;
-    width:60%;
+    width:100%;
     margin-right:10%;
     position:relative;
-    .orderBox{
-      border:2px dashed #096dd9;
-      padding:10px 20px;
-      margin:20px 10px;
-      &:hover{
-        box-shadow:2px 2px 2px 2px lightblue;
+    height:1180px;
+    border-bottom:1px solid #eee;
+    .orderContainerHeader{
+      height:200px;
+      padding:20px;
+      text-align:center;
+      h1{
+        font-family: "Work Sans", Arial, sans-serif;
+        font-weight: 400;
+        font-size: 32px;
+        margin: 0 0 20px 0;
+        margin-bottom: 20px;
+        line-height: 1.5;
+        color: #000;
       }
-      .orderHeader{
-        padding:10px 0;
-        border-bottom:1px solid #dcdcdc;
-      }
-      .orderContent{
-        padding:10px 0;
+      p{
+        font-size: 18px;
+        line-height: 1.5;
+        color: #828282;
       }
     }
-  }
+    .orderContainer{
 
-  .orderContainerRight{
-      width:30%;
-      border:1px solid yellow;
-  }
-  
+      .orderPapa{
+        width: 1200px;
+        margin: 0 auto;
+      }
+      .orderBox{
+        padding: 10px 20px;
+        margin: 2%;
+        width: 46%;
+        background: white;
+        box-shadow:2px 2px 2px 2px #eee
+        &:hover{
+          // background:#eee;
+        }
+        .orderHeader{
+          padding:10px 0;
+          border-bottom:1px solid #dcdcdc;
+        }
+        .orderContent{
+          padding:10px 0;
+        }
+      }
+    }
+    .orderContainerBottom{
+      position:absolute;
+      bottom:40px;
+      right:40px;
+    }
 `;
 
 class Order extends React.Component {
@@ -53,7 +82,7 @@ class Order extends React.Component {
 
   switchPage = (current) => {
     let currentCity = localStorage.getItem('currentCity');
-    this.props.getOrders(current, 10, currentCity)
+    this.props.getOrders(current, orderPageSize, currentCity)
   }
 
   clickContact = (e) => {
@@ -93,17 +122,17 @@ class Order extends React.Component {
   componentDidMount() {
     let currentCity = localStorage.getItem('currentCity');
     console.log('order city:  ', currentCity);
-    this.props.getOrders(1, 10, currentCity);
-    if (!this.state.timer) {
-      this.setState({
-        timer: setInterval(this.refreshData, 300000)
-      })
-    }
+    this.props.getOrders(1, orderPageSize, currentCity);
+    // if (!this.state.timer) {
+    //   this.setState({
+    //     timer: setInterval(this.refreshData, 300000)
+    //   })
+    // }
   }
 
   refreshData = () => {
     let currentCity = localStorage.getItem('currentCity');
-    this.props.getOrders(1, 10, currentCity)
+    this.props.getOrders(1, 10, currentCity);
   }
 
   componentWillMount() {
@@ -124,7 +153,7 @@ class Order extends React.Component {
     return orders.map((item, index) => {
       const { phone, order_no, order_price, order_address, order_need_sex, order_subject, order_time, order_detail, order_state } = item;
       return (
-        <div key={item + index} className="orderBox">
+        <div key={item + index} className="orderBox fl">
           <div className="orderHeader clearfix">
             <div className="orderHeaderLeft fl">
               <span>订单号：</span>
@@ -188,17 +217,18 @@ class Order extends React.Component {
         console.log('page: --->    ', total);
         return (
           <Wrapper>
-            <div className="clearfix">
-              <div className="orderContainerLeft fl">
-                <QueueAnim delay={300}>
-                  {this.getOrderTem()}
-                </QueueAnim>
-              </div>
-              <div className="orderContainerRight fr">
-
-              </div>
+            <div className="orderContainerHeader">
+              <h1>JUST FOR YOU</h1>
+              <p>recruitment information </p>
             </div>
-            <div className="orderBottom">
+            <div className="orderContainer">
+              <QueueAnim
+                className="orderPapa clearfix"
+                delay={300}>
+                {this.getOrderTem()}
+              </QueueAnim>
+            </div>
+            <div className="orderContainerBottom">
               <Pagination pageSize={parseInt(pageSize)} showQuickJumper defaultCurrent={parseInt(currentPage)} total={parseInt(total)} onChange={this.switchPage} />
             </div>
           </Wrapper>

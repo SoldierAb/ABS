@@ -73,7 +73,7 @@ const fadeBtnBottom = keyframes`
 
 const Wrapper = styled.div`
     position:relative;
-    height:880px;
+    height:940px;
     max-width:1700px;
     min-width:960px;
     padding:0 40px 30px 40px;
@@ -83,8 +83,10 @@ const Wrapper = styled.div`
     }
 
     .teaHeader{
-        background: linear-gradient(50deg, rgb(81, 255, 182), rgb(87, 160, 255));
-        height:140px;
+        // background: linear-gradient(50deg, rgb(81, 255, 182), rgb(87, 160, 255));
+        height: 200px;
+        text-align: center;
+        padding-top: 60px;
     }
 
     .teaBoxContainer{
@@ -261,7 +263,8 @@ class Tea extends React.Component {
                 return (
                     <Wrapper>
                         <div className="teaHeader">
-
+                            <h1>JUST FOR YOU</h1>
+                            <p>Excellent Teachers</p>
                         </div>
                         <div className="teaBoxContainer clearfix">
                             <QueueAnim delay={300}>
