@@ -19,8 +19,13 @@ injectGlobal`
 
 const Wrapper = styled.div`
     .xTitle{
+        background:white;
         height:30px;
         border-bottom:1px solid #eee;
+        padding:0 80px;
+        div{
+            height:100%;
+        }
     }
 `;
 
@@ -52,19 +57,19 @@ const Nav = ({ locat, currentUser }) => {
                             </li>
                             : <li>
                                 <Button type="primary" size="small">
-                                    <Link to="/login" >Login</Link>
+                                    <Link to="/login" >登陆</Link>
                                 </Button>
                                 <Button size="small" style={{ marginLeft: '4px' }}>
-                                    <Link to="/regist" >Regist</Link>
+                                    <Link to="/regist" >注册</Link>
                                 </Button>
                             </li>
                     }
-                    <li><Link to="/contact" className={locat.pathname === '/contact' ? 'menuActive' : ' menuNormal'}>Contact</Link></li>
-                    <li><Link to="/about" className={locat.pathname === '/about' ? 'menuActive' : ' menuNormal'}>About</Link></li>
-                    <li><Link to="/order" className={locat.pathname === '/order' ? 'menuActive' : ' menuNormal'}>Order</Link></li>
-                    <li><Link to="/teacher" className={locat.pathname === '/teacher' ? 'menuActive' : ' menuNormal'}>Teacher</Link></li>
-                    <li><Link to="/course" className={locat.pathname === '/course' ? 'menuActive' : ' menuNormal'}>Course</Link></li>
-                    <li><Link to="/" className={locat.pathname === '/' ? 'menuActive' : ' menuNormal'}>Home</Link></li>
+                    <li><Link to="/contact" className={locat.pathname === '/contact' ? 'menuActive' : ' menuNormal'}>联系我们</Link></li>
+                    <li><Link to="/about" className={locat.pathname === '/about' ? 'menuActive' : ' menuNormal'}>关于家教</Link></li>
+                    <li><Link to="/order" className={locat.pathname === '/order' ? 'menuActive' : ' menuNormal'}>招聘信息</Link></li>
+                    <li><Link to="/teacher" className={locat.pathname === '/teacher' ? 'menuActive' : ' menuNormal'}>优秀教员</Link></li>
+                    <li><Link to="/course" className={locat.pathname === '/course' ? 'menuActive' : ' menuNormal'}>课程推荐</Link></li>
+                    <li><Link to="/" className={locat.pathname === '/' ? 'menuActive' : ' menuNormal'}>主页</Link></li>
                 </ul>
                 <span className="logo fl">
                     <img src="http://localhost:3099/logo.png" alt="logo" />

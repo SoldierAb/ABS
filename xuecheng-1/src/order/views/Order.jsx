@@ -52,8 +52,8 @@ class Order extends React.Component {
   }
 
   switchPage = (current) => {
-    console.log('当前页', current);
-    this.props.getOrders(current, 10);
+    let currentCity = localStorage.getItem('currentCity');
+    this.props.getOrders(current, 10, currentCity)
   }
 
   clickContact = (e) => {
@@ -183,7 +183,7 @@ class Order extends React.Component {
     const { getOrderStatus, orders, total, pageSize, currentPage, msg } = this.props;
     switch (getOrderStatus) {
       case Status.LOADING:
-        return <Wrapper>加载中。。。</Wrapper>;
+        return <Wrapper></Wrapper>;
       case Status.SUCCESS:
         console.log('page: --->    ', total);
         return (
@@ -199,7 +199,7 @@ class Order extends React.Component {
               </div>
             </div>
             <div className="orderBottom">
-              <Pagination showQuickJumper defaultCurrent={parseInt(currentPage)} total={total} onChange={this.switchPage} />,
+              <Pagination pageSize={parseInt(pageSize)} showQuickJumper defaultCurrent={parseInt(currentPage)} total={parseInt(total)} onChange={this.switchPage} />
             </div>
           </Wrapper>
         );

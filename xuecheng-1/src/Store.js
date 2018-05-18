@@ -5,13 +5,15 @@ import { reducer as loadingReducer } from './components/loading';
 import { reducer as personalReducer } from './personal/';
 import { reducer as registReducer } from './regist/';
 import { reducer as orderReducer } from './order';
+import { reducer as teacherReducer } from './teacher';
 
 const reducer = combineReducers({
     login: loginReducer,
     loading: loadingReducer,
     personal: personalReducer,
     regist: registReducer,
-    order: orderReducer
+    order: orderReducer,
+    teacher: teacherReducer
 })
 
 const win = window;

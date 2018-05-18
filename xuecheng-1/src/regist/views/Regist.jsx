@@ -86,11 +86,11 @@ class RegistContainer extends Component {
           </div>
           <div className="rightBar fr">
             <Tabs defaultActiveKey={tab} onChange={this.handleTabs} tabPosition="left">
-              <TabPane tab="User" key="1">
+              <TabPane tab="雇主注册" key="1">
                 <RegistUser registAct={registAct} />
               </TabPane>
-              <TabPane tab="Teacher" key="5">
-                <RegistTea  registAct={registAct} />
+              <TabPane tab="教员注册" key="5">
+                <RegistTea registAct={registAct} />
               </TabPane>
             </Tabs>
           </div>

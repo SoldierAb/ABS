@@ -14,7 +14,7 @@ router.get('/getOrders', function (req, res, next) {
         _arr = [],
         // _sql = "SELECT * FROM orders limit " + _pageDrop + "," + _size + "",
         _sql = _city ? "SELECT * FROM orders WHERE order_address like '%" + _city + "%'  limit " + _pageDrop + "," + _size + "" : "SELECT * FROM orders limit " + _pageDrop + "," + _size + "",
-        _countSql = _city ? "SELECT count(order_no) FROM orders WHERE order_address like '%" + _city + "%'  limit " + _pageDrop + "," + _size + "" : "SELECT count(order_no) FROM orders limit " + _pageDrop + "," + _size + "",
+        _countSql = "SELECT count(order_no) FROM orders WHERE order_address like '%" + _city + "%' ",
         _total = 0;
     console.log(_sql);
     connection.query(_countSql, function (err, result) {
@@ -50,8 +50,8 @@ router.get('/getOrders', function (req, res, next) {
                 order.order_state = result[i].order_state;
                 _arr.push(order);
             }
-            // _response = { code: 200, data: _arr, total: _total, currentPage: _curPage, pageSize: _size, msg: 'get orders success' };
-            _response = { code: 200, data: _arr, total: _total, msg: 'get orders success' };
+            _response = { code: 200, data: _arr, total: _total, currentPage: _curPage, pageSize: _size, msg: 'get orders success' };
+            // _response = { code: 200, data: _arr, total: _total, msg: 'get orders success' };
         }
         res.send(JSON.stringify(_response));
 

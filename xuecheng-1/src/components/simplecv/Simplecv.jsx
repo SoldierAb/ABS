@@ -79,8 +79,8 @@ const Simplecv = ({ location }) => {
     <Wrapper>
       <div className="cvTop clearfix">
         <div className="fl topLeft">
-          <h2>Name: {name}</h2>
-          <p>Age: {age}  -  Sex:{sex == 1 ? ' 男' : ' 女'}</p>
+          <h2>姓名: {name}</h2>
+          <p>年龄: {age}  -  性别:{sex == 1 ? ' 男' : ' 女'}</p>
         </div>
         <div className="fr topRight clearfix">
           <div className="fl address">COLLEGE</div>

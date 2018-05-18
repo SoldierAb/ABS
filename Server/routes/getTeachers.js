@@ -9,9 +9,25 @@ router.get('/getTeachers', function (req, res, next) {
 
     var _response = {},
         _city = req.query.city ? req.query.city : null,
+        _size = req.query.pageSize,
+        _curPage = req.query.currentPage,
+        _pageDrop = (_curPage - 1) * _size,
         _arr = [],
-        _sql = _city ? "SELECT * FROM teachers WHERE address like '%" + _city + "%' " : 'SELECT * FROM teachers';
+        _sql = _city ? "SELECT * FROM teachers WHERE address like '%" + _city + "%'  limit " + _pageDrop + "," + _size + "" : "SELECT * FROM teachers limit " + _pageDrop + "," + _size + "",
+        _countSql = "SELECT count(phone) FROM teachers WHERE address like '%" + _city + "%' ",
+        _total = 0;
     console.log(_sql);
+
+    connection.query(_countSql, function (err, result) {
+        if (err) {
+            console.log('[SELECT ERROR] - ', err.message);
+            res.send(JSON.stringify({ code: 202, data: [], msg: '服务器错误' }));
+            return;
+        }
+        _total = result[0]['count(phone)'] || 0;
+        console.log('总条数： ', _total);
+
+    });
 
     connection.query(_sql, function (err, result) {
         if (err) {
@@ -21,7 +37,7 @@ router.get('/getTeachers', function (req, res, next) {
         }
 
         if (result.length < 1) {
-            _response = { code: 404, data: [], msg: '暂无相关数据' };
+            _response = { code: 202, data: [], msg: '暂无相关数据' };
         } else {
             for (var i = 0; i < result.length; i++) {
                 var teacher = new Teacher();
@@ -39,7 +55,9 @@ router.get('/getTeachers', function (req, res, next) {
                 _arr.push(teacher);
             }
 
-            _response = { code: 200, data: _arr, msg: '加载教员数据成功' };
+            // _response = { code: 200, data: _arr, msg: '加载教员数据成功' };
+            _response = { code: 200, data: _arr, total: _total, currentPage: _curPage, pageSize: _size, msg: 'get teachers success' };
+
         }
 
         res.send(JSON.stringify(_response));

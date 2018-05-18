@@ -116,7 +116,7 @@ class RegistForm extends Component {
             <Form onSubmit={this.handleSubmit} className="clearfix">
                 <FormItem
                     {...formItemLayout}
-                    label="Phone Number"
+                    label="手机号码"
                 >
                     {getFieldDecorator('phone', {
                         rules: [{ required: true, message: 'Please input your phone number!' }],
@@ -127,7 +127,7 @@ class RegistForm extends Component {
 
                 <FormItem
                     {...formItemLayout}
-                    label="Password"
+                    label="登录密码"
                 >
                     {getFieldDecorator('pwd', {
                         rules: [{
@@ -141,7 +141,7 @@ class RegistForm extends Component {
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label="Confirm Password"
+                    label="确认密码"
                 >
                     {getFieldDecorator('confirm', {
                         rules: [{
@@ -155,7 +155,7 @@ class RegistForm extends Component {
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label="Name"
+                    label="用户名/昵称"
                 >
                     {getFieldDecorator('name', {
                         rules: [{
@@ -167,22 +167,22 @@ class RegistForm extends Component {
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label="Sex"
+                    label="性别"
                     initialValue={1}
                 >
                     {getFieldDecorator('sex', {
                         rules: [{ required: true, message: 'Please check the sex' }]
                     })(
                         <RadioGroup >
-                            <Radio value={1}>Male</Radio>
-                            <Radio value={2}>Female</Radio>
+                            <Radio value={1}>男</Radio>
+                            <Radio value={2}>女</Radio>
                         </RadioGroup>
                         )}
                 </FormItem>
 
                 <FormItem
                     {...formItemLayout}
-                    label="Head Image"
+                    label="头像"
                 >
                     {getFieldDecorator('head', {
                         rules: [{ require: true, message: 'Please upload a image for your head' }]
@@ -192,7 +192,7 @@ class RegistForm extends Component {
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label="Identity Card"
+                    label="身份证号"
                 >
                     {getFieldDecorator('iden', {
                         rules: [{ required: true, message: 'Please input your identify card' }]
@@ -202,7 +202,7 @@ class RegistForm extends Component {
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label="Age"
+                    label="年龄"
                 >
                     {getFieldDecorator('age', {
                         initialValue: { age: 20 },
@@ -213,7 +213,7 @@ class RegistForm extends Component {
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label="College"
+                    label="就读院校"
                 >
                     {getFieldDecorator('college', {
                         rules: [{ required: true, message: 'Please check the college' }]
@@ -229,7 +229,7 @@ class RegistForm extends Component {
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label="Price Per Hour"
+                    label="期望时薪"
                 >
                     {getFieldDecorator('price', {
                         rules: [{ required: true, message: 'Please check the price' }]
@@ -245,7 +245,7 @@ class RegistForm extends Component {
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label="Subject Support"
+                    label="授课支持"
                 >
                     {getFieldDecorator('subject', {
                         rules: [{ required: true, message: 'Please check the subject' }]
@@ -261,7 +261,7 @@ class RegistForm extends Component {
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label="Address"
+                    label="现居住地址"
                 >
                     {getFieldDecorator('address', {
                         initialValue: {},
@@ -272,7 +272,7 @@ class RegistForm extends Component {
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label="Time"
+                    label="授课时间"
                 >
                     {getFieldDecorator('time', {
                         rules: [{ required: true, message: 'Please check your time' }]
@@ -288,7 +288,7 @@ class RegistForm extends Component {
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label="Evaluation"
+                    label="自我评价"
                 >
                     {getFieldDecorator('evaluation', {
 

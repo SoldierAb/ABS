@@ -104,7 +104,7 @@ class OrderForm extends Component {
             <Wrapper>
                 <Form onSubmit={this.handleSubmit} className="clearfix">
                     <FormItem
-                        label="Phone Number"
+                        label="手机号码"
                     >
                         {getFieldDecorator('phone', {
                             rules: [{ required: true, message: 'Please input your phone number!' }],
@@ -115,7 +115,7 @@ class OrderForm extends Component {
                     </FormItem>
 
                     <FormItem
-                        label="Price Per Hour"
+                        label="课酬（元/小时）"
                     >
                         {getFieldDecorator('order_price', {
                             rules: [{ required: true, message: 'Please check the price' }]
@@ -131,7 +131,7 @@ class OrderForm extends Component {
                     </FormItem>
 
                     <FormItem
-                        label="Address"
+                        label="授课地址"
                     >
                         {getFieldDecorator('order_address', {
                             initialValue: {},
@@ -142,7 +142,7 @@ class OrderForm extends Component {
                     </FormItem>
 
                     <FormItem
-                        label="Need Sex"
+                        label="性别要求"
                         initialValue={1}
                     >
                         {getFieldDecorator('order_need_sex', {
@@ -158,7 +158,7 @@ class OrderForm extends Component {
 
 
                     <FormItem
-                        label="Order Subject"
+                        label="辅导科目"
                     >
                         {getFieldDecorator('order_subject', {
                             rules: [{ required: true, message: 'Please check the subject' }]
@@ -174,7 +174,7 @@ class OrderForm extends Component {
                     </FormItem>
 
                     <FormItem
-                        label="Order Time"
+                        label="辅导时间"
                     >
                         {getFieldDecorator('order_time', {
                             rules: [{ required: true, message: 'Please check your time' }]
@@ -189,7 +189,7 @@ class OrderForm extends Component {
                             )}
                     </FormItem>
                     <FormItem
-                        label="Order Detail"
+                        label="学员情况"
                     >
                         {getFieldDecorator('order_detail', {
 

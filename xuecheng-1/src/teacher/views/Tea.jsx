@@ -2,7 +2,11 @@ import React from 'react'
 import QueueAnim from 'rc-queue-anim';
 import styled, { injectGlobal, keyframes } from 'styled-components'
 import TweenOne, { TweenOneGroup } from 'rc-tween-one';
-import { Button, message, Icon } from 'antd';
+import { Button, message, Modal, Pagination, Icon } from 'antd';
+import { connect } from 'react-redux';
+import * as Actions from '../Actions';
+import * as Status from '../../Status';
+import _AllHeight from '../../utils/GetHeightUtil';
 
 injectGlobal`
     .clearfix:after{
@@ -38,21 +42,64 @@ const fade = keyframes`
     }
 `;
 
+
+const fadeBtnTop = keyframes`
+    0%{
+        transform:translateY(-40px);
+    }
+
+    80%{
+        transform:translateY(24px);
+    }
+
+    100%{
+        transform:translateY(20px);
+    }
+`
+
+const fadeBtnBottom = keyframes`
+    0%{
+        transform:translateY(50px);
+    }
+
+    80%{
+        transform:translateY(-14px);
+    }
+
+    100%{
+        transform:translateY(-10px);
+    }
+`;
+
 const Wrapper = styled.div`
+    position:relative;
+    height:880px;
     max-width:1700px;
     min-width:960px;
-    padding:40px;
+    padding:0 40px 30px 40px;
+    border-bottom:1px solid #eee;
     .teaTitle{
         background: url(http://localhost:3099/crossword.png) repeat scroll 0 0 #5a88ca;
     }
-    .boxContainer{
+
+    .teaHeader{
+        background: linear-gradient(50deg, rgb(81, 255, 182), rgb(87, 160, 255));
+        height:140px;
+    }
+
+    .teaBoxContainer{
         position:relative;
         margin:auto;
         background:white;
         padding:10px;
     }
+    .teaBoxBottom{
+        position:absolute;
+        bottom:80px;
+        right:100px;
+    }
     .boxItem{
-        height:290px;
+        height:270px;
         width:262px;
         margin:10px;
         background:white;
@@ -61,7 +108,6 @@ const Wrapper = styled.div`
         display:block;
         position:absolute;
         &:hover{
-            cursor:pointer;
             opacity:0;
         }
         .boxItemContent{
@@ -72,26 +118,26 @@ const Wrapper = styled.div`
             height:100%;
             background:rgba(0,0,0,0.6);
             padding:10px;
-            border-radius:4px;
+            bteacher-radius:4px;
             over-flow:hidden;
             color:rgba(255,255,255,0.8);
             opacity:0;
             &:hover{
                 animation:${fade} .2s ease;
                 opacity:1;
-            }
-            .detailBox{
                 .callBtn{
                     width:50%;
                     text-align:center;
                     margin:25% auto;
                     transform:translateY(20px);
+                    animation:${fadeBtnTop} .3s ease;
                 }
                 .detailBtn{
                     width:50%;
                     text-align:center;
                     margin:0 auto;
                     transform:translateY(-10px);
+                    animation:${fadeBtnBottom} .3s ease;
                 }
             }
         }
@@ -99,52 +145,46 @@ const Wrapper = styled.div`
 
 `;
 
-export default class Tea extends React.Component {
-    constructor() {
-        super(...arguments);
-        this.state = {
-            teaArr: [],
-            loaded: false,
-            btnSize: 'small',
-        }
+const mapState = (state) => {
+    return {
+        teaArr: state.teacher.data,
+        getTeaStatus: state.teacher.status,
+        msg: state.teacher.msg,
+        msg: state.teacher.msg,
+        currentUser: state.login.data,
+        total: state.teacher.total,
+        pageSize: state.teacher.pageSize,
+        currentPage: state.teacher.currentPage
+    }
+}
+
+
+const mapDispatch = (dispatch) => {
+    return {
+        getTeachers: (current, size, city) => dispatch(Actions.getTeachers(current, size, city))
+    }
+}
+
+
+class Tea extends React.Component {
+    constructor(props) {
+        super(props);
     }
 
     componentDidMount() {
         let currentCity = localStorage.getItem('currentCity');
-        console.log('tea city:  ', currentCity);
-        const api = `/getTeachers?city=${currentCity}`;
-        fetch(api).then((res) => {
-            if (res.status !== 200) throw new Error('出错' + res);
-            res.json().then((resJson) => {
-                if (resJson.data.length < 1) {
-                    this.setState({
-                        loaded: true,
-                        teaArr: []
-                    })
-                    return;
-                }
-                let teaArr = resJson.data;
-                teaArr.forEach((item, index) => {
-                    item.address = JSON.parse(item.address);
-                    item.subject = JSON.parse(item.subject);
-                    item.time = JSON.parse(item.time);
-                    item.head = `http://localhost:3099/${item.head}`;
-                });
-                teaArr = teaArr.map((item, index) => ({ ...item }))
+        this.props.getTeachers(1, 8, currentCity);
+        // this.getMore();
+    }
 
-                this.setState({
-                    loaded: true,
-                    teaArr
-                })
-            })
-        }).catch((err) => {
-            throw new Error('Err' + err);
-        })
+    switchPage = (current) => {
+        let currentCity = localStorage.getItem('currentCity');
+        this.props.getTeachers(current, 8, currentCity)
     }
 
 
     seeDetail = (e) => {                     //查看教师详情数据
-        let tea = this.state.teaArr[e.target.value];
+        let tea = this.props.teaArr[e.target.value];
         let toSimplecv = {
             pathname: '/simplecv',
             state: tea
@@ -152,12 +192,29 @@ export default class Tea extends React.Component {
         this.props.history.push(toSimplecv);
     }
 
+    // collectTea = (e) => {                         //收藏教师
+    //     let tea = this.state.teaArr[e.target.value];
+    //     console.log();
+    //     // let toSimplecv = {
+    //     //     pathname: '/simplecv',
+    //     //     state: tea
+    //     // }
+    //     // this.props.history.push(toSimplecv);
+    // }
+
 
     getDiv = () => {                         //列表数据渲染
-        const { teaArr, btnSize } = this.state;
-        return teaArr.map((item, i) => {
+        let { teaArr } = this.props;
+        console.log('arr教师：  ', teaArr);
+        teaArr.forEach((item, index) => {
+            item.address = typeof item.address === 'string' ? JSON.parse(item.address) : item.address;
+            item.subject = typeof item.subject === 'string' ? JSON.parse(item.subject) : item.subject;
+            item.time = typeof item.time === 'string' ? JSON.parse(item.time) : item.time;
+            item.head = `http://localhost:3099/${item.head}`;
+        });
+        let teachers = teaArr.map((item, index) => ({ ...item }))
+        return teachers.map((item, i) => {
             const { head, address, name, phone, age, price, sex, suject } = item;
-            // console.log(item);
             const imgBoxWidth = 262;
             const imgBoxHeight = 290;
             const left = imgBoxWidth * (i % 4) * 1.17;
@@ -171,7 +228,8 @@ export default class Tea extends React.Component {
                     style={{ left, top }}
                 >
                     <TweenOne
-                        component="span"
+                        component="div"
+                        style={{ height: '100%' }}
                     >
                         <img width="100%" height="100%" src={head} />
                     </TweenOne>
@@ -180,10 +238,10 @@ export default class Tea extends React.Component {
                     >
                         <div className="detailBox">
                             <div className="callBtn">
-                                <Button type="primary">SELECT</Button>
+                                <Button type="primary" size="small" value={i}>收藏</Button>
                             </div>
                             <div className="detailBtn">
-                                <Button type="primary" value={i} onClick={this.seeDetail}>SEE DETAILS</Button>
+                                <Button type="primary" size="small" value={i} onClick={this.seeDetail}>更多了解</Button>
                             </div>
                         </div>
                     </TweenOneGroup>
@@ -195,30 +253,33 @@ export default class Tea extends React.Component {
 
 
     render() {
-        const { loaded, teaArr } = this.state;
+        const { getTeaStatus, teaArr, total, pageSize, currentPage, msg } = this.props;
+        switch (getTeaStatus) {
+            case Status.LOADING:
+                return <Wrapper></Wrapper>;
+            case Status.SUCCESS:
+                return (
+                    <Wrapper>
+                        <div className="teaHeader">
 
-        if (!loaded) return <div>加载中。。。</div>;
-        if (teaArr.length < 1) return <div>暂无数据~</div>;
-        return (
-            <Wrapper>
-                <div className="teaTitle">
-
-                </div>
-                <div className="boxContainer clearfix">
-                    <div className="teaLeft fl clearfix">
-                        <QueueAnim delay={400}>
-                            {this.getDiv()}
-                        </QueueAnim>
-                    </div>
-                    <div className="teaRight fr">
-
-                    </div>
-                </div>
-            </Wrapper>
-        );
-
+                        </div>
+                        <div className="teaBoxContainer clearfix">
+                            <QueueAnim delay={300}>
+                                {this.getDiv()}
+                            </QueueAnim>
+                        </div>
+                        <div className="teaBoxBottom">
+                            <Pagination pageSize={parseInt(pageSize)} showQuickJumper defaultCurrent={parseInt(currentPage)} total={parseInt(total)} onChange={this.switchPage} />
+                        </div>
+                    </Wrapper>
+                );
+            case Status.FAILURE:
+                return <Wrapper>加载失败 。。。</Wrapper>;
+            default:
+                return <Wrapper>加载中 。。。</Wrapper>;
+        }
     }
-
-
 }
 
+
+export default connect(mapState, mapDispatch)(Tea);

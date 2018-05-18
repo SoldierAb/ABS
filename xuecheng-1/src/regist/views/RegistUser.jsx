@@ -102,7 +102,7 @@ class RegistForm extends Component {
             <Form onSubmit={this.handleSubmit} className="clearfix">
                 <FormItem
                     {...formItemLayout}
-                    label="Phone Number"
+                    label="手机号码"
                 >
                     {getFieldDecorator('phone', {
                         rules: [{ required: true, message: 'Please input your phone number!' }],
@@ -113,7 +113,7 @@ class RegistForm extends Component {
 
                 <FormItem
                     {...formItemLayout}
-                    label="Password"
+                    label="登陆密码"
                 >
                     {getFieldDecorator('pwd', {
                         rules: [{
@@ -127,7 +127,7 @@ class RegistForm extends Component {
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label="Confirm Password"
+                    label="确认密码"
                 >
                     {getFieldDecorator('confirm', {
                         rules: [{
@@ -141,7 +141,7 @@ class RegistForm extends Component {
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label="Name"
+                    label="用户名/昵称"
                 >
                     {getFieldDecorator('name', {
                         rules: [{
@@ -155,7 +155,7 @@ class RegistForm extends Component {
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label="Head Image"
+                    label="头像"
                     initialValue={this.state.imgpath}
                 >
                     {getFieldDecorator('head', {
@@ -166,7 +166,7 @@ class RegistForm extends Component {
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label="Identity Card"
+                    label="身份证号"
                 >
                     {getFieldDecorator('iden', {
                         rules: [{ required: true, message: 'Please input your identify card' }]
