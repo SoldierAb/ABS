@@ -8,8 +8,10 @@ router.get('/getTeachers', function (req, res, next) {
     console.log('-----getTeachers----START---------');
 
     var _response = {},
+        _city = req.query.city ? req.query.city : null,
         _arr = [],
-        _sql = 'SELECT * FROM teachers';
+        _sql = _city ? "SELECT * FROM teachers WHERE address like '%" + _city + "%' " : 'SELECT * FROM teachers';
+    console.log(_sql);
 
     connection.query(_sql, function (err, result) {
         if (err) {

@@ -80,7 +80,7 @@ const Simplecv = ({ location }) => {
       <div className="cvTop clearfix">
         <div className="fl topLeft">
           <h2>Name: {name}</h2>
-          <p>Age: {age}  -  Sex:{sex == 2 ? ' 男' : ' 女'}</p>
+          <p>Age: {age}  -  Sex:{sex == 1 ? ' 男' : ' 女'}</p>
         </div>
         <div className="fr topRight clearfix">
           <div className="fl address">COLLEGE</div>

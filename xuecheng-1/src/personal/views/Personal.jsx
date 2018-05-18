@@ -52,7 +52,22 @@ class Personal extends React.Component {
         return this.state.currentUser.state !== nextState.currentUser.state;
     }
 
+    componentWillUnmount() {
+        clearInterval(this.state.timer);
+        this.setState({
+            timer: null
+        })
+    }
+
     checkState = () => {
+        // let { pathname } = this.props.history.location;
+        // console.log('路由：   ', pathname);
+        // if (pathname !== '/personal') {
+        //     this.setState({
+        //         timer: null
+        //     })
+        //     return;
+        // }
         const apiUrl = `/loginCheck`;
         let { currentUser, loginStatus } = this.state;
         if (loginStatus === LoginStatusTypes.SUCCESS) {
@@ -74,20 +89,12 @@ class Personal extends React.Component {
                         console.log('当前用户===校验---**：   ', resJson);
                         this.setState({ currentUser: resJson.data });
                         if (obj.remember) localStorage.setItem(`current_user`, JSON.stringify(obj));
-                        // if (currentUser.state !== resJson.data.state) {
-                        // }
-                        // return resJson;
                     })
                 }
             })
         }
     }
 
-    componentWillUnmount() {
-        this.setState({
-            timer: null
-        })
-    }
 
     render() {
         let { modifyAct, history } = this.props;

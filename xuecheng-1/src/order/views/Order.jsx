@@ -44,17 +44,18 @@ const Wrapper = styled.div`
 
 class Order extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      timer: null
+    }
+  }
+
   switchPage = (current) => {
     console.log('当前页', current);
     this.props.getOrders(current, 10);
   }
 
-  /**
-   * 
-   * 点击申请接单
-   * @param {any} e 
-   * @returns 
-   */
   clickContact = (e) => {
     const _this = this;
     if (!this.props.currentUser) {
@@ -90,7 +91,26 @@ class Order extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getOrders();
+    let currentCity = localStorage.getItem('currentCity');
+    console.log('order city:  ', currentCity);
+    this.props.getOrders(1, 10, currentCity);
+    if (!this.state.timer) {
+      this.setState({
+        timer: setInterval(this.refreshData, 300000)
+      })
+    }
+  }
+
+  refreshData = () => {
+    let currentCity = localStorage.getItem('currentCity');
+    this.props.getOrders(1, 10, currentCity)
+  }
+
+  componentWillMount() {
+    clearInterval(this.state.timer);
+    this.setState({
+      timer: null
+    });
   }
 
   getOrderTem = () => {
@@ -205,8 +225,8 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    getOrders: () => dispatch(Actions.getOrders())
-    // getOrders: (currentPage, pageSize) => dispatch(Actions.getOrders(currentPage, pageSize))
+    // getOrders: (city) => dispatch(Actions.getOrders(city))
+    getOrders: (currentPage, pageSize, city) => dispatch(Actions.getOrders(currentPage, pageSize, city))
   }
 }
 

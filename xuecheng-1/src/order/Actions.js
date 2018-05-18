@@ -17,19 +17,8 @@ export const addOrder = (obj) => {
     }
 }
 
-export const getOrders = () => {
-    const api = `/getOrders`;
-    return {
-        promise: fetch(api).then((res) => {
-            if (res.status !== 200) throw new Error('订单数据请求获取出错', res);
-            return res.json().then(resJson => resJson);
-        }),
-        types: [ActionTypes.GET_START, ActionTypes.GET_SUCCESS, ActionTypes.GET_FAIL]
-    }
-}
-
-// export const getOrders = (currentPage, pageSize) => {
-//     const api = `/getOrders?currentPage=${currentPage}&&pageSize=${pageSize}`;
+// export const getOrders = (city) => {
+//     const api = `/getOrders?city=${city}`;
 //     return {
 //         promise: fetch(api).then((res) => {
 //             if (res.status !== 200) throw new Error('订单数据请求获取出错', res);
@@ -38,3 +27,14 @@ export const getOrders = () => {
 //         types: [ActionTypes.GET_START, ActionTypes.GET_SUCCESS, ActionTypes.GET_FAIL]
 //     }
 // }
+
+export const getOrders = (currentPage, pageSize, city) => {
+    const api = `/getOrders?city=${city}&&currentPage=${currentPage}&&pageSize=${pageSize}`;
+    return {
+        promise: fetch(api).then((res) => {
+            if (res.status !== 200) throw new Error('订单数据请求获取出错', res);
+            return res.json().then(resJson => resJson);
+        }),
+        types: [ActionTypes.GET_START, ActionTypes.GET_SUCCESS, ActionTypes.GET_FAIL]
+    }
+}

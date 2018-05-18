@@ -112,7 +112,7 @@ export default class Tea extends React.Component {
     componentDidMount() {
         let currentCity = localStorage.getItem('currentCity');
         console.log('tea city:  ', currentCity);
-        const api = `/getTeachers`;
+        const api = `/getTeachers?city=${currentCity}`;
         fetch(api).then((res) => {
             if (res.status !== 200) throw new Error('出错' + res);
             res.json().then((resJson) => {

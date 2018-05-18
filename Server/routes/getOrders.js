@@ -7,14 +7,16 @@ var Order = require('./order');
 router.get('/getOrders', function (req, res, next) {
     console.log('--------------------------getOrders----START------------------------');
     var _response = {},
-        // _size = req.query.pageSize,
-        // _curPage = req.query.currentPage,
-        // _pageDrop = (_curPage - 1) * _size,
+        _city = req.query.city ? req.query.city : null,
+        _size = req.query.pageSize,
+        _curPage = req.query.currentPage,
+        _pageDrop = (_curPage - 1) * _size,
         _arr = [],
         // _sql = "SELECT * FROM orders limit " + _pageDrop + "," + _size + "",
-        _sql = "SELECT * FROM orders",
-        _countSql = 'SELECT count(order_no) FROM orders',
+        _sql = _city ? "SELECT * FROM orders WHERE order_address like '%" + _city + "%'  limit " + _pageDrop + "," + _size + "" : "SELECT * FROM orders limit " + _pageDrop + "," + _size + "",
+        _countSql = _city ? "SELECT count(order_no) FROM orders WHERE order_address like '%" + _city + "%'  limit " + _pageDrop + "," + _size + "" : "SELECT count(order_no) FROM orders limit " + _pageDrop + "," + _size + "",
         _total = 0;
+    console.log(_sql);
     connection.query(_countSql, function (err, result) {
         if (err) {
             console.log('[SELECT ERROR] - ', err.message);
