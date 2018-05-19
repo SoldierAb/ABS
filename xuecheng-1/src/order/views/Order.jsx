@@ -6,7 +6,8 @@ import * as Status from '../../Status';
 import QueueAnim from 'rc-queue-anim';
 import * as UserTypes from '../../UserTypes';
 import * as DateUtil from '../../utils/DateUtil';
-
+import Header from '../../components/header/Header.jsx';
+import Footer from '../../components/footer/Footer.jsx';
 import { Button, message, Modal, Pagination } from 'antd';
 const confirm = Modal.confirm;
 
@@ -220,10 +221,11 @@ class Order extends React.Component {
         console.log('page: --->    ', total);
         return (
           <Wrapper>
-            <div className="orderContainerHeader">
+            {/* <div className="orderContainerHeader">
               <h1>JUST FOR YOU</h1>
               <p>recruitment information </p>
-            </div>
+            </div> */}
+            <Header text="recruitment information" />
             <div className="orderBoxContainer">
               <div className="orderBoxBody">
                 <QueueAnim
@@ -236,6 +238,7 @@ class Order extends React.Component {
                 <Pagination pageSize={parseInt(pageSize)} showQuickJumper defaultCurrent={parseInt(currentPage)} total={parseInt(total)} onChange={this.switchPage} />
               </div>
             </div>
+            <Footer />
           </Wrapper>
         );
       case Status.FAILURE:

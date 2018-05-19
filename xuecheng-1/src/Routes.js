@@ -101,7 +101,7 @@ const Wrapper = styled.div`
    
 
    .xBody{
-       padding:76px 0;
+       padding-top:76px;
    }
 
 `;

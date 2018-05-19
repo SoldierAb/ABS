@@ -7,7 +7,8 @@ import { connect } from 'react-redux';
 import * as Actions from '../Actions';
 import * as Status from '../../Status';
 import _AllHeight from '../../utils/GetHeightUtil';
-
+import Footer from '../../components/footer/Footer.jsx';
+import Header from '../../components/header/Header.jsx';
 injectGlobal`
     .clearfix:after{
         height:0;
@@ -278,10 +279,11 @@ class Tea extends React.Component {
             case Status.SUCCESS:
                 return (
                     <Wrapper>
-                        <div className="teaContainerHeader">
+                        {/* <div className="teaContainerHeader">
                             <h1>JUST FOR YOU</h1>
                             <p>Excellent Teachers</p>
-                        </div>
+                        </div> */}
+                        <Header text="Excellent Teachers" />
                         <div className="teaContainerBody">
                             <div className="teaBody clearfix">
                                 <QueueAnim delay={300}>
@@ -292,6 +294,7 @@ class Tea extends React.Component {
                                 <Pagination pageSize={parseInt(pageSize)} showQuickJumper defaultCurrent={parseInt(currentPage)} total={parseInt(total)} onChange={this.switchPage} />
                             </div>
                         </div>
+                        <Footer />
                     </Wrapper>
                 );
             case Status.FAILURE:

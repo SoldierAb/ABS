@@ -4,7 +4,16 @@ import QRCode from 'qrcode.react';
 import { Icon } from 'antd';
 import _AllHeight from '../../utils/GetHeightUtil';
 import Minmap from '../edumap/Minmap';
+import QueueAnim from 'rc-queue-anim';
+import TweenOne from 'rc-tween-one';
+import ScrollAnim from 'rc-scroll-anim';
+import Footer from '../../components/footer/Footer.jsx';
+const OverPack = ScrollAnim.OverPack;
+
+
 const skill = 'http://localhost:3099/skills.jpg'
+
+
 
 const fadeUp = keyframes`
   0%{
@@ -148,76 +157,102 @@ const Simplecv = ({ location }) => {
       </div>
       <div className="simpleCvBox">
         <div className="cvTop clearfix">
-          <div className="fl topLeft">
-            <h1>NAME: {name}</h1>
-            <h3>AGE: {age}  - SEX:{sex == 1 ? ' 男' : ' 女'}</h3>
-          </div>
-          <div className="fr topRight clearfix">
-            <div className="fl college">COLLEGE</div>
-            <div className="fr">
-              <h1>{college}</h1>
+          {/* <OverPack> */}
+          <QueueAnim
+            key="cvqueue-1"
+            leaveReverse
+            delay={300}
+          >
+            <div key="cvname" className="fl topLeft">
+              <h1>NAME: {name}</h1>
+              <h3>AGE: {age}  - SEX:{sex == 1 ? ' 男' : ' 女'}</h3>
             </div>
-          </div>
-          <div className="head">
-            <img src={head} alt="" />
-          </div>
+
+            <div key="cvcollege" className="fr topRight clearfix">
+              <div className="fl college">COLLEGE</div>
+              <div className="fr">
+                <h1>{college}</h1>
+              </div>
+            </div>
+            <div key="cvhead" className="head">
+              <img src={head} alt="" />
+            </div>
+          </QueueAnim>
+          {/* </OverPack> */}
+
         </div>
-        <div className="cvContentBox clearfix">
-          <div className="cvContentHeader">
-            <h2>
-              您好，我是{name},今年{age}岁，就读于{college}。目前住在
-          </h2>
-            <h2>
-              {address.city.join('')}{address.address}
-            </h2>
-          </div>
-        </div>
+        <OverPack>
+          <TweenOne key="tweenheader"
+            animation={{ opacity: 1 }}
+            style={{ opacity: 0, marginBottom: 10 }}
+          >
+            <div key="cv" className="cvContentBox clearfix">
+              <div className="cvContentHeader">
+                <h2>
+                  您好，我是{name},今年{age}岁，就读于{college}。目前住在
+                </h2>
+                <h2>
+                  {address.city.join('')}{address.address}
+                </h2>
+              </div>
+            </div>
+          </TweenOne>
+
+        </OverPack>
         {/* <div className="cvContentBox">
           <Minmap address={`${address.city.join('')}${address.address}`} />
         </div> */}
       </div>
       <div className="simpleCvSkill">
         <div className="skillBox">
-          <span>
-            <h2>擅长科目：</h2>
-          </span>
-          <span>
-            <p>{subject}</p>
-          </span><br />
-          <span>
-            <h2>空闲时间：</h2>
-          </span>
-          <span>
-            <p>{time}</p>
-          </span><br />
-          <span>
-            <h2>期望时薪：</h2>
-          </span>
-          <span>
-            <p>&yen;{price}</p>
-          </span><br />
-          <span>
-            <h2>自我评价</h2>
-          </span>
-          <span>
-            <p>{evaluation}</p>
-          </span><br />
-        </div>
-        <div className="simpleCvQrcode">
-          <div>
-            <QRCode value={phone} />
-          </div>
-          <div>
-            <span className="phoneIcon">
-              <Icon type="phone" />
-            </span>
-            <span>
-              {phone}
-            </span>
+          <OverPack>
+            <QueueAnim
+              key="cvskill"
+              leaveReverse
+              delay={300}
+            >
+              <span key="subject">
+                <h2>擅长科目：</h2>
+              </span>
+              <span key="subjectText">
+                <p>{subject}</p>
+              </span><br />
+              <span key="free">
+                <h2>空闲时间：</h2>
+              </span>
+              <span key="freetime">
+                <p>{time}</p>
+              </span><br />
+              <span key="price">
+                <h2>期望时薪：</h2>
+              </span>
+              <span key="priceHour">
+                <p>&yen;{price}</p>
+              </span><br />
+              <span key="evaluation">
+                <h2>自我评价</h2>
+              </span>
+              <span key="evaluationText">
+                <p>{evaluation}</p>
+              </span>
+            </QueueAnim>
+          </OverPack>
+          <div className="simpleCvQrcode">
+            <div>
+              <QRCode value={phone} />
+            </div>
+            <div>
+              <span className="phoneIcon">
+                <Icon type="phone" />
+              </span>
+              <span>
+                {phone}
+              </span>
+            </div>
           </div>
         </div>
       </div>
-
+      <Footer />
     </Wrapper>
   )
 }

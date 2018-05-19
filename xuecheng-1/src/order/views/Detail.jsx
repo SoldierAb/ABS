@@ -5,7 +5,8 @@ import QRCode from 'qrcode.react';
 import Minmap from '../../components/edumap/Minmap.jsx';
 import * as DateUtil from '../../utils/DateUtil';
 import { Icon } from 'antd';
-
+import Footer from '../../components/footer/Footer.jsx';
+import Header from '../../components/header/Header.jsx';
 const fadeUp = keyframes`
   0%{
     margin-right:10px;
@@ -96,9 +97,7 @@ class Detail extends React.Component {
     let { order, currentUser, loaded, address } = this.state;
     return (
       <Wrapper>
-        <div className="detailHeader">
-          <h1>ORDER DETAIL</h1>
-        </div>
+        <Header text='Order detail' />
         <div className="detailContainer clearfix">
           <QueueAnim delay={300}>
             {
@@ -183,6 +182,7 @@ class Detail extends React.Component {
             </div>
           </QueueAnim>
         </div>
+        <Footer />
       </Wrapper>
     );
   }
@@ -267,7 +267,7 @@ const Detailbak = ({ location }) => {
           </div>
         </QueueAnim>
       </div>
-    </Wrapper>
+    </Wrapper >
   );
 }
 
