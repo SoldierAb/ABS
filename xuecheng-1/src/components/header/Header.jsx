@@ -5,7 +5,6 @@ import QueueAnim from 'rc-queue-anim';
 
 
 const Wrapper = styled.div`
-  background: linear-gradient(50deg, rgba(212, 211, 211, 0.84), rgb(87, 160, 255));
   height: 200px;
   text-align: center;
   padding-top: 60px;
@@ -35,7 +34,7 @@ const Header = ({ text }) => (
     key="queueHeaderha"
     leaveReverse
     delay={300}>
-    <Wrapper key="headerTextHa" className="orderContainerHeader">
+    <Wrapper key="headerTextHa">
       <h1>JUST FOR YOU</h1>
       <p>{text ? text : 'recruitment information'} </p>
     </Wrapper>

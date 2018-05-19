@@ -9,6 +9,8 @@ import * as Status from '../../Status';
 import _AllHeight from '../../utils/GetHeightUtil';
 import Footer from '../../components/footer/Footer.jsx';
 import Header from '../../components/header/Header.jsx';
+import * as HeaderImg from '../../components/headerImg/headerImg.jsx';
+const TeaHeader = HeaderImg.TeaHeader;
 injectGlobal`
     .clearfix:after{
         height:0;
@@ -283,6 +285,7 @@ class Tea extends React.Component {
                             <h1>JUST FOR YOU</h1>
                             <p>Excellent Teachers</p>
                         </div> */}
+                        <TeaHeader />
                         <Header text="Excellent Teachers" />
                         <div className="teaContainerBody">
                             <div className="teaBody clearfix">

@@ -3,37 +3,24 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import * as Actions from '../Actions';
 import * as Status from '../../Status';
-import QueueAnim from 'rc-queue-anim';
 import * as UserTypes from '../../UserTypes';
 import * as DateUtil from '../../utils/DateUtil';
 import Header from '../../components/header/Header.jsx';
 import Footer from '../../components/footer/Footer.jsx';
 import { Button, message, Modal, Pagination } from 'antd';
+import * as HeaderImg from '../../components/headerImg/headerImg.jsx';
+import QueueAnim from 'rc-queue-anim';
+import TweenOne from 'rc-tween-one';
+import ScrollAnim from 'rc-scroll-anim';
+
+const OverPack = ScrollAnim.OverPack;
+const Parallax = ScrollAnim.Parallax;
+const OrderHeader = HeaderImg.OrderHeader;
 const confirm = Modal.confirm;
 
 const orderPageSize = 6;
 
 const Wrapper = styled.div`
-    .orderContainerHeader{
-      background: linear-gradient(50deg, rgba(212, 211, 211, 0.84), rgb(87, 160, 255));
-      height: 200px;
-      text-align: center;
-      padding-top: 60px;
-      h1{
-        font-family: "Work Sans", Arial, sans-serif;
-        font-weight: 400;
-        font-size: 32px;
-        margin: 0 0 20px 0;
-        margin-bottom: 20px;
-        line-height: 1.5;
-        color: #000;
-      }
-      p{
-        font-size: 18px;
-        line-height: 1.5;
-        color: #828282;
-      }
-    }
     .orderBoxContainer{
       padding:40px 80px;
       border:1px solid #eee;
@@ -221,14 +208,12 @@ class Order extends React.Component {
         console.log('page: --->    ', total);
         return (
           <Wrapper>
-            {/* <div className="orderContainerHeader">
-              <h1>JUST FOR YOU</h1>
-              <p>recruitment information </p>
-            </div> */}
+            <OrderHeader />
             <Header text="recruitment information" />
-            <div className="orderBoxContainer">
+            <OverPack className="orderBoxContainer">
               <div className="orderBoxBody">
                 <QueueAnim
+                  key="orderqueue"
                   className="orderPapa clearfix"
                   delay={300}>
                   {this.getOrderTem()}
@@ -237,7 +222,7 @@ class Order extends React.Component {
               <div className="orderBoxBottom">
                 <Pagination pageSize={parseInt(pageSize)} showQuickJumper defaultCurrent={parseInt(currentPage)} total={parseInt(total)} onChange={this.switchPage} />
               </div>
-            </div>
+            </OverPack>
             <Footer />
           </Wrapper>
         );

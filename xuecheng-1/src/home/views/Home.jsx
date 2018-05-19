@@ -169,7 +169,8 @@ const Home = () => (
                         <p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. Odit ab aliquam dolor eius.</p>
                     </div>
                 </TweenOne>
-                <QueueAnim key="queue"
+                <QueueAnim
+                    key="queue"
                     leaveReverse
                     className="cultureBoxContainer clearfix"
                     delay={800}>
