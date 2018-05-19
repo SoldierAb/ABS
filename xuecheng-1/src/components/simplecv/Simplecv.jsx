@@ -1,18 +1,43 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import QRCode from 'qrcode.react';
-
+import { Icon } from 'antd';
+import _AllHeight from '../../utils/GetHeightUtil';
+import Minmap from '../edumap/Minmap';
 const skill = 'http://localhost:3099/skills.jpg'
+
+const fadeUp = keyframes`
+  0%{
+    margin-right:10px;
+  
+  }
+  100%{
+    margin-right:6px;
+  }
+`;
 
 const Wrapper = styled.div`
   letter-spacing:0.2px;
   width: 100%;
   .simpleCvHeader{
-    height:200px;
-    line-height: 150px;
-    padding:20px;
-    text-align:center;
-    background:#eee;
+    background: linear-gradient(50deg, rgba(139, 139, 139, 0.84), rgb(87, 160, 255));
+    height: 200px;
+    text-align: center;
+    padding-top: 60px;
+    h1{
+      font-family: "Work Sans", Arial, sans-serif;
+      font-weight: 400;
+      font-size: 32px;
+      margin: 0 0 20px 0;
+      margin-bottom: 20px;
+      line-height: 1.5;
+      color: #000;
+    }
+    p{
+      font-size: 18px;
+      line-height: 1.5;
+      color: #828282;
+    }
   }
   .simpleCvBox{
     width:1000px;
@@ -98,9 +123,17 @@ const Wrapper = styled.div`
       }
     }
     .simpleCvQrcode{
+      background:rgba(255,255,255,0.8);
       position:absolute;
-      right:300px;
+      right:20px;
       bottom:100px;
+      padding:20px;
+      font-size:24px;
+      text-align:center;
+      .phoneIcon{
+        animation:${fadeUp} .5s ease infinite;
+        margin-right:10px;
+      }
     }
   }
 `;
@@ -132,18 +165,16 @@ const Simplecv = ({ location }) => {
         <div className="cvContentBox clearfix">
           <div className="cvContentHeader">
             <h2>
-              您好，我是{name},今年{age}岁，就读于{college},目前住在
+              您好，我是{name},今年{age}岁，就读于{college}。目前住在
           </h2>
             <h2>
               {address.city.join('')}{address.address}
             </h2>
           </div>
-
-
         </div>
-        <div className="cvBottom">
-
-        </div>
+        {/* <div className="cvContentBox">
+          <Minmap address={`${address.city.join('')}${address.address}`} />
+        </div> */}
       </div>
       <div className="simpleCvSkill">
         <div className="skillBox">
@@ -173,7 +204,17 @@ const Simplecv = ({ location }) => {
           </span><br />
         </div>
         <div className="simpleCvQrcode">
-          <QRCode value={phone} />
+          <div>
+            <QRCode value={phone} />
+          </div>
+          <div>
+            <span className="phoneIcon">
+              <Icon type="phone" />
+            </span>
+            <span>
+              {phone}
+            </span>
+          </div>
         </div>
       </div>
 

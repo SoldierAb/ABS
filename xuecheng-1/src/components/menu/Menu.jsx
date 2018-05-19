@@ -68,7 +68,7 @@ const Nav = ({ locat, currentUser }) => {
                     <li><Link to="/about" className={locat.pathname === '/about' ? 'menuActive' : ' menuNormal'}>关于家教</Link></li>
                     <li><Link to="/order" className={locat.pathname === '/order' ? 'menuActive' : ' menuNormal'}>招聘信息</Link></li>
                     <li><Link to="/teacher" className={locat.pathname === '/teacher' ? 'menuActive' : ' menuNormal'}>优秀教员</Link></li>
-                    <li><Link to="/course" className={locat.pathname === '/course' ? 'menuActive' : ' menuNormal'}>课程推荐</Link></li>
+                    {/* <li><Link to="/course" className={locat.pathname === '/course' ? 'menuActive' : ' menuNormal'}>课程推荐</Link></li> */}
                     <li><Link to="/" className={locat.pathname === '/' ? 'menuActive' : ' menuNormal'}>主页</Link></li>
                 </ul>
                 <span className="logo fl">

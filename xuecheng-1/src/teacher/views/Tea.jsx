@@ -72,30 +72,46 @@ const fadeBtnBottom = keyframes`
 `;
 
 const Wrapper = styled.div`
-    position:relative;
-    height:940px;
-    max-width:1700px;
-    min-width:960px;
-    padding:0 40px 30px 40px;
-    border-bottom:1px solid #eee;
-    .teaTitle{
-        background: url(http://localhost:3099/crossword.png) repeat scroll 0 0 #5a88ca;
-    }
+   
 
-    .teaHeader{
-        // background: linear-gradient(50deg, rgb(81, 255, 182), rgb(87, 160, 255));
+    .teaContainerHeader{
+
+        background: linear-gradient(50deg, rgba(212, 211, 211, 0.84), rgb(87, 160, 255));
         height: 200px;
         text-align: center;
         padding-top: 60px;
+        h1{
+            font-family: "Work Sans", Arial, sans-serif;
+            font-weight: 400;
+            font-size: 32px;
+            margin: 0 0 20px 0;
+            margin-bottom: 20px;
+            line-height: 1.5;
+            color: #000;
+          }
+          p{
+            font-size: 18px;
+            line-height: 1.5;
+            color: #828282;
+          }
     }
 
-    .teaBoxContainer{
+    .teaContainerBody{
+        position:relative;
+        height:760px;
+        max-width:1700px;
+        min-width:960px;
+        padding:20px 40px 30px 40px;
+        border-bottom:1px solid #eee;
+    }
+
+    .teaBody{
         position:relative;
         margin:auto;
         background:white;
         padding:10px;
     }
-    .teaBoxBottom{
+    .teaBottom{
         position:absolute;
         bottom:80px;
         right:100px;
@@ -262,17 +278,19 @@ class Tea extends React.Component {
             case Status.SUCCESS:
                 return (
                     <Wrapper>
-                        <div className="teaHeader">
+                        <div className="teaContainerHeader">
                             <h1>JUST FOR YOU</h1>
                             <p>Excellent Teachers</p>
                         </div>
-                        <div className="teaBoxContainer clearfix">
-                            <QueueAnim delay={300}>
-                                {this.getDiv()}
-                            </QueueAnim>
-                        </div>
-                        <div className="teaBoxBottom">
-                            <Pagination pageSize={parseInt(pageSize)} showQuickJumper defaultCurrent={parseInt(currentPage)} total={parseInt(total)} onChange={this.switchPage} />
+                        <div className="teaContainerBody">
+                            <div className="teaBody clearfix">
+                                <QueueAnim delay={300}>
+                                    {this.getDiv()}
+                                </QueueAnim>
+                            </div>
+                            <div className="teaBottom">
+                                <Pagination pageSize={parseInt(pageSize)} showQuickJumper defaultCurrent={parseInt(currentPage)} total={parseInt(total)} onChange={this.switchPage} />
+                            </div>
                         </div>
                     </Wrapper>
                 );

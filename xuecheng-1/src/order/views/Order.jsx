@@ -13,18 +13,11 @@ const confirm = Modal.confirm;
 const orderPageSize = 6;
 
 const Wrapper = styled.div`
-    padding:40px 80px;
-    border:1px solid #eee;
-    padding:20px 10px;
-    width:100%;
-    margin-right:10%;
-    position:relative;
-    height:1180px;
-    border-bottom:1px solid #eee;
     .orderContainerHeader{
-      height:200px;
-      padding:20px;
-      text-align:center;
+      background: linear-gradient(50deg, rgba(212, 211, 211, 0.84), rgb(87, 160, 255));
+      height: 200px;
+      text-align: center;
+      padding-top: 60px;
       h1{
         font-family: "Work Sans", Arial, sans-serif;
         font-weight: 400;
@@ -40,7 +33,17 @@ const Wrapper = styled.div`
         color: #828282;
       }
     }
-    .orderContainer{
+    .orderBoxContainer{
+      padding:40px 80px;
+      border:1px solid #eee;
+      padding:20px 10px;
+      width:100%;
+      margin-right:10%;
+      position:relative;
+      height:980px;
+      border-bottom:1px solid #eee;
+    }
+    .orderBoxBody{
 
       .orderPapa{
         width: 1200px;
@@ -64,7 +67,7 @@ const Wrapper = styled.div`
         }
       }
     }
-    .orderContainerBottom{
+    .orderBoxBottom{
       position:absolute;
       bottom:40px;
       right:40px;
@@ -221,15 +224,17 @@ class Order extends React.Component {
               <h1>JUST FOR YOU</h1>
               <p>recruitment information </p>
             </div>
-            <div className="orderContainer">
-              <QueueAnim
-                className="orderPapa clearfix"
-                delay={300}>
-                {this.getOrderTem()}
-              </QueueAnim>
-            </div>
-            <div className="orderContainerBottom">
-              <Pagination pageSize={parseInt(pageSize)} showQuickJumper defaultCurrent={parseInt(currentPage)} total={parseInt(total)} onChange={this.switchPage} />
+            <div className="orderBoxContainer">
+              <div className="orderBoxBody">
+                <QueueAnim
+                  className="orderPapa clearfix"
+                  delay={300}>
+                  {this.getOrderTem()}
+                </QueueAnim>
+              </div>
+              <div className="orderBoxBottom">
+                <Pagination pageSize={parseInt(pageSize)} showQuickJumper defaultCurrent={parseInt(currentPage)} total={parseInt(total)} onChange={this.switchPage} />
+              </div>
             </div>
           </Wrapper>
         );
