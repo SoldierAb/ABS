@@ -42,10 +42,13 @@ class Personal extends React.Component {
 
     componentDidMount() {
         console.log('personal user: ', this.state.currentUser);
-        if (!this.state.timer && this.state.currentUser === UserTypes.USER) {
-            this.setState({
-                timer: setInterval(this.checkState, 3000)
-            });
+
+        if (!this.state.timer) {
+            if (this.state.currentUser.type === UserTypes.USER) {
+                this.setState({
+                    timer: setInterval(this.checkState, 1000)
+                });
+            }
         }
     }
 
@@ -61,8 +64,8 @@ class Personal extends React.Component {
     }
 
     checkState = () => {
-        // let { pathname } = this.props.history.location;
-        // console.log('路由：   ', pathname);
+        let { pathname } = this.props.history.location;
+        console.log('路由：   ', pathname);
         // if (pathname !== '/personal') {
         //     this.setState({
         //         timer: null

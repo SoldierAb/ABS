@@ -102,7 +102,7 @@ export default class AllOrderTable extends React.Component {
               selectedRowKeys: [],
               users
             });
-            // _this.props.refresh();
+            _this.props.refresh();
             message.success('操作成功！', 2);
           }
         })
