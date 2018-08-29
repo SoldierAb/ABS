@@ -43,9 +43,6 @@ const Wrapper = styled.div`
         width: 46%;
         background: white;
         box-shadow:2px 2px 2px 2px #eee
-        &:hover{
-          // background:#eee;
-        }
         .orderHeader{
           padding:10px 0;
           border-bottom:1px solid #dcdcdc;
