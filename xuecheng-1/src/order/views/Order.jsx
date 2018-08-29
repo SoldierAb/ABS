@@ -244,7 +244,6 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    // getOrders: (city) => dispatch(Actions.getOrders(city))
     getOrders: (currentPage, pageSize, city) => dispatch(Actions.getOrders(currentPage, pageSize, city))
   }
 }
