@@ -138,7 +138,7 @@ export default class Banner extends React.Component {
             'http://localhost:3099/img_bg_3.jpg',
             'http://localhost:3099/img_bg_4.jpg',
         ];
-        this.bannerContent=[
+        this.bannerContent = [
             'The Roots of Education are Bitter, But the Fruit is Sweet',
             'The Great Aim of Education is not Knowledge, But Action',
             'We Help You to Learn New Things'
@@ -161,8 +161,8 @@ export default class Banner extends React.Component {
     }
 
 
-    componentDidMount(){
-        
+    componentDidMount() {
+
     }
 
     onChange(type, int) {
@@ -223,13 +223,13 @@ export default class Banner extends React.Component {
     }
 
 
-    getBgElement=()=>{
-        return this.imgArray.map((item,i) =>
-            <Element 
-                prefixCls="banner-user-elem" 
+    getBgElement = () => {
+        return this.imgArray.map((item, i) =>
+            <Element
+                prefixCls="banner-user-elem"
                 key={item}>
                 <BgElement
-                    key={item+i}
+                    key={item + i}
                     className="bg"
                     style={{
                         backgroundImage: `url( ${item} )`,
@@ -241,17 +241,17 @@ export default class Banner extends React.Component {
                     key="bg"
                     className="bg"
                     style={{
-                        background:'rgba(0,0,0,0.4)'
+                        background: 'rgba(0,0,0,0.4)'
                     }}
                 />
                 <TweenOne className="banner-user-title" animation={{ y: 30, opacity: 0, type: 'from' }}>
-                    JUST FOR YOU
+                    家教信息系统
                 </TweenOne>
                 <TweenOne
                     className="banner-user-text"
                     animation={{ y: 30, opacity: 0, type: 'from', delay: 100 }}
-                     >
-                    XUECHENG EDUCATION
+                >
+                    用心创造
                 </TweenOne>
             </Element>
         )

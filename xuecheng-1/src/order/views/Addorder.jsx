@@ -165,9 +165,9 @@ class OrderForm extends Component {
                             rules: [{ required: true, message: 'Please check the sex' }]
                         })(
                             <RadioGroup >
-                                <Radio value={1}>Male</Radio>
-                                <Radio value={2}>Female</Radio>
-                                <Radio value={3}>No-Limit</Radio>
+                                <Radio value={1}>男</Radio>
+                                <Radio value={2}>女</Radio>
+                                <Radio value={3}>不限</Radio>
                             </RadioGroup>
                             )}
                     </FormItem>
@@ -182,7 +182,6 @@ class OrderForm extends Component {
                             <Select
                                 mode="multiple"
                                 style={{ width: '100%' }}
-                                placeholder="Please select"
                             >
                                 {subjectOptions}
                             </Select>
@@ -198,7 +197,6 @@ class OrderForm extends Component {
                             <Select
                                 mode="multiple"
                                 style={{ width: '100%' }}
-                                placeholder="Please select"
                             >
                                 {timeOptions}
                             </Select>
@@ -210,12 +208,13 @@ class OrderForm extends Component {
                         {getFieldDecorator('order_detail', {
 
                         })(
-                            <TextArea rows={6} placeholder="words<200" />
+                            <TextArea rows={6} />
                             )}
                     </FormItem>
                     <FormItem>
                         {getFieldDecorator('agreement', {
                             valuePropName: 'checked',
+                            initialValue: true
                         })(
                             <Checkbox>I have read the <a href="">agreement</a></Checkbox>
                             )}

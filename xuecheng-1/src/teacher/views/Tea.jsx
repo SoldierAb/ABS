@@ -66,11 +66,11 @@ const fadeBtnBottom = keyframes`
     }
 
     80%{
-        transform:translateY(-14px);
+        transform:translateY(70px);
     }
 
     100%{
-        transform:translateY(-10px);
+        transform:translateY(50px);
     }
 `;
 
@@ -157,7 +157,7 @@ const Wrapper = styled.div`
                     width:50%;
                     text-align:center;
                     margin:0 auto;
-                    transform:translateY(-10px);
+                    transform:translateY(50px);
                     animation:${fadeBtnBottom} .3s ease;
                 }
             }
@@ -259,7 +259,7 @@ class Tea extends React.Component {
                     >
                         <div className="detailBox">
                             <div className="callBtn">
-                                <Button type="primary" size="small" value={i}>收藏</Button>
+                                {/* <Button type="primary" size="small" value={i}>收藏</Button> */}
                             </div>
                             <div className="detailBtn">
                                 <Button type="primary" size="small" value={i} onClick={this.seeDetail}>更多了解</Button>

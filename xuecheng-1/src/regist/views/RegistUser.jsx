@@ -177,6 +177,7 @@ class RegistForm extends Component {
                 <FormItem {...tailFormItemLayout}>
                     {getFieldDecorator('agreement', {
                         valuePropName: 'checked',
+                        initialValue: true
                     })(
                         <Checkbox>I have read the <a href="">agreement</a></Checkbox>
                         )}

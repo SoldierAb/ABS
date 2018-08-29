@@ -5,12 +5,10 @@ import QueueAnim from 'rc-queue-anim';
 import TweenOne from 'rc-tween-one';
 import * as Header from '../../components/headerImg/headerImg.jsx';
 import ScrollAnim from 'rc-scroll-anim';
-
-const AboutHeader = Header.AboutHeader;
-
 const OverPack = ScrollAnim.OverPack;
 const Parallax = ScrollAnim.Parallax;
 
+const AboutHeader = Header.AboutHeader;
 const aboutBg = `http://localhost:3000/img_bg_3.jpg`;
 const abcontent = `http://localhost:3000/img_bg_2.jpg`;
 

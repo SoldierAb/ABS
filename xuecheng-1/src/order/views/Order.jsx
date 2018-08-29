@@ -112,11 +112,10 @@ class Order extends React.Component {
 
   componentDidMount() {
     let currentCity = localStorage.getItem('currentCity');
-    console.log('order city:  ', currentCity);
     this.props.getOrders(1, orderPageSize, currentCity);
     // if (!this.state.timer) {
     //   this.setState({
-    //     timer: setInterval(this.refreshData, 300000)
+    //     timer: setInterval(this.refreshData, 3000)
     //   })
     // }
   }

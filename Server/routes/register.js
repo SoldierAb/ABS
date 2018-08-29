@@ -39,8 +39,8 @@ router.post('/regist', (req, res) => {
             break;
         case 5:
             _table = 'teachers';
-            _addSql = "INSERT INTO " + _table + "(phone,pwd,name,sex,head,iden,age,college,price,subject,address,time,type,evaluation,order_no) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-            var teaarr = ['phone', 'pwd', 'name', 'sex', 'head', 'iden', 'age', 'college', 'price', 'subject', 'address', 'time', 'type', 'evaluation', 'order_no'];
+            _addSql = "INSERT INTO " + _table + "(phone,pwd,name,sex,head,iden,age,college,price,subject,address,time,type,evaluation,state) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            var teaarr = ['phone', 'pwd', 'name', 'sex', 'head', 'iden', 'age', 'college', 'price', 'subject', 'address', 'time', 'type', 'evaluation', 'state'];
             teaarr.forEach(function (item, index) {
                 _addParams[index] = req.body[item] || '';
             });

@@ -7,6 +7,7 @@ import univerSitys from '../../initdata/university';
 import prices from '../../initdata/price';
 import subjectOptions from '../../initdata/subject';
 import timeOptions from '../../initdata/time';
+import * as UserTypes from '../../UserTypes';
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
 const SelectOption = Select.Option;
@@ -31,6 +32,7 @@ class RegistForm extends Component {
                 values.address = JSON.stringify(values.address);
                 values.time = JSON.stringify(values.time);
                 values.subject = JSON.stringify(values.subject);
+                values.state = UserTypes.UNACTIVE;
                 console.log('注册Tea的数据: ', values);
                 this.props.registAct(values);
             }
@@ -299,6 +301,7 @@ class RegistForm extends Component {
                 <FormItem {...tailFormItemLayout}>
                     {getFieldDecorator('agreement', {
                         valuePropName: 'checked',
+                        initialValue: true
                     })(
                         <Checkbox>I have read the <a href="">agreement</a></Checkbox>
                         )}

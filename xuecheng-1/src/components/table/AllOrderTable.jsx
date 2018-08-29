@@ -94,7 +94,6 @@ export default class AllOrderTable extends React.Component {
 
   start = () => {
     this.setState({ loaded: true });
-    // ajax request after empty completing
     setTimeout(() => {
       this.setState({
         selectedRowKeys: [],
@@ -114,7 +113,6 @@ export default class AllOrderTable extends React.Component {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ orders: selectedRowKeys })
       }).then((res) => {
-        console.log('del res:  ', res);
         if (res.status !== 200) throw new Error('删除操作出错' + res);
         for (var i = 0; i < selectedRowKeys.length; i++) {
           for (var j = 0; j < orders.length; j++) {
@@ -142,8 +140,6 @@ export default class AllOrderTable extends React.Component {
     let { selectedRowKeys, orders } = this.state,
       _type = e.target.value;
     const _this = this;
-    console.log(e.target.value);
-    console.log(selectedRowKeys);
     const updateApi = `/updateOrder`;
     if (selectedRowKeys.length > 0) {
       fetch(updateApi, {
@@ -182,7 +178,6 @@ export default class AllOrderTable extends React.Component {
    * @param {any} selectedRowKeys 
    */
   onSelectChange = (selectedRowKeys) => {
-    console.log('selectedRowKeys changed: ', selectedRowKeys);
     this.setState({ selectedRowKeys });
   }
 

@@ -5,6 +5,12 @@ import RegistUser from './RegistUser.jsx';
 import RegistTea from './RegistTea.jsx';
 import { connect } from 'react-redux';
 import * as Actions from '../Actions';
+import QueueAnim from 'rc-queue-anim';
+import TweenOne from 'rc-tween-one';
+import ScrollAnim from 'rc-scroll-anim';
+const OverPack = ScrollAnim.OverPack;
+const Parallax = ScrollAnim.Parallax;
+const abcontent = `http://localhost:3000/img_bg_2.jpg`;
 
 const mapDispatch = (dispatch) => {
   return {
@@ -49,8 +55,12 @@ const Wrapper = styled.div`
     .registContainer{
        padding:20px 100px;
        .leftBar{
-          width:25%;
-          border:1px solid blue;
+          width:30%;
+          height:200px;
+          img{
+            height:100%;
+            width:100%;
+          }
        }
        .rightBar{
           width:70%;
@@ -82,7 +92,7 @@ class RegistContainer extends Component {
       <Wrapper>
         <div className="registContainer">
           <div className="leftBar fl">
-
+            <img src={abcontent} alt="" />
           </div>
           <div className="rightBar fr">
             <Tabs defaultActiveKey={tab} onChange={this.handleTabs} tabPosition="left">
